@@ -1,0 +1,15 @@
+{
+  "name": "metacomponents",
+  "version": "1.0.0",
+  "description": "Schema based frontend framework",
+  "main": "lib/compiler.js",
+  "scripts": {
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roman",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^13.0.2"
+  }
+}
