@@ -1,10 +1,12 @@
-export default {
+export default ({ elements }) => ({
   tag: 'html',
   attrs: {
     lang: 'en'
   },
   hooks: {
-    init: () => console.log('Html init')
+    init() {
+      console.log('Html init');
+    }
   },
   children: [
     {
@@ -35,8 +37,8 @@ export default {
         margin: 0
       },
       children: [
-        components.form.container
+        elements.form()
       ]
     }
   ]
-};
+});

@@ -1,4 +1,4 @@
-export default {
+export default (formTitle, sender) => ({
   tag: 'input',
   styles: {
     padding: '5px 10px',
@@ -13,15 +13,14 @@ export default {
   events: {
     input(event) {
       const value = event.target.value;
-      domain.data.sender.setData(value);
-      const inputTitle = this.state.initialInputTitle + value;
-      components.form.container.children[0].text = inputTitle;
+      sender.setData(value);
+      formTitle.text = this.state.initialFormTitle + value;
     }
   },
   hooks: {
     init() {
       console.log('Input init');
-      this.state.initialInputTitle = components.form.container.children[0].text;
+      this.state.initialFormTitle = formTitle.text;
     }
   }
-};
+});
