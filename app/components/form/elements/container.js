@@ -18,6 +18,6 @@ export default ({ elements, domain }) => ({
   children: [
     formTitle,
     elements.input(formTitle, domain.sender),
-    elements.button(domain.sender)
+    elements.button(elements.buttonStyles(), domain.sender)
   ]
 });

@@ -1,7 +1,7 @@
-export default async (sender) => ({
+export default (styles, sender) => ({
   tag: 'button',
   text: 'Send',
-  styles: await import('./button-styles.js').then((m) => m.default),
+  styles,
   attrs: {
     name: 'sendBtn'
   },

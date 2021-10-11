@@ -1,11 +1,12 @@
 export default () => ({
   main: 'container',
   elements: {
-    container: import('./elements/container.js').then(m => m.default),
-    input: import('./elements/input.js').then(m => m.default),
-    button: import('./elements/button.js').then(m => m.default)
+    container: '/app/components/form/elements/container.js',
+    input: '/app/components/form/elements/input.js',
+    button: '/app/components/form/elements/button.js',
+    buttonStyles: '/app/components/form/elements/button-styles.js'
   },
   domain: {
-    sender: import('../../domain/sender.js').then(m => m.default)
+    sender: '/app/domain/sender.js'
   }
 });

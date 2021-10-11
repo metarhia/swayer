@@ -1,4 +1,4 @@
-export default {
+export default () => ({
   marginLeft: '10px',
   padding: '5px 10px',
   borderRadius: '5px',
@@ -6,4 +6,4 @@ export default {
   border: 'none',
   color: 'white',
   cursor: 'pointer'
-};
+});
