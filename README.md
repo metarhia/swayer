@@ -24,12 +24,13 @@ Go to `http://localhost:8080` and play with simple form.
 export default () => ({
   main: 'container',
   elements: {
-    container: import('./elements/container.js').then(m => m.default),
-    input: import('./elements/input.js').then(m => m.default),
-    button: import('./elements/button.js').then(m => m.default)
+    container: '/app/components/form/elements/container.js',
+    input: '/app/components/form/elements/input.js',
+    button: '/app/components/form/elements/button.js',
+    buttonStyles: '/app/components/form/elements/button-styles.js'
   },
   domain: {
-    sender: import('../../domain/sender.js').then(m => m.default)
+    sender: '/app/domain/sender.js'
   }
 });
 ```
@@ -55,7 +56,7 @@ export default ({ elements, domain }) => ({
   children: [
     formTitle,
     elements.input(formTitle, domain.sender),
-    elements.button(domain.sender)
+    elements.button(elements.buttonStyles(), domain.sender)
   ]
 });
 ```
@@ -90,10 +91,10 @@ export default (formTitle, sender) => ({
 ```
 ### Form button element
 ```js
-export default async (sender) => ({
+export default (styles, sender) => ({
   tag: 'button',
   text: 'Send',
-  styles: await import('./button-styles.js').then((m) => m.default),
+  styles,
   attrs: {
     name: 'sendBtn'
   },
