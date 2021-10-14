@@ -1,7 +1,10 @@
-export default (styles, sender) => ({
+import styles from './button-styles.js'
+import sender from '../../../domain/sender.js'
+
+export default () => ({
   tag: 'button',
   text: 'Send',
-  styles,
+  styles: styles(),
   attrs: {
     name: 'sendBtn'
   },
@@ -17,7 +20,7 @@ export default (styles, sender) => ({
   },
   hooks: {
     init() {
-      console.log('Button init');
+      console.log('Button init', this);
     }
   }
 });

@@ -1,4 +1,6 @@
-export default (formTitle, sender) => ({
+import sender from '../../../domain/sender.js'
+
+export default ({ formTitle }) => ({
   tag: 'input',
   styles: {
     padding: '5px 10px',

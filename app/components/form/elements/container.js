@@ -3,7 +3,7 @@ const formTitle = {
   text: 'Type your name: '
 };
 
-export default ({ elements, domain }) => ({
+export default () => ({
   tag: 'div',
   styles: {
     padding: '20px',
@@ -17,7 +17,7 @@ export default ({ elements, domain }) => ({
   },
   children: [
     formTitle,
-    elements.input(formTitle, domain.sender),
-    elements.button(elements.buttonStyles(), domain.sender)
+    { type: 'dynamic', path: '../app/components/form/elements/input.js', props: { formTitle } },
+    { type: 'dynamic', path: '../app/components/form/elements/button.js' }
   ]
 });

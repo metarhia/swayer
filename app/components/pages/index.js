@@ -1,4 +1,4 @@
-export default ({ elements }) => ({
+export default (props) => ({
   tag: 'html',
   attrs: {
     lang: 'en'
@@ -27,7 +27,7 @@ export default ({ elements }) => ({
         },
         {
           tag: 'title',
-          text: 'Metacomponents'
+          text: `${props.title} OK`
         }
       ]
     },
@@ -37,7 +37,7 @@ export default ({ elements }) => ({
         margin: 0
       },
       children: [
-        elements.form()
+        { type: 'dynamic', path: '../app/components/form/elements/container.js', props }
       ]
     }
   ]
