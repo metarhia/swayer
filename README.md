@@ -1,4 +1,4 @@
-# Schema based frontend framework
+# MetaComponents - schema based frontend framework
 ```
 npm i
 npm start
@@ -7,62 +7,79 @@ Go to `http://localhost:8080` and play with simple form.
 ## Features:
 - Pure JavaScript only - no need to switch between HTML/CSS/JS syntax
 - No 3rd party dependencies
-- Tiny JIT compiler
-- Dynamic module resolutions
-- Declarative schema based definitions
-- Component elements
-- Component/element encapsulation
-- Element dependency injection
-- Element change detection
-- Element local state
-- Element lifecycle hooks
-- Separate domain logics
+- Tiny runtime
+- Declarative schema based components
+- Component inline/preload/lazy loading
+- Component encapsulation
+- Component dependency injection
+- Component change detection
+- Component local state
+- Component lifecycle hooks
+- Separate singleton or non-singleton domain logics as services
 
-## Form component example
-### Component definition
+## Dynamic form component example
 ```js
-export default () => ({
-  main: 'container',
-  elements: {
-    container: '/app/components/form/elements/container.js',
-    input: '/app/components/form/elements/input.js',
-    button: '/app/components/form/elements/button.js',
-    buttonStyles: '/app/components/form/elements/button-styles.js'
-  },
-  domain: {
-    sender: '/app/domain/sender.js'
-  }
+import formService from './domain/form-service.js';
+
+const createField = ([name, value]) => ({
+  type: 'lazy',
+  path: `/app/features/form/components/${value.type}.js`,
+  props: [name, value]
 });
-```
-### Form container element
-```js
-const formTitle = {
-  tag: 'p',
-  text: 'Type your name: '
-};
 
-export default ({ elements, domain }) => ({
+const createFields = (fields) => Object.entries(fields).map(createField);
+
+export default ({ action, title, fields }) => ({
   tag: 'div',
   styles: {
     padding: '20px',
     backgroundColor: 'grey',
-    color: 'white'
+    color: 'white',
+    borderBottom: '1px solid white'
   },
   hooks: {
     init() {
       console.log('Container init');
     }
   },
+  events: {
+    submit(event) {
+      event.preventDefault();
+      const result = {};
+      new FormData(event.target).forEach(
+        (value, name) => {
+          const existing = result[name];
+          if (existing && Array.isArray(existing)) existing.push(value);
+          else if (existing) result[name] = [existing, value];
+          else result[name] = value;
+        }
+      );
+      void formService.sendFormData(action, result);
+    }
+  },
   children: [
-    formTitle,
-    elements.input(formTitle, domain.sender),
-    elements.button(elements.buttonStyles(), domain.sender)
+    {
+      tag: 'p',
+      text: title
+    },
+    {
+      tag: 'form',
+      styles: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '450px'
+      },
+      children: [
+        ...createFields(fields),
+        { type: 'lazy', path: '/app/features/form/components/button.js' }
+      ]
+    }
   ]
 });
 ```
-### Form input element
+### Form input component example
 ```js
-export default (formTitle, sender) => ({
+export default ([name, value]) => ({
   tag: 'input',
   styles: {
     padding: '5px 10px',
@@ -71,32 +88,31 @@ export default (formTitle, sender) => ({
   },
   attrs: {
     type: 'text',
-    placeholder: 'Name'
-  },
-  state: {},
-  events: {
-    input(event) {
-      const value = event.target.value;
-      sender.setData(value);
-      formTitle.text = this.state.initialFormTitle + value;
-    }
+    placeholder: value.placeholder,
+    name
   },
   hooks: {
     init() {
       console.log('Input init');
-      this.state.initialFormTitle = formTitle.text;
     }
   }
 });
 ```
-### Form button element
+### Form button component example
 ```js
-export default (styles, sender) => ({
+export default () => ({
   tag: 'button',
   text: 'Send',
-  styles,
+  styles: {
+    padding: '5px 10px',
+    borderRadius: '5px',
+    backgroundColor: 'green',
+    border: 'none',
+    color: 'white',
+    cursor: 'pointer'
+  },
   attrs: {
-    name: 'sendBtn'
+    type: 'submit'
   },
   state: {
     count: 0
@@ -104,7 +120,6 @@ export default (styles, sender) => ({
   events: {
     async click() {
       this.state.count++;
-      await sender.send();
       console.log(`Button clicked ${this.state.count} times`);
     }
   },

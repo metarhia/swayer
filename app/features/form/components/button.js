@@ -1,9 +1,16 @@
-export default (styles, sender) => ({
+export default () => ({
   tag: 'button',
   text: 'Send',
-  styles,
+  styles: {
+    padding: '5px 10px',
+    borderRadius: '5px',
+    backgroundColor: 'green',
+    border: 'none',
+    color: 'white',
+    cursor: 'pointer'
+  },
   attrs: {
-    name: 'sendBtn'
+    type: 'submit'
   },
   state: {
     count: 0
@@ -11,7 +18,6 @@ export default (styles, sender) => ({
   events: {
     async click() {
       this.state.count++;
-      await sender.send();
       console.log(`Button clicked ${this.state.count} times`);
     }
   },
