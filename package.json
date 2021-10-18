@@ -2,14 +2,48 @@
   "name": "metacomponents",
   "version": "1.0.0",
   "description": "Schema based frontend framework",
-  "main": "lib/runtime.js",
-  "scripts": {
-    "start": "http-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Roman",
+  "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "application",
+    "lightweight",
+    "scalable",
+    "web",
+    "framework",
+    "app"
+  ],
+  "main": "lib/runtime.js",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metarhia/metacomponents"
+  },
+  "bugs": {
+    "url": "https://github.com/metarhia/metacomponents/issues",
+    "email": "r.ogiyevich@gmail.com"
+  },
+  "homepage": "https://metarhia.com",
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/tshemsedinov"
+  },
+  "types": "types/metacomponent.d.ts",
+  "files": [
+    "examples/",
+    "lib/",
+    "types/"
+  ],
+  "scripts": {
+    "test": "npm run lint && npm run types && metatests test/",
+    "types": "tsc -p types/tsconfig.json",
+    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
+    "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\""
+  },
   "devDependencies": {
-    "http-server": "^13.0.2"
+    "eslint": "^8.0.1",
+    "eslint-config-metarhia": "^7.0.1",
+    "metatests": "^0.7.2",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4"
   }
 }

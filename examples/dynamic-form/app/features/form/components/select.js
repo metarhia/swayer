@@ -1,7 +1,7 @@
 const createOption = ({ text, value }) => ({
   tag: 'option',
   attrs: { value },
-  text
+  text,
 });
 
 export default ([name, value]) => ({
@@ -9,16 +9,16 @@ export default ([name, value]) => ({
   styles: {
     padding: '5px 10px',
     borderRadius: '5px',
-    border: 'none'
+    border: 'none',
   },
   attrs: {
     multiple: value.multiple || false,
-    name
+    name,
   },
   children: value.options.map(createOption),
   hooks: {
     init() {
       console.log('Select init');
-    }
-  }
+    },
+  },
 });

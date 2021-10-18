@@ -7,23 +7,23 @@ export default () => ({
     backgroundColor: 'green',
     border: 'none',
     color: 'white',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   attrs: {
-    type: 'submit'
+    type: 'submit',
   },
   state: {
-    count: 0
+    count: 0,
   },
   events: {
     async click() {
       this.state.count++;
       console.log(`Button clicked ${this.state.count} times`);
-    }
+    },
   },
   hooks: {
     init() {
       console.log('Button init');
-    }
-  }
+    },
+  },
 });

@@ -3,16 +3,16 @@ export default ([name, value]) => ({
   styles: {
     padding: '5px 10px',
     borderRadius: '5px',
-    border: 'none'
+    border: 'none',
   },
   attrs: {
     type: 'text',
     placeholder: value.placeholder,
-    name
+    name,
   },
   hooks: {
     init() {
       console.log('Input init');
-    }
-  }
+    },
+  },
 });

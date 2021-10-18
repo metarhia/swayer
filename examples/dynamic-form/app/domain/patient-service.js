@@ -1,19 +1,18 @@
-export default new class PatientService {
-
-  async getRegistrationFormData() {
+class PatientService {
+  async getRegisterFormData() {
     return {
       action: 'createPatient',
       title: 'Registration form',
       fields: {
         name: {
           type: 'text',
-          placeholder: 'Name'
+          placeholder: 'Name',
         },
         phone: {
           type: 'text',
-          placeholder: 'Phone'
-        }
-      }
+          placeholder: 'Phone',
+        },
+      },
     };
   }
 
@@ -24,17 +23,18 @@ export default new class PatientService {
       fields: {
         disease: {
           type: 'text',
-          placeholder: 'Name'
+          placeholder: 'Name',
         },
         symptom: {
           type: 'select',
           options: [
             { text: 'Sore throat', value: 'soreThroat' },
             { text: 'Stomach ache', value: 'stomachAche' },
-            { text: 'Tooth pain', value: 'toothPain' }
-          ]
-        }
-      }
+            { text: 'Tooth pain', value: 'toothPain' },
+          ],
+        },
+      },
     };
   }
 }
+export default new PatientService();

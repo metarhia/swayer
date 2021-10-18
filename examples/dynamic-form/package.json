@@ -1,0 +1,29 @@
+{
+  "name": "dynamic-form-example",
+  "version": "1.0.0",
+  "description": "Simple dynamic form",
+  "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metarhia/metacomponents"
+  },
+  "bugs": {
+    "url": "https://github.com/metarhia/metacomponents/issues",
+    "email": "r.ogiyevich@gmail.com"
+  },
+  "homepage": "https://metarhia.com",
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/tshemsedinov"
+  },
+  "scripts": {
+    "start": "http-server"
+  },
+  "dependencies": {
+    "metacomponents": "file:../../"
+  },
+  "devDependencies": {
+    "http-server": "^13.0.2"
+  }
+}

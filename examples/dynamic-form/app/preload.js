@@ -3,5 +3,5 @@ import Form from './features/form/form.js';
 
 export default {
   Head,
-  Form
+  Form,
 };
