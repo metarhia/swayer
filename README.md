@@ -1,6 +1,6 @@
-# MetaComponents - schema based frontend framework
+# MetaComponents - schema based frontend framework 🧱
 
-##**Play with [examples](https://github.com/metarhia/metacomponents/tree/main/examples) to see how it works**
+## Play with [examples](https://github.com/metarhia/metacomponents/tree/main/examples) to see how it works
 
 ## Features:
 
