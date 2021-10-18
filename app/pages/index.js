@@ -65,6 +65,7 @@ export default () => ({
       styles: {
         margin: 0
       },
+      asyncIterable: true,
       hooks: {
         async init() {
           console.log('Body init');
