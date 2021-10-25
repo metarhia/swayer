@@ -16,9 +16,4 @@ export default ([name, value]) => ({
     name,
   },
   children: value.options.map(createOption),
-  hooks: {
-    init() {
-      console.log('Select init');
-    },
-  },
 });

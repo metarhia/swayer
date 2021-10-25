@@ -1,9 +1,9 @@
 import formService from './domain/form-service.js';
 
 const createField = ([name, value]) => ({
-  type: 'lazy',
-  path: `/app/features/form/components/${value.type}.js`,
-  props: [name, value],
+  path: `./components/${value.type}.js`,
+  base: import.meta.url,
+  args: [name, value],
 });
 
 const createFields = (fields) => Object.entries(fields).map(createField);
@@ -15,11 +15,6 @@ export default ({ action, title, fields }) => ({
     backgroundColor: 'grey',
     color: 'white',
     borderBottom: '1px solid white',
-  },
-  hooks: {
-    init() {
-      console.log('Container init');
-    },
   },
   events: {
     submit(event) {
@@ -48,7 +43,7 @@ export default ({ action, title, fields }) => ({
       },
       children: [
         ...createFields(fields),
-        { type: 'lazy', path: '/app/features/form/components/button.js' },
+        { path: './components/button', base: import.meta.url },
       ],
     },
   ],

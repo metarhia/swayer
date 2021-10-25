@@ -1,9 +1,8 @@
 import patientService from '../domain/patient-service.js';
 
 const createForm = (data) => ({
-  type: 'preload',
-  name: 'Form',
-  props: data,
+  path: '/app/features/form/form',
+  args: data,
 });
 
 const buttonStyles = {
@@ -45,7 +44,7 @@ const removeFormButton = {
   },
 };
 
-export default () => ({
+export default async () => ({
   tag: 'html',
   styles: {
     fontFamily: 'Helvetica',
@@ -59,7 +58,7 @@ export default () => ({
     },
   },
   children: [
-    { type: 'preload', name: 'Head' },
+    { path: './head', base: import.meta.url },
     {
       tag: 'body',
       styles: {
@@ -67,12 +66,37 @@ export default () => ({
       },
       hooks: {
         async init() {
-          console.log('Body init');
           const registerFormData = await patientService.getRegisterFormData();
           const registerForm = createForm(registerFormData);
-          this.children.push(registerForm, addFormButton, removeFormButton);
+          this.children.push(
+            registerForm,
+            addFormButton,
+            removeFormButton,
+          );
         },
       },
     },
+    // uncomment to test performance
+    // ...new Array(1000).fill({
+    //   path: '/app/features/form/form',
+    //   args: {
+    //     action: 'addPatientDisease',
+    //     title: 'Disease form',
+    //     fields: {
+    //       disease: {
+    //         type: 'text',
+    //         placeholder: 'Name',
+    //       },
+    //       symptom: {
+    //         type: 'select',
+    //         options: [
+    //           { text: 'Sore throat', value: 'soreThroat' },
+    //           { text: 'Stomach ache', value: 'stomachAche' },
+    //           { text: 'Tooth pain', value: 'toothPain' },
+    //         ],
+    //       },
+    //     },
+    //   },
+    // }),
   ],
 });

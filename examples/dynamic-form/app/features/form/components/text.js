@@ -10,9 +10,9 @@ export default ([name, value]) => ({
     placeholder: value.placeholder,
     name,
   },
-  hooks: {
-    init() {
-      console.log('Input init');
-    },
+  events: {
+    input(event) {
+      this.parent.parent.children[0].text = event.target.value;
+    }
   },
 });

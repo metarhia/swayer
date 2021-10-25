@@ -24,7 +24,7 @@ import formService from './domain/form-service.js';
 const createField = ([name, value]) => ({
   type: 'lazy',
   path: `/app/features/form/components/${value.type}.js`,
-  props: [name, value],
+  args: [name, value],
 });
 
 const createFields = (fields) => Object.entries(fields).map(createField);
