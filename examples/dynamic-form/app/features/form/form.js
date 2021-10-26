@@ -10,11 +10,13 @@ const createFields = (fields) => Object.entries(fields).map(createField);
 
 export default ({ action, title, fields }) => ({
   tag: 'div',
-  styles: {
-    padding: '20px',
-    backgroundColor: 'grey',
-    color: 'white',
-    borderBottom: '1px solid white',
+  attrs: {
+    style: {
+      padding: '20px',
+      backgroundColor: 'grey',
+      color: 'white',
+      borderBottom: '1px solid white',
+    },
   },
   events: {
     submit(event) {
@@ -36,10 +38,12 @@ export default ({ action, title, fields }) => ({
     },
     {
       tag: 'form',
-      styles: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '450px',
+      attrs: {
+        style: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '450px',
+        },
       },
       children: [
         ...createFields(fields),

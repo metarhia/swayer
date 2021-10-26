@@ -6,14 +6,14 @@ const createOption = ({ text, value }) => ({
 
 export default ([name, value]) => ({
   tag: 'select',
-  styles: {
-    padding: '5px 10px',
-    borderRadius: '5px',
-    border: 'none',
-  },
   attrs: {
     multiple: value.multiple || false,
     name,
+    style: {
+      padding: '5px 10px',
+      borderRadius: '5px',
+      border: 'none',
+    },
   },
   children: value.options.map(createOption),
 });

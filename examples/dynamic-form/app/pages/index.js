@@ -17,7 +17,9 @@ const buttonStyles = {
 
 const addFormButton = {
   tag: 'button',
-  styles: buttonStyles,
+  attrs: {
+    style: buttonStyles
+  },
   text: 'Load new form',
   events: {
     async click() {
@@ -30,11 +32,13 @@ const addFormButton = {
 
 const removeFormButton = {
   tag: 'button',
-  styles: {
-    ...buttonStyles,
-    marginLeft: '20px',
-  },
   text: 'Remove last form',
+  attrs: {
+    style: {
+      ...buttonStyles,
+      marginLeft: '20px',
+    },
+  },
   events: {
     click() {
       const { children } = this.parent;
@@ -46,11 +50,11 @@ const removeFormButton = {
 
 export default async () => ({
   tag: 'html',
-  styles: {
-    fontFamily: 'Helvetica',
-  },
   attrs: {
     lang: 'en',
+    style: {
+      fontFamily: 'Helvetica',
+    },
   },
   hooks: {
     init() {
@@ -61,8 +65,10 @@ export default async () => ({
     { path: './head', base: import.meta.url },
     {
       tag: 'body',
-      styles: {
-        margin: 0,
+      attrs: {
+        style: {
+          margin: 0,
+        },
       },
       hooks: {
         async init() {
