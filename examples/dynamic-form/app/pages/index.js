@@ -25,6 +25,7 @@ const addFormButton = {
     async click() {
       const diseaseFormData = await patientService.getDiseaseFormData();
       const diseaseForm = createForm(diseaseFormData);
+      // todo pass output
       this.parent.children.push(diseaseForm);
     },
   },

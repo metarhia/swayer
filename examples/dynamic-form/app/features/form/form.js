@@ -30,6 +30,14 @@ export default ({ action, title, fields }) => ({
       });
       void formService.sendFormData(action, result);
     },
+    // updateTitle(event) {
+    //   this.children[0].text = event.detail;
+    // },
+  },
+  hooks: {
+    init() {
+      console.log('Form init');
+    },
   },
   children: [
     {

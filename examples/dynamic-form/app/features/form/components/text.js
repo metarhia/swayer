@@ -10,9 +10,14 @@ export default ([name, value]) => ({
       border: 'none',
     },
   },
+  hooks: {
+    init() {
+      console.log('Text input init');
+    },
+  },
   events: {
     input(event) {
-      this.parent.parent.children[0].text = event.target.value;
+      // this.output('updateTitle', event.target.value);
     }
   },
 });

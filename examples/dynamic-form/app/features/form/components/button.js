@@ -12,6 +12,11 @@ export default () => ({
       cursor: 'pointer',
     },
   },
+  hooks: {
+    init() {
+      console.log('Button init');
+    },
+  },
   state: {
     count: 0,
   },

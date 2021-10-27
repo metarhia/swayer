@@ -15,5 +15,10 @@ export default ([name, value]) => ({
       border: 'none',
     },
   },
+  hooks: {
+    init() {
+      console.log('Select init');
+    },
+  },
   children: value.options.map(createOption),
 });
