@@ -5,12 +5,22 @@ const createField = ([name, value]) => ({
   base: import.meta.url,
   args: [name, value],
 });
-
 const createFields = (fields) => Object.entries(fields).map(createField);
+
+const createFieldListener = (name) => ({
+  [name](data) {
+    this.state.formData[name] = data;
+  },
+});
+const createFieldListeners = (fields) => Object
+  .keys(fields)
+  .map(createFieldListener)
+  .reduce((events, listener) => ({ ...events, ...listener }), {});
 
 export default ({ action, title, fields }) => ({
   tag: 'div',
   attrs: {
+    name: 'test',
     style: {
       padding: '20px',
       backgroundColor: 'grey',
@@ -18,21 +28,16 @@ export default ({ action, title, fields }) => ({
       borderBottom: '1px solid white',
     },
   },
+  state: {
+    formData: {},
+    count: 0,
+  },
   events: {
-    submit(event) {
-      event.preventDefault();
-      const result = {};
-      new FormData(event.target).forEach((value, name) => {
-        const existing = result[name];
-        if (existing && Array.isArray(existing)) existing.push(value);
-        else if (existing) result[name] = [existing, value];
-        else result[name] = value;
-      });
-      void formService.sendFormData(action, result);
+    ...createFieldListeners(fields),
+    async send() {
+      const data = this.state.formData;
+      await formService.sendFormData(action, data);
     },
-    // updateTitle(event) {
-    //   this.children[0].text = event.detail;
-    // },
   },
   hooks: {
     init() {

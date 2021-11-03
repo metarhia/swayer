@@ -2,7 +2,7 @@ export default () => ({
   tag: 'button',
   text: 'Send',
   attrs: {
-    type: 'submit',
+    type: 'button',
     style: {
       padding: '5px 10px',
       borderRadius: '5px',
@@ -23,7 +23,11 @@ export default () => ({
   events: {
     async click() {
       this.state.count++;
+      this.triggerCustomEvent('send');
       console.log(`Button clicked ${this.state.count} times`);
+    },
+    test() {
+      console.log('test');
     },
   },
 });

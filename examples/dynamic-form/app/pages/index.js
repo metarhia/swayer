@@ -18,15 +18,14 @@ const buttonStyles = {
 const addFormButton = {
   tag: 'button',
   attrs: {
-    style: buttonStyles
+    style: buttonStyles,
   },
   text: 'Load new form',
   events: {
     async click() {
       const diseaseFormData = await patientService.getDiseaseFormData();
       const diseaseForm = createForm(diseaseFormData);
-      // todo pass output
-      this.parent.children.push(diseaseForm);
+      this.triggerCustomEvent('addForm', diseaseForm);
     },
   },
 };
@@ -42,9 +41,7 @@ const removeFormButton = {
   },
   events: {
     click() {
-      const { children } = this.parent;
-      const last = children[children.length - 1];
-      if (this !== last) children.pop();
+      this.triggerCustomEvent('removeForm');
     },
   },
 };
@@ -69,6 +66,16 @@ export default async () => ({
       attrs: {
         style: {
           margin: 0,
+        },
+      },
+      events: {
+        addForm(diseaseForm) {
+          this.children.push(diseaseForm);
+        },
+        removeForm() {
+          const children = this.children;
+          const last = children[children.length - 1];
+          if (removeFormButton !== last) children.pop();
         },
       },
       hooks: {

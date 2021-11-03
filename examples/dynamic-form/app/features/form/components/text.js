@@ -17,7 +17,7 @@ export default ([name, value]) => ({
   },
   events: {
     input(event) {
-      // this.output('updateTitle', event.target.value);
+      this.triggerCustomEvent(name, event.target.value);
     }
   },
 });
