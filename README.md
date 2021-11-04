@@ -123,7 +123,7 @@ export default () => ({
 });
 ```
 
-###TODO
+### TODO
 
 - implement intercomponent messaging
 - implement AOT compilation, refactor base compiler
