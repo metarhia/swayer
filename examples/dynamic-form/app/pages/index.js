@@ -82,11 +82,7 @@ export default async () => ({
         async init() {
           const registerFormData = await patientService.getRegisterFormData();
           const registerForm = createForm(registerFormData);
-          this.children.push(
-            registerForm,
-            addFormButton,
-            removeFormButton,
-          );
+          this.children.push(registerForm, addFormButton, removeFormButton);
         },
       },
     },

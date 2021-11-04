@@ -1,7 +1,7 @@
-import bootstrap from '../node_modules/metacomponents/lib/runtime.js';
+import bootstrap from '../node_modules/metacomponents/index.js';
 import './preload.js';
 
 bootstrap({
   path: './pages/index.js',
-  base: import.meta.url
+  base: import.meta.url,
 });

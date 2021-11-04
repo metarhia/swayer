@@ -12,10 +12,10 @@ const createFieldListener = (name) => ({
     this.state.formData[name] = data;
   },
 });
-const createFieldListeners = (fields) => Object
-  .keys(fields)
-  .map(createFieldListener)
-  .reduce((events, listener) => ({ ...events, ...listener }), {});
+const createFieldListeners = (fields) =>
+  Object.keys(fields)
+    .map(createFieldListener)
+    .reduce((events, listener) => ({ ...events, ...listener }), {});
 
 export default ({ action, title, fields }) => ({
   tag: 'div',

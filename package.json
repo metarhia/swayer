@@ -12,7 +12,7 @@
     "framework",
     "app"
   ],
-  "main": "lib/runtime.js",
+  "main": "index.js",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "types": "types/metacomponent.d.ts",
   "files": [
+    "index.js",
     "examples/",
     "lib/",
     "types/"
@@ -40,7 +41,7 @@
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\""
   },
   "devDependencies": {
-    "eslint": "^8.0.1",
+    "eslint": "^8.1.0",
     "eslint-config-metarhia": "^7.0.1",
     "metatests": "^0.7.2",
     "prettier": "^2.4.1",

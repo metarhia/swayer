@@ -132,3 +132,9 @@ export default () => ({
   },
 });
 ```
+
+###TODO
+- implement intercomponent messaging
+- implement AOT, refactor base compiler
+- implement style preprocessor
+- implement sandboxes
