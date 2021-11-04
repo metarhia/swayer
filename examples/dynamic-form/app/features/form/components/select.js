@@ -1,9 +1,11 @@
+/** @returns {Metacomponent} */
 const createOption = ({ text, value }) => ({
   tag: 'option',
   attrs: { value },
   text,
 });
 
+/** @returns {Metacomponent} */
 export default ([name, value]) => ({
   tag: 'select',
   attrs: {

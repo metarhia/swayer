@@ -1,5 +1,4 @@
 node_modules
-/log/
 *.log
 *.pem
 *.done

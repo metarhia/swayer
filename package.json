@@ -13,6 +13,7 @@
     "app"
   ],
   "main": "index.js",
+  "types": "types/index.d.ts",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
@@ -27,17 +28,15 @@
     "type": "patreon",
     "url": "https://www.patreon.com/tshemsedinov"
   },
-  "types": "types/metacomponent.d.ts",
   "files": [
     "index.js",
-    "examples/",
     "lib/",
     "types/"
   ],
   "scripts": {
     "test": "npm run lint && npm run types && metatests test/",
-    "types": "tsc -p types/tsconfig.json",
-    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
+    "types": "tsc",
+    "lint": "eslint --ext .js,.ts . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\""
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import patientService from '../domain/patient-service.js';
 
+/** @returns {MetacomponentConfig} */
 const createForm = (data) => ({
   path: '/app/features/form/form',
   args: data,
@@ -15,6 +16,7 @@ const buttonStyles = {
   cursor: 'pointer',
 };
 
+/** @type {Metacomponent} */
 const addFormButton = {
   tag: 'button',
   attrs: {
@@ -30,6 +32,7 @@ const addFormButton = {
   },
 };
 
+/** @type {Metacomponent} */
 const removeFormButton = {
   tag: 'button',
   text: 'Remove last form',
@@ -46,6 +49,7 @@ const removeFormButton = {
   },
 };
 
+/** @returns {Promise<Metacomponent>} */
 export default async () => ({
   tag: 'html',
   attrs: {
@@ -65,7 +69,7 @@ export default async () => ({
       tag: 'body',
       attrs: {
         style: {
-          margin: 0,
+          margin: '0',
         },
       },
       events: {

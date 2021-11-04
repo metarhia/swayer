@@ -1,3 +1,4 @@
+/** @returns {Metacomponent} */
 export default ([name, value]) => ({
   tag: 'input',
   attrs: {

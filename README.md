@@ -1,4 +1,4 @@
-# MetaComponents - schema based frontend framework 🧱
+# Metacomponents - schema based frontend framework 🧱
 
 ## Play with [examples](https://github.com/metarhia/metacomponents/tree/main/examples) to see how it works
 
@@ -13,46 +13,38 @@
 - Component dependency injection
 - Component change detection
 - Component local state
+- Component system and custom events
 - Component lifecycle hooks
 - Separate singleton or non-singleton domain logics as services
 
 ## Dynamic form component example
 
 ```js
-import formService from './domain/form-service.js';
-
-const createField = ([name, value]) => ({
-  type: 'lazy',
-  path: `/app/features/form/components/${value.type}.js`,
-  args: [name, value],
-});
-
-const createFields = (fields) => Object.entries(fields).map(createField);
-
 export default ({ action, title, fields }) => ({
   tag: 'div',
-  styles: {
-    padding: '20px',
-    backgroundColor: 'grey',
-    color: 'white',
-    borderBottom: '1px solid white',
+  attrs: {
+    name: 'test',
+    style: {
+      padding: '20px',
+      backgroundColor: 'grey',
+      color: 'white',
+      borderBottom: '1px solid white',
+    },
+  },
+  state: {
+    formData: {},
+    count: 0,
+  },
+  events: {
+    async send() {
+      const data = this.state.formData;
+      await formService.sendFormData(action, data);
+    },
   },
   hooks: {
     init() {
-      console.log('Container init');
-    },
-  },
-  events: {
-    submit(event) {
-      event.preventDefault();
-      const result = {};
-      new FormData(event.target).forEach((value, name) => {
-        const existing = result[name];
-        if (existing && Array.isArray(existing)) existing.push(value);
-        else if (existing) result[name] = [existing, value];
-        else result[name] = value;
-      });
-      void formService.sendFormData(action, result);
+      console.log('Form init');
+      Object.assign(this.events, createFieldListeners(fields));
     },
   },
   children: [
@@ -62,14 +54,16 @@ export default ({ action, title, fields }) => ({
     },
     {
       tag: 'form',
-      styles: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '450px',
+      attrs: {
+        style: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '450px',
+        },
       },
       children: [
         ...createFields(fields),
-        { type: 'lazy', path: '/app/features/form/components/button.js' },
+        { path: './components/button', base: import.meta.url },
       ],
     },
   ],
@@ -81,19 +75,19 @@ export default ({ action, title, fields }) => ({
 ```js
 export default ([name, value]) => ({
   tag: 'input',
-  styles: {
-    padding: '5px 10px',
-    borderRadius: '5px',
-    border: 'none',
-  },
   attrs: {
     type: 'text',
-    placeholder: value.placeholder,
     name,
+    placeholder: value.placeholder,
+    style: {
+      padding: '5px 10px',
+      borderRadius: '5px',
+      border: 'none',
+    },
   },
-  hooks: {
-    init() {
-      console.log('Input init');
+  events: {
+    input(event) {
+      this.triggerCustomEvent(name, event.target.value);
     },
   },
 });
@@ -105,16 +99,16 @@ export default ([name, value]) => ({
 export default () => ({
   tag: 'button',
   text: 'Send',
-  styles: {
-    padding: '5px 10px',
-    borderRadius: '5px',
-    backgroundColor: 'green',
-    border: 'none',
-    color: 'white',
-    cursor: 'pointer',
-  },
   attrs: {
-    type: 'submit',
+    type: 'button',
+    style: {
+      padding: '5px 10px',
+      borderRadius: '5px',
+      backgroundColor: 'green',
+      border: 'none',
+      color: 'white',
+      cursor: 'pointer',
+    },
   },
   state: {
     count: 0,
@@ -122,19 +116,16 @@ export default () => ({
   events: {
     async click() {
       this.state.count++;
+      this.triggerCustomEvent('send');
       console.log(`Button clicked ${this.state.count} times`);
-    },
-  },
-  hooks: {
-    init() {
-      console.log('Button init');
     },
   },
 });
 ```
 
 ###TODO
+
 - implement intercomponent messaging
-- implement AOT, refactor base compiler
+- implement AOT compilation, refactor base compiler
 - implement style preprocessor
-- implement sandboxes
+- implement sandboxes?
