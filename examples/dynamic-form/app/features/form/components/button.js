@@ -1,4 +1,4 @@
-/** @returns {Metacomponent} */
+/** @returns Metacomponent */
 export default () => ({
   tag: 'button',
   text: 'Send',
@@ -13,11 +13,6 @@ export default () => ({
       cursor: 'pointer',
     },
   },
-  hooks: {
-    init() {
-      console.log('Button init');
-    },
-  },
   state: {
     count: 0,
   },
@@ -26,9 +21,6 @@ export default () => ({
       this.state.count++;
       this.triggerCustomEvent('send');
       console.log(`Button clicked ${this.state.count} times`);
-    },
-    test() {
-      console.log('test');
     },
   },
 });

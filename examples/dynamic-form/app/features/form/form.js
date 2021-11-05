@@ -1,6 +1,6 @@
 import formService from './domain/form-service.js';
 
-/** @returns {MetacomponentConfig} */
+/** @returns MetacomponentConfig */
 const createField = ([name, value]) => ({
   path: `./components/${value.type}.js`,
   base: import.meta.url,
@@ -18,7 +18,7 @@ const createFieldListeners = (fields) =>
     .map(createFieldListener)
     .reduce((events, listener) => ({ ...events, ...listener }), {});
 
-/** @returns {Metacomponent} */
+/** @returns Metacomponent */
 export default ({ action, title, fields }) => ({
   tag: 'div',
   attrs: {
@@ -42,7 +42,6 @@ export default ({ action, title, fields }) => ({
   },
   hooks: {
     init() {
-      console.log('Form init');
       Object.assign(this.events, createFieldListeners(fields));
     },
   },

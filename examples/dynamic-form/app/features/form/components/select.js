@@ -1,11 +1,11 @@
-/** @returns {Metacomponent} */
+/** @returns Metacomponent */
 const createOption = ({ text, value }) => ({
   tag: 'option',
   attrs: { value },
   text,
 });
 
-/** @returns {Metacomponent} */
+/** @returns Metacomponent */
 export default ([name, value]) => ({
   tag: 'select',
   attrs: {
@@ -15,11 +15,6 @@ export default ([name, value]) => ({
       padding: '5px 10px',
       borderRadius: '5px',
       border: 'none',
-    },
-  },
-  hooks: {
-    init() {
-      console.log('Select init');
     },
   },
   children: value.options.map(createOption),

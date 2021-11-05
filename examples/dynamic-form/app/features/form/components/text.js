@@ -1,4 +1,4 @@
-/** @returns {Metacomponent} */
+/** @returns Metacomponent */
 export default ([name, value]) => ({
   tag: 'input',
   attrs: {
@@ -9,11 +9,6 @@ export default ([name, value]) => ({
       padding: '5px 10px',
       borderRadius: '5px',
       border: 'none',
-    },
-  },
-  hooks: {
-    init() {
-      console.log('Text input init');
     },
   },
   events: {
