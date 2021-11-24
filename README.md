@@ -5,9 +5,12 @@
 ## Features:
 
 - Pure JavaScript only - no need to switch between HTML/CSS/JS syntax
+- Tiny and fast runtime
+- No need to build app
+- No need to use HTML/CSS preprocessors
 - No 3rd party dependencies
-- Tiny runtime
 - Declarative schema based components
+- Configurable styles and animations
 - Component inline/preload/lazy loading
 - Component encapsulation
 - Component dependency injection
@@ -15,21 +18,20 @@
 - Component local state
 - Component system and custom events
 - Component lifecycle hooks
-- Separate singleton or non-singleton domain logics as services
 
 ## Dynamic form component example
 
 ```js
 export default ({ action, title, fields }) => ({
   tag: 'div',
+  styles: {
+    padding: '20px',
+    backgroundColor: 'grey',
+    color: 'white',
+    borderBottom: '1px solid white',
+  },
   attrs: {
     name: 'test',
-    style: {
-      padding: '20px',
-      backgroundColor: 'grey',
-      color: 'white',
-      borderBottom: '1px solid white',
-    },
   },
   state: {
     formData: {},
@@ -54,12 +56,10 @@ export default ({ action, title, fields }) => ({
     },
     {
       tag: 'form',
-      attrs: {
-        style: {
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '450px',
-        },
+      styles: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '450px',
       },
       children: [
         ...createFields(fields),
@@ -75,15 +75,15 @@ export default ({ action, title, fields }) => ({
 ```js
 export default ([name, value]) => ({
   tag: 'input',
+  styles: {
+    padding: '5px 10px',
+    borderRadius: '5px',
+    border: 'none',
+  },
   attrs: {
     type: 'text',
     name,
     placeholder: value.placeholder,
-    style: {
-      padding: '5px 10px',
-      borderRadius: '5px',
-      border: 'none',
-    },
   },
   events: {
     input(event) {
@@ -99,16 +99,21 @@ export default ([name, value]) => ({
 export default () => ({
   tag: 'button',
   text: 'Send',
+  styles: {
+    padding: '5px 10px',
+    marginLeft: '10px',
+    borderRadius: '5px',
+    backgroundColor: 'green',
+    border: 'none',
+    color: 'white',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease-in-out',
+    hover: {
+      backgroundColor: 'darkgreen',
+    },
+  },
   attrs: {
     type: 'button',
-    style: {
-      padding: '5px 10px',
-      borderRadius: '5px',
-      backgroundColor: 'green',
-      border: 'none',
-      color: 'white',
-      cursor: 'pointer',
-    },
   },
   state: {
     count: 0,
@@ -126,6 +131,4 @@ export default () => ({
 ### TODO
 
 - implement intercomponent messaging
-- implement AOT compilation, refactor base compiler
-- implement style preprocessor
-- implement sandboxes?
+- implement AOT compilation

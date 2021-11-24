@@ -13,6 +13,7 @@
   "rules": {
     "semi": "error",
     "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "arrow-parens": ["error", "always"],
     "comma-dangle": "off",
     "handle-callback-err": "off",

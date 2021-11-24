@@ -1,17 +1,12 @@
+import buttonStyles from './button-styles.js';
+
 /** @returns Metacomponent */
 export default () => ({
   tag: 'button',
   text: 'Send',
+  styles: buttonStyles(),
   attrs: {
     type: 'button',
-    style: {
-      padding: '5px 10px',
-      borderRadius: '5px',
-      backgroundColor: 'green',
-      border: 'none',
-      color: 'white',
-      cursor: 'pointer',
-    },
   },
   state: {
     count: 0,

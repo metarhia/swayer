@@ -14,14 +14,16 @@ const buttonStyles = {
   border: 'none',
   color: 'white',
   cursor: 'pointer',
+  transition: 'background-color 0.2s ease-in-out',
+  hover: {
+    backgroundColor: 'rebeccapurple',
+  },
 };
 
 /** @type Metacomponent */
 const addFormButton = {
   tag: 'button',
-  attrs: {
-    style: buttonStyles,
-  },
+  styles: buttonStyles,
   text: 'Load new form',
   events: {
     async click() {
@@ -36,12 +38,7 @@ const addFormButton = {
 const removeFormButton = {
   tag: 'button',
   text: 'Remove last form',
-  attrs: {
-    style: {
-      ...buttonStyles,
-      marginLeft: '20px',
-    },
-  },
+  styles: buttonStyles,
   events: {
     click() {
       this.triggerCustomEvent('removeForm');
@@ -49,14 +46,14 @@ const removeFormButton = {
   },
 };
 
-/** @returns Promise<Metacomponent> */
-export default async () => ({
+/** @returns Metacomponent */
+export default () => ({
   tag: 'html',
+  styles: {
+    fontFamily: 'Helvetica',
+  },
   attrs: {
     lang: 'en',
-    style: {
-      fontFamily: 'Helvetica',
-    },
   },
   hooks: {
     init() {
@@ -67,10 +64,8 @@ export default async () => ({
     { path: './head', base: import.meta.url },
     {
       tag: 'body',
-      attrs: {
-        style: {
-          margin: '0',
-        },
+      styles: {
+        margin: '0',
       },
       events: {
         addForm(diseaseForm) {

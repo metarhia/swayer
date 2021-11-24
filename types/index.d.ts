@@ -1,6 +1,7 @@
 interface Metacomponent {
   tag: string;
   text?: string;
+  styles?: Styles;
   attrs?: Attrs;
   state?: any;
   events?: Events;
@@ -18,14 +19,16 @@ interface MetacomponentConfig {
   args?: Parameters<any>;
 }
 
+type CSSProps = Partial<CSSStyleDeclaration>;
+
 interface Attrs {
-  style?: Partial<CSSStyleDeclaration>;
+  style?: CSSProps;
   [attr: string]:
     | string
     | number
     | boolean
     | undefined
-    | Partial<CSSStyleDeclaration>;
+    | CSSProps;
 }
 
 type MetacomponentInstance = Required<Metacomponent & MetacomponentApi>;
@@ -36,4 +39,36 @@ interface Events {
 
 interface Hooks {
   init(this: MetacomponentInstance): void;
+}
+
+interface PseudoFunction {
+  arg: string;
+  rule: PseudoStyles;
+}
+
+interface PseudoStyles extends CSSProps {
+  hover?: PseudoStyles;
+  focus?: PseudoStyles;
+  active?: PseudoStyles;
+  disabled?: PseudoStyles;
+  link?: PseudoStyles;
+  visited?: PseudoStyles;
+  first?: PseudoStyles;
+  last?: PseudoStyles;
+  before?: PseudoStyles;
+  after?: PseudoStyles;
+  nth?: PseudoFunction;
+  not?: PseudoFunction;
+}
+
+interface CssAnimation {
+  name: string;
+  props: string;
+  keyframes: {
+    [key: string]: CSSProps;
+  };
+}
+
+interface Styles extends PseudoStyles {
+  animations?: CssAnimation[];
 }

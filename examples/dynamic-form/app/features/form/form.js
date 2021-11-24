@@ -21,14 +21,14 @@ const createFieldListeners = (fields) =>
 /** @returns Metacomponent */
 export default ({ action, title, fields }) => ({
   tag: 'div',
+  styles: {
+    padding: '20px',
+    backgroundColor: 'grey',
+    color: 'white',
+    borderBottom: '1px solid white',
+  },
   attrs: {
     name: 'test',
-    style: {
-      padding: '20px',
-      backgroundColor: 'grey',
-      color: 'white',
-      borderBottom: '1px solid white',
-    },
   },
   state: {
     formData: {},
@@ -52,12 +52,10 @@ export default ({ action, title, fields }) => ({
     },
     {
       tag: 'form',
-      attrs: {
-        style: {
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '450px',
-        },
+      styles: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '450px',
       },
       children: [
         ...createFields(fields),
