@@ -49,6 +49,7 @@ interface PseudoFunction {
 interface PseudoStyles extends CSSProps {
   hover?: PseudoStyles;
   focus?: PseudoStyles;
+  checked?: PseudoStyles;
   active?: PseudoStyles;
   disabled?: PseudoStyles;
   link?: PseudoStyles;
