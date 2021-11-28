@@ -74,7 +74,7 @@ export default () => ({
         removeForm() {
           const children = this.children;
           const last = children[children.length - 1];
-          if (removeFormButton !== last) children.pop();
+          if (removeFormButton !== last.original) children.pop();
         },
       },
       hooks: {

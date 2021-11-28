@@ -23,12 +23,7 @@ type CSSProps = Partial<CSSStyleDeclaration>;
 
 interface Attrs {
   style?: CSSProps;
-  [attr: string]:
-    | string
-    | number
-    | boolean
-    | undefined
-    | CSSProps;
+  [attr: string]: string | number | boolean | undefined | CSSProps;
 }
 
 type MetacomponentInstance = Required<Metacomponent & MetacomponentApi>;
