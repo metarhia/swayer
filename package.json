@@ -26,12 +26,12 @@
   "homepage": "https://metarhia.com",
   "funding": {
     "type": "patreon",
-    "url": "https://www.patreon.com/tshemsedinov"
+    "url": "https://www.patreon.com/rohiievych"
   },
   "files": [
     "index.js",
-    "lib/",
-    "types/"
+    "lib",
+    "types"
   ],
   "scripts": {
     "test": "npm run lint && npm run types && metatests test/",

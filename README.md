@@ -6,7 +6,6 @@
 
 - Pure JavaScript only - no need to switch between HTML/CSS/JS syntax
 - Tiny and fast runtime
-- No need to build app
 - No need to use HTML/CSS preprocessors
 - No 3rd party dependencies
 - Declarative schema based components
