@@ -1,16 +1,32 @@
 interface Metacomponent {
   tag: string;
+  meta?: ImportMeta;
   text?: string;
   styles?: Styles;
+  props?: Partial<HTMLInputElement>;
   attrs?: Attrs;
   state?: any;
+  methods?: Methods;
   events?: Events;
+  channels?: Channels;
   hooks?: Hooks;
-  children?: Array<Metacomponent | MetacomponentConfig>;
+  children?: Array<Metacomponent | MetacomponentConfig | false | null | undefined>;
+}
+
+interface ImportMeta {
+  url: string;
+}
+
+interface ChannelOptions {
+  scope?: string | string[];
 }
 
 interface MetacomponentApi {
-  triggerCustomEvent(name: string, data?: any): boolean;
+  emitCustomEvent(name: string, data?: any): boolean;
+  emitMessage(name: string, data?: any, options?: ChannelOptions): boolean;
+  click(): void;
+  focus(): void;
+  blur(): void;
 }
 
 interface MetacomponentConfig {
@@ -19,7 +35,7 @@ interface MetacomponentConfig {
   args?: Parameters<any>;
 }
 
-type CSSProps = Partial<CSSStyleDeclaration>;
+type CSSProps = Partial<Record<keyof CSSStyleDeclaration, string | number>>;
 
 interface Attrs {
   style?: CSSProps;
@@ -28,8 +44,16 @@ interface Attrs {
 
 type MetacomponentInstance = Required<Metacomponent & MetacomponentApi>;
 
+interface Methods {
+  [method: string]: (this: MetacomponentInstance, ...args) => any;
+}
+
 interface Events {
-  [event: string]: (this: MetacomponentInstance, data?: any) => void;
+  [event: string]: (this: MetacomponentInstance, event?: any) => void;
+}
+
+interface Channels {
+  [channel: string]: (this: MetacomponentInstance, data?: any) => void;
 }
 
 interface Hooks {
@@ -53,6 +77,7 @@ interface PseudoStyles extends CSSProps {
   last?: PseudoStyles;
   before?: PseudoStyles;
   after?: PseudoStyles;
+  placeholder?: PseudoStyles;
   nth?: PseudoFunction;
   not?: PseudoFunction;
 }

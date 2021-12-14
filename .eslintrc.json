@@ -15,6 +15,8 @@
     "no-trailing-spaces": ["error", { "skipBlankLines": true }],
     "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "arrow-parens": ["error", "always"],
+    "no-extra-parens": ["error", "functions"],
+    "operator-linebreak": ["error", "before"],
     "comma-dangle": "off",
     "handle-callback-err": "off",
     "consistent-return": "off"

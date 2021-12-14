@@ -13,7 +13,7 @@ export default ([name, value]) => ({
   },
   events: {
     input(event) {
-      this.triggerCustomEvent(name, event.target.value);
+      this.emitCustomEvent(name, event.target.value);
     },
   },
 });

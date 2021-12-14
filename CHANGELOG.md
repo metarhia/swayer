@@ -2,20 +2,22 @@
 
 ## [Unreleased][unreleased]
 
-## [1.0.0][] - 2021-12-04
+## [1.0.0][] - 2021-12-14
 
 First generation of framework with following features:
 
 - Pure JavaScript without HTML/CSS syntax
+- Fast asynchronous rendering
 - Declarative schema based components
 - Configurable styles and animations
-- Component inline/preload/lazy loading
-- Component encapsulation
-- Component dependency injection
-- Component change detection
-- Component local state
-- Component system and custom events
-- Component init lifecycle hook
+- Inline/preload/lazy component loading
+- Module encapsulation
+- Framework methods injection
+- Component reflections
+- Local state and methods
+- System and custom upstream events
+- Scoped intercomponent messaging
+- Component lifecycle hooks
 
-[unreleased]: https://github.com/metarhia/metacomponents/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/metarhia/metacomponents/releases/tag/v1.0.0
+[unreleased]: https://github.com/metarhia/swayer/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/metarhia/swayer/releases/tag/v1.0.0

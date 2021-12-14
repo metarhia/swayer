@@ -23,7 +23,7 @@ If applicable, add screenshots to help explain your problem.
 - OS: [e.g. Fedora 30 64-bit]
 - Node.js version [e.g. 16.16.2]
 - Browser [e.g. Google Chrome 94]
-- Metacomponents version [e.g. 1.0.0]
+- Swayer version [e.g. 1.0.0]
 
 **Additional context**
 Add any other context about the problem here.

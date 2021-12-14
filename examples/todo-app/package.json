@@ -1,7 +1,7 @@
 {
-  "name": "dynamic-form-example",
+  "name": "todo-app",
   "version": "1.0.0",
-  "description": "Simple dynamic form",
+  "description": "todo-app example from https://todomvc.com/",
   "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
   "repository": {

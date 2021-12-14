@@ -5,6 +5,7 @@
     "strict": true,
     "baseUrl": ".",
     "moduleResolution": "node",
+    "useDefineForClassFields": true,
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,

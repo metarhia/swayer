@@ -17,7 +17,7 @@ export default () => ({
     },
     {
       tag: 'title',
-      text: 'Dynamic forms',
+      text: 'Todo app',
     },
   ],
 });

@@ -9,7 +9,7 @@ const createField = ([name, value]) => ({
 const createFields = (fields) => Object.entries(fields).map(createField);
 
 const createFieldListener = (name) => ({
-  [name](data) {
+  [name]({ detail: data }) {
     this.state.formData[name] = data;
   },
 });

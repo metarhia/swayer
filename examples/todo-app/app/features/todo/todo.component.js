@@ -1,27 +1,24 @@
-# Swayer - schema based frontend framework 🧱
+import todoStore from './domain/todo-store.js';
+import { todoSectionStyle } from './todo.style.js';
 
-## Play with [examples](https://github.com/metarhia/metacomponents/tree/main/examples) to see how it works
+/** @returns MetacomponentConfig */
+const createMain = (todos = null) => ({
+  path: './main/main.component',
+  base: import.meta.url,
+  args: { todos: todos || todoStore.todos },
+});
 
-## Features:
+/** @returns MetacomponentConfig */
+const createFooter = () => ({
+  path: './footer/footer.component',
+  base: import.meta.url,
+  args: {
+    remainingCount: todoStore.getRemaining().length,
+    completedCount: todoStore.getCompleted().length,
+  },
+});
 
-- Pure JavaScript only - no need to switch between HTML/CSS/JS syntax
-- Fast asynchronous rendering
-- No need to use HTML/CSS preprocessors
-- No 3rd party dependencies
-- Declarative schema based components
-- Configurable styles and animations
-- Inline/preload/lazy component loading
-- Module encapsulation
-- Framework methods injection
-- Component reflections
-- Local state and methods
-- System and custom upstream events
-- Scoped intercomponent messaging
-- Component lifecycle hooks
-
-## Component example
-
-```js
+/** @returns Metacomponent */
 export default () => ({
   tag: 'section',
   meta: import.meta,
@@ -65,4 +62,3 @@ export default () => ({
   },
   children: [{ path: './header/header.component', base: import.meta.url }],
 });
-```

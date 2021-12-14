@@ -1,4 +1,4 @@
-# Simple dynamic form built with MetaComponents
+# Simple dynamic form built with Swayer
 
 ```
 npm i
