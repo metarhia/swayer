@@ -1,9 +1,7 @@
-import bootstrap from '../node_modules/swayer/index.js';
+import bootstrap from '../../../index.js';
 import './preload.js';
 
-console.time('Bootstrap');
-await bootstrap({
+bootstrap({
   path: './pages/index.component',
   base: import.meta.url,
 });
-console.timeEnd('Bootstrap');

@@ -1,9 +1,9 @@
 /** @returns Styles */
 export const titleStyle = () => ({
   position: 'absolute',
-  top: '-140px',
+  top: '-155px',
   width: '100%',
-  fontSize: '80px',
+  fontSize: '100px',
   fontWeight: 200,
   textAlign: 'center',
   color: 'rgba(175, 47, 47, 0.15)',

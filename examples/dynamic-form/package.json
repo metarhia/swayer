@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/metarhia/metacomponents"
+    "url": "https://github.com/metarhia/swayer"
   },
   "bugs": {
-    "url": "https://github.com/metarhia/metacomponents/issues",
+    "url": "https://github.com/metarhia/swayer/issues",
     "email": "r.ogiyevich@gmail.com"
   },
   "homepage": "https://metarhia.com",
@@ -18,10 +18,7 @@
     "url": "https://www.patreon.com/rohiievych"
   },
   "scripts": {
-    "start": "http-server"
-  },
-  "dependencies": {
-    "swayer": "file:../../"
+    "start": "http-server ../../ -a localhost -o /examples/dynamic-form"
   },
   "devDependencies": {
     "http-server": "^14.0.0"

@@ -2,7 +2,8 @@ import patientService from '../domain/patient-service.js';
 
 /** @returns MetacomponentConfig */
 const createForm = (data) => ({
-  path: '/app/features/form/form',
+  path: '../features/form/form',
+  base: import.meta.url,
   args: data,
 });
 

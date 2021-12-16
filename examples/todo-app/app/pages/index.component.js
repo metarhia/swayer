@@ -1,3 +1,15 @@
+/** @returns Styles */
+const linkStyles = () => ({
+  color: 'inherit',
+  textDecoration: 'none',
+  fontWeight: 400,
+  hover: {
+    textDecoration: 'underline',
+  },
+});
+
+console.time('Bootstrap');
+
 /** @returns Metacomponent */
 export default () => ({
   tag: 'html',
@@ -6,6 +18,11 @@ export default () => ({
   },
   attrs: {
     lang: 'en',
+  },
+  hooks: {
+    init() {
+      console.timeEnd('Bootstrap');
+    },
   },
   children: [
     { path: './head.component', base: import.meta.url },
@@ -19,11 +36,62 @@ export default () => ({
         minWidth: '230px',
         maxWidth: '550px',
         margin: '0 auto',
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale',
         fontWeight: '300',
       },
-      children: [{ path: '/app/features/todo/todo.component' }],
+      children: [
+        {
+          path: '../features/todo/todo.component',
+          base: import.meta.url,
+        },
+        {
+          tag: 'footer',
+          styles: {
+            margin: '65px auto 0',
+            color: '#bfbfbf',
+            fontSize: '12px',
+            lineHeight: 1,
+            textShadow: '0 1px 0 rgb(255 255 255 / 50%)',
+            textAlign: 'center',
+          },
+          children: [
+            {
+              tag: 'p',
+              text: 'Double-click to edit a todo',
+            },
+            {
+              tag: 'p',
+              children: [
+                {
+                  tag: 'span',
+                  text: 'Created by ',
+                },
+                {
+                  tag: 'a',
+                  styles: linkStyles(),
+                  attrs: {
+                    href: 'https://github.com/rohiievych',
+                    target: '_blank',
+                  },
+                  text: 'Roman Ohiievych',
+                },
+                {
+                  tag: 'span',
+                  text: ' using ',
+                },
+                {
+                  tag: 'a',
+                  styles: linkStyles(),
+                  attrs: {
+                    href: 'https://github.com/metarhia/swayer',
+                    target: '_blank',
+                  },
+                  text: 'Swayer',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
 });
