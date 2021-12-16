@@ -18,10 +18,7 @@
     "url": "https://www.patreon.com/rohiievych"
   },
   "scripts": {
-    "start": "http-server"
-  },
-  "dependencies": {
-    "swayer": "file:../../"
+    "start": "http-server ../../ -a localhost -o /examples/todo-app"
   },
   "devDependencies": {
     "http-server": "^14.0.0"

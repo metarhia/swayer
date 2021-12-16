@@ -1,4 +1,4 @@
-import bootstrap from '../node_modules/swayer/index.js';
+import bootstrap from '../../../index.js';
 import './preload.js';
 
 bootstrap({

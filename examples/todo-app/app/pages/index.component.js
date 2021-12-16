@@ -8,6 +8,8 @@ const linkStyles = () => ({
   },
 });
 
+console.time('Bootstrap');
+
 /** @returns Metacomponent */
 export default () => ({
   tag: 'html',
@@ -16,6 +18,11 @@ export default () => ({
   },
   attrs: {
     lang: 'en',
+  },
+  hooks: {
+    init() {
+      console.timeEnd('Bootstrap');
+    },
   },
   children: [
     { path: './head.component', base: import.meta.url },
