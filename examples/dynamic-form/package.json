@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/metarhia/metacomponents"
+    "url": "https://github.com/metarhia/swayer"
   },
   "bugs": {
-    "url": "https://github.com/metarhia/metacomponents/issues",
+    "url": "https://github.com/metarhia/swayer/issues",
     "email": "r.ogiyevich@gmail.com"
   },
   "homepage": "https://metarhia.com",

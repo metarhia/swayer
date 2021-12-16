@@ -1,6 +1,8 @@
 # Swayer - schema based frontend framework 🧱
 
-## Play with [examples](https://github.com/metarhia/metacomponents/tree/main/examples) to see how it works
+## Play with [examples](https://github.com/metarhia/swayer/tree/main/examples) to see how it works
+
+## [See online Todo App demo](https://metarhia.github.io/swayer/examples/todo-app/)
 
 ## Features:
 

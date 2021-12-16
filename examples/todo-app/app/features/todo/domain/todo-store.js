@@ -9,7 +9,7 @@ class Todo {
 }
 
 class TodoStore {
-  static localStoreName = 'metacomponents-todos';
+  static localStoreName = 'swayer-todos';
   todos = [];
 
   constructor() {
