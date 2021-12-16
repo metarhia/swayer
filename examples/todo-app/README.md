@@ -1,6 +1,7 @@
 # Todo application built with Swayer
 
 ## Run locally
+
 ```
 npm i
 npm start

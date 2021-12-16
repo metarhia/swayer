@@ -10,7 +10,9 @@ interface Metacomponent {
   events?: Events;
   channels?: Channels;
   hooks?: Hooks;
-  children?: Array<Metacomponent | MetacomponentConfig | false | null | undefined>;
+  children?: Array<
+    Metacomponent | MetacomponentConfig | false | null | undefined
+  >;
 }
 
 interface ImportMeta {
