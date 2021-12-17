@@ -2,6 +2,11 @@
 
 ## [Unreleased][unreleased]
 
+## [1.0.1][] - 2021-12-17
+
+- Update examples
+- Update code style
+
 ## [1.0.0][] - 2021-12-14
 
 First generation of framework with following features:
@@ -19,5 +24,6 @@ First generation of framework with following features:
 - Scoped intercomponent messaging
 - Component lifecycle hooks
 
-[unreleased]: https://github.com/metarhia/swayer/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/metarhia/swayer/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/metarhia/swayer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/metarhia/swayer/releases/tag/v1.0.0
