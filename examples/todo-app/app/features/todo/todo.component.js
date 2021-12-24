@@ -1,14 +1,14 @@
 import todoStore from './domain/todo-store.js';
 import { todoSectionStyle } from './todo.style.js';
 
-/** @returns MetacomponentConfig */
+/** @returns SchemaConfig */
 const createMain = (todos = null) => ({
   path: './main/main.component',
   base: import.meta.url,
   args: { todos: todos || todoStore.todos },
 });
 
-/** @returns MetacomponentConfig */
+/** @returns SchemaConfig */
 const createFooter = () => ({
   path: './footer/footer.component',
   base: import.meta.url,
@@ -18,7 +18,7 @@ const createFooter = () => ({
   },
 });
 
-/** @returns Metacomponent */
+/** @returns Schema */
 export default () => ({
   tag: 'section',
   meta: import.meta,

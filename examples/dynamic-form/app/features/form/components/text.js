@@ -1,4 +1,4 @@
-/** @returns Metacomponent */
+/** @returns Schema */
 export default ([name, value]) => ({
   tag: 'input',
   styles: {

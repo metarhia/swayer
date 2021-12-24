@@ -1,6 +1,6 @@
-interface Metacomponent {
+interface Schema {
   tag: string;
-  meta?: ImportMeta;
+  meta?: ComponentMeta;
   text?: string;
   styles?: Styles;
   props?: Partial<HTMLInputElement>;
@@ -10,12 +10,18 @@ interface Metacomponent {
   events?: Events;
   channels?: Channels;
   hooks?: Hooks;
-  children?: Array<
-    Metacomponent | MetacomponentConfig | false | null | undefined
+  children?: ComponentChildren<
+    Schema | SchemaConfig | false | null | undefined
   >;
 }
 
-interface ImportMeta {
+interface SchemaConfig {
+  path: string;
+  base?: string;
+  args?: Parameters<any>;
+}
+
+interface ComponentMeta extends ImportMeta {
   url: string;
 }
 
@@ -23,18 +29,24 @@ interface ChannelOptions {
   scope?: string | string[];
 }
 
-interface MetacomponentApi {
+interface ComponentAPI {
+  original: Schema;
   emitCustomEvent(name: string, data?: any): boolean;
-  emitMessage(name: string, data?: any, options?: ChannelOptions): boolean;
+  emitMessage(name: string, data?: any, options?: ChannelOptions): void;
   click(): void;
   focus(): void;
   blur(): void;
 }
 
-interface MetacomponentConfig {
-  path: string;
-  base?: string;
-  args?: Parameters<any>;
+// @ts-ignore
+interface ComponentChildren<T> extends Array<T> {
+  push(...schemas: T[]): Promise<Component[]>;
+  pop(): Component;
+  splice(
+    start: number,
+    deleteCount: number,
+    ...replacements: T[]
+  ): Promise<Component[]>;
 }
 
 type CSSProps = Partial<Record<keyof CSSStyleDeclaration, string | number>>;
@@ -44,22 +56,22 @@ interface Attrs {
   [attr: string]: string | number | boolean | undefined | CSSProps;
 }
 
-type MetacomponentInstance = Required<Metacomponent & MetacomponentApi>;
+type Component = Required<Schema & ComponentAPI>;
 
 interface Methods {
-  [method: string]: (this: MetacomponentInstance, ...args) => any;
+  [method: string]: (this: Component, ...args) => any;
 }
 
 interface Events {
-  [event: string]: (this: MetacomponentInstance, event?: any) => void;
+  [event: string]: (this: Component, event?: any) => void;
 }
 
 interface Channels {
-  [channel: string]: (this: MetacomponentInstance, data?: any) => void;
+  [channel: string]: (this: Component, data?: any) => void;
 }
 
 interface Hooks {
-  init(this: MetacomponentInstance): void;
+  init(this: Component): void;
 }
 
 interface PseudoFunction {
