@@ -6,14 +6,14 @@ import {
   toggleAllTodoStyle,
 } from './main.style.js';
 
-/** @returns MetacomponentConfig */
+/** @returns SchemaConfig */
 const createListItem = (todo) => ({
   path: './todo-item/todo-item.component',
   base: import.meta.url,
   args: { todo },
 });
 
-/** @returns Metacomponent */
+/** @returns Schema */
 export default ({ todos }) => ({
   tag: 'section',
   styles: mainSectionStyle(),

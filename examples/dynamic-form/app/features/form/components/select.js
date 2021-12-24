@@ -1,11 +1,11 @@
-/** @returns Metacomponent */
+/** @returns Schema */
 const createOption = ({ text, value }) => ({
   tag: 'option',
   attrs: { value },
   text,
 });
 
-/** @returns Metacomponent */
+/** @returns Schema */
 export default ([name, value]) => ({
   tag: 'select',
   styles: {

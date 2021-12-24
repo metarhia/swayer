@@ -1,6 +1,6 @@
 import patientService from '../domain/patient-service.js';
 
-/** @returns MetacomponentConfig */
+/** @returns SchemaConfig */
 const createForm = (data) => ({
   path: '../features/form/form',
   base: import.meta.url,
@@ -21,7 +21,7 @@ const buttonStyles = {
   },
 };
 
-/** @type Metacomponent */
+/** @type Schema */
 const addFormButton = {
   tag: 'button',
   styles: buttonStyles,
@@ -35,7 +35,7 @@ const addFormButton = {
   },
 };
 
-/** @type Metacomponent */
+/** @type Schema */
 const removeFormButton = {
   tag: 'button',
   text: 'Remove last form',
@@ -47,7 +47,7 @@ const removeFormButton = {
   },
 };
 
-/** @returns Metacomponent */
+/** @returns Schema */
 export default () => ({
   tag: 'html',
   styles: {
@@ -88,7 +88,8 @@ export default () => ({
     },
     // uncomment to test performance
     // ...new Array(1000).fill({
-    //   path: '/app/features/form/form',
+    //   path: '../features/form/form',
+    //   base: import.meta.url,
     //   args: {
     //     action: 'addPatientDisease',
     //     title: 'Disease form',

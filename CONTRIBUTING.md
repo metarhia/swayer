@@ -12,12 +12,12 @@ There are two reasons to open an issue:
 
 For bug reports please describe the bug with a clear and concise description,
 steps to reproduce the behavior (usage example or test), expected behavior,
-provide OS, Node.js and Impress version, you can upload screenshots and any
+provide OS, Browser and Swayer version, you can upload screenshots and any
 additional context for better understanding.
 
 Please don't open an issue to ask questions.
 
-Issues on GitHub are intended to be related to problems and feature requests
+Issues on GitHub are intended to be related to problems and feature requests,
 so we recommend not using this medium to ask them here grin. Thanks for
 understanding!
 

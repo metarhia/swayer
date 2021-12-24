@@ -1,6 +1,6 @@
 {
   "name": "swayer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Schema based frontend framework",
   "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\""
   },
   "devDependencies": {
-    "eslint": "^8.4.1",
+    "eslint": "^8.5.0",
     "eslint-config-metarhia": "^7.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",

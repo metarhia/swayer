@@ -1,4 +1,4 @@
-/** @returns Metacomponent */
+/** @returns Schema */
 export default () => ({
   tag: 'head',
   children: [

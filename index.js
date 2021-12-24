@@ -1,5 +1,5 @@
 import './lib/core.js';
-import './lib/metacomponent.js';
+import './lib/component.js';
 import './lib/styler.js';
 import './lib/element.js';
 import './lib/events.js';

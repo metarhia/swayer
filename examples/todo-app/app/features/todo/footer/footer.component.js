@@ -2,7 +2,7 @@ import { clearTodosButtonStyle, footerStyle } from './footer.style.js';
 
 const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 
-/** @returns Metacomponent */
+/** @returns Schema */
 export default ({ remainingCount, completedCount }) => ({
   tag: 'footer',
   styles: footerStyle(),
