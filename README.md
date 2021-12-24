@@ -716,8 +716,7 @@ is the following:
 
 - Properties:
   - `original` - reference to original schema.
-
-
+    <br><br>
 - Methods:
   - `emitCustomEvent(name: string, data?: any): boolean` - emits a synthetic
     DOM event bubbling up through the component hierarchy, see Events section
@@ -729,8 +728,7 @@ is the following:
   - `click(): void` - native click method.
   - `focus(): void` - native focus method.
   - `blur(): void` - native blur method.
-
-
+    <br><br>
 - Children methods:
   - `push(...schemas: Schema[]): Promise<Component[]>` - adds a new component
     to the end of children.
