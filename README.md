@@ -754,10 +754,10 @@ how it works.
 
 ## Browser compatibility
 
-- Chromium based browsers (v80+)
+- Chromium based browsers (v84+)
 - Firefox (v90+)
-- Safari (v14.1+)
-- Opera (v67+)
+- Safari (v15+)
+- Opera (v70+)
 
 ## License & Contributors
 
