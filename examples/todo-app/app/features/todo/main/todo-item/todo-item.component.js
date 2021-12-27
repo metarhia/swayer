@@ -10,7 +10,7 @@ import {
 
 // todo refactor to styles reflection when available
 
-/** @returns Schema */
+/** @returns {Schema} */
 const createTodoToggle = (todo) => ({
   tag: 'i',
   styles: todoToggleStyle(todo.completed),
@@ -22,7 +22,7 @@ const createTodoToggle = (todo) => ({
   },
 });
 
-/** @returns Schema */
+/** @returns {Schema} */
 const createTodoLabel = (todo) => ({
   tag: 'label',
   text: todo.title,
@@ -34,7 +34,7 @@ const createTodoLabel = (todo) => ({
   },
 });
 
-/** @returns Schema */
+/** @returns {Schema} */
 const createEditInput = (todo) => ({
   tag: 'input',
   styles: editTodoStyle(),
@@ -58,7 +58,7 @@ const createEditInput = (todo) => ({
   },
 });
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default ({ todo }) => ({
   tag: 'li',
   styles: todoItemStyle(),

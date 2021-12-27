@@ -1,3 +1,15 @@
+interface SchemaConfig {
+  path: string;
+  base?: string;
+  args?: any;
+}
+
+interface ComponentMeta extends ImportMeta {
+  url: string;
+}
+
+type SchemaChildren = Array<Schema | SchemaConfig | false | null | undefined>;
+
 interface Schema {
   tag: string;
   meta?: ComponentMeta;
@@ -6,47 +18,37 @@ interface Schema {
   props?: Partial<HTMLInputElement>;
   attrs?: Attrs;
   state?: any;
-  methods?: Methods;
-  events?: Events;
-  channels?: Channels;
-  hooks?: Hooks;
-  children?: ComponentChildren<
-    Schema | SchemaConfig | false | null | undefined
-  >;
+  methods?: Methods & ThisType<Component>;
+  events?: Events & ThisType<Component>;
+  channels?: Channels & ThisType<Component>;
+  hooks?: Hooks & ThisType<Component>;
+  children?: SchemaChildren;
 }
 
-interface SchemaConfig {
-  path: string;
-  base?: string;
-  args?: Parameters<any>;
-}
-
-interface ComponentMeta extends ImportMeta {
-  url: string;
-}
-
-interface ChannelOptions {
-  scope?: string | string[];
-}
-
-interface ComponentAPI {
+interface Component extends Omit<Required<Schema>, 'children'> {
   original: Schema;
+  children: ComponentChildren;
   emitCustomEvent(name: string, data?: any): boolean;
   emitMessage(name: string, data?: any, options?: ChannelOptions): void;
+  destroy(): void;
   click(): void;
   focus(): void;
   blur(): void;
 }
 
-// @ts-ignore
-interface ComponentChildren<T> extends Array<T> {
-  push(...schemas: T[]): Promise<Component[]>;
+interface ComponentChildren
+  extends Omit<Component[], 'push' | 'pop' | 'splice'> {
+  push(...schemas: SchemaChildren): Promise<Component[]>;
   pop(): Component;
   splice(
     start: number,
     deleteCount: number,
-    ...replacements: T[]
+    ...replacements: SchemaChildren
   ): Promise<Component[]>;
+}
+
+interface ChannelOptions {
+  scope?: string | string[];
 }
 
 type CSSProps = Partial<Record<keyof CSSStyleDeclaration, string | number>>;
@@ -56,22 +58,20 @@ interface Attrs {
   [attr: string]: string | number | boolean | undefined | CSSProps;
 }
 
-type Component = Required<Schema & ComponentAPI>;
-
 interface Methods {
-  [method: string]: (this: Component, ...args) => any;
+  [method: string]: (...args: any[]) => any;
 }
 
 interface Events {
-  [event: string]: (this: Component, event?: any) => void;
+  [event: string]: (event?: any) => void;
 }
 
 interface Channels {
-  [channel: string]: (this: Component, data?: any) => void;
+  [channel: string]: (data?: any) => void;
 }
 
 interface Hooks {
-  init(this: Component): void;
+  init(): void;
 }
 
 interface PseudoFunction {

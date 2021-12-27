@@ -10,7 +10,7 @@ const linkStyles = () => ({
 
 console.time('Bootstrap');
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default () => ({
   tag: 'html',
   styles: {

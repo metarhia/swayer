@@ -1,6 +1,6 @@
 import buttonStyles from './button-styles.js';
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default () => ({
   tag: 'button',
   text: 'Send',
