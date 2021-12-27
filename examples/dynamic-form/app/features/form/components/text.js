@@ -1,4 +1,4 @@
-/** @returns Schema */
+/** @returns {Schema} */
 export default ([name, value]) => ({
   tag: 'input',
   styles: {

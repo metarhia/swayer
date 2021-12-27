@@ -1,7 +1,7 @@
 import todoCtrl from '../domain/todo-controller.js';
 import { titleStyle, todoInputStyle } from './header.style.js';
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default () => ({
   tag: 'header',
   children: [

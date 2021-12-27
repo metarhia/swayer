@@ -1,6 +1,6 @@
 import formService from './domain/form-service.js';
 
-/** @returns SchemaConfig */
+/** @returns {SchemaConfig} */
 const createField = ([name, value]) => ({
   path: `./components/${value.type}.js`,
   base: import.meta.url,
@@ -18,7 +18,7 @@ const createFieldListeners = (fields) =>
     .map(createFieldListener)
     .reduce((events, listener) => ({ ...events, ...listener }), {});
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default ({ action, title, fields }) => ({
   tag: 'div',
   styles: {

@@ -1,4 +1,4 @@
-# Swayer - schema based frontend framework 🧱
+# Swayer - schema based frontend framework 👀
 
 [![npm version](https://img.shields.io/npm/v/swayer)](https://www.npmjs.com/package/swayer)
 [![npm downloads/month](https://img.shields.io/npm/dm/swayer.svg)](https://www.npmjs.com/package/swayer)
@@ -64,6 +64,7 @@ Swayer component
 example: [examples/todo-app/app/features/todo/todo.component.js](https://github.com/metarhia/swayer/blob/main/examples/todo-app/app/features/todo/todo.component.js)
 
 ```js
+/** @returns {Schema} */
 export default () => ({
   tag: 'section',
   meta: import.meta,
@@ -199,7 +200,7 @@ application parts and load them on demand.
     {
       path: './header/header.component.js', // skipping .js extension is available
       base: import.meta.url,
-      args: { title: 'Header title', },
+      args: { title: 'Header title' },
     }
     ```
     ```js
@@ -725,6 +726,7 @@ is the following:
   - `emitMessage(name: string, data?: any, options?: ChannelOptions): void` -
     emits a data message to the channel by name. See Channels section for more
     details. Returns void.
+  - `destroy(): void` - remove component itself with its children and release memory.
   - `click(): void` - native click method.
   - `focus(): void` - native focus method.
   - `blur(): void` - native blur method.

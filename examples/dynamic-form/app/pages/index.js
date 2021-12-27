@@ -1,6 +1,6 @@
 import patientService from '../domain/patient-service.js';
 
-/** @returns SchemaConfig */
+/** @returns {SchemaConfig} */
 const createForm = (data) => ({
   path: '../features/form/form',
   base: import.meta.url,
@@ -47,7 +47,7 @@ const removeFormButton = {
   },
 };
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default () => ({
   tag: 'html',
   styles: {
@@ -87,27 +87,27 @@ export default () => ({
       },
     },
     // uncomment to test performance
-    // ...new Array(1000).fill({
-    //   path: '../features/form/form',
-    //   base: import.meta.url,
-    //   args: {
-    //     action: 'addPatientDisease',
-    //     title: 'Disease form',
-    //     fields: {
-    //       disease: {
-    //         type: 'text',
-    //         placeholder: 'Name',
-    //       },
-    //       symptom: {
-    //         type: 'select',
-    //         options: [
-    //           { text: 'Sore throat', value: 'soreThroat' },
-    //           { text: 'Stomach ache', value: 'stomachAche' },
-    //           { text: 'Tooth pain', value: 'toothPain' },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // }),
+    ...new Array(1000).fill({
+      path: '../features/form/form',
+      base: import.meta.url,
+      args: {
+        action: 'addPatientDisease',
+        title: 'Disease form',
+        fields: {
+          disease: {
+            type: 'text',
+            placeholder: 'Name',
+          },
+          symptom: {
+            type: 'select',
+            options: [
+              { text: 'Sore throat', value: 'soreThroat' },
+              { text: 'Stomach ache', value: 'stomachAche' },
+              { text: 'Tooth pain', value: 'toothPain' },
+            ],
+          },
+        },
+      },
+    }),
   ],
 });

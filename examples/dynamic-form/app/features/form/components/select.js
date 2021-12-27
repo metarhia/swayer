@@ -1,11 +1,11 @@
-/** @returns Schema */
+/** @returns {Schema} */
 const createOption = ({ text, value }) => ({
   tag: 'option',
   attrs: { value },
   text,
 });
 
-/** @returns Schema */
+/** @returns {Schema} */
 export default ([name, value]) => ({
   tag: 'select',
   styles: {
