@@ -38,7 +38,7 @@ consistent with JavaScript.
 
 ## Features:
 
-- Prue JavaScript everywhere
+- Pure JavaScript everywhere
 - Fast asynchronous rendering
 - No need to use HTML/CSS preprocessors
 - No 3rd party dependencies
