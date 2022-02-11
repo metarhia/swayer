@@ -1,3 +1,11 @@
+// Preload
+import '../features/todo/footer/footer.component.js';
+import '../features/todo/header/header.component.js';
+import '../features/todo/main/main.component.js';
+import '../features/todo/main/todo-item/todo-item.component.js';
+import '../features/todo/todo.component.js';
+import '../meta/head.component.js';
+
 /** @returns Styles */
 const linkStyles = () => ({
   color: 'inherit',
@@ -20,12 +28,12 @@ export default () => ({
     lang: 'en',
   },
   hooks: {
-    init() {
+    async init() {
       console.timeEnd('Bootstrap');
     },
   },
   children: [
-    { path: './head.component', base: import.meta.url },
+    { path: '../meta/head.component', base: import.meta.url },
     {
       tag: 'body',
       styles: {
@@ -61,29 +69,25 @@ export default () => ({
             {
               tag: 'p',
               children: [
-                {
-                  tag: 'span',
-                  text: 'Created by ',
-                },
+                'Created by ',
                 {
                   tag: 'a',
                   styles: linkStyles(),
                   attrs: {
                     href: 'https://github.com/rohiievych',
                     target: '_blank',
+                    rel: 'noopener',
                   },
                   text: 'Roman Ohiievych',
                 },
-                {
-                  tag: 'span',
-                  text: ' using ',
-                },
+                ' using ',
                 {
                   tag: 'a',
                   styles: linkStyles(),
                   attrs: {
                     href: 'https://github.com/metarhia/swayer',
                     target: '_blank',
+                    rel: 'noopener',
                   },
                   text: 'Swayer',
                 },

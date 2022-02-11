@@ -13,13 +13,15 @@ class TodoStore {
   todos = [];
 
   constructor() {
-    const todosStr = localStorage.getItem(TodoStore.localStoreName) || '[]';
-    const persistedTodos = JSON.parse(todosStr);
-    this.todos = persistedTodos.map((todo) => {
-      const newTodo = new Todo(todo.title);
-      newTodo.completed = todo.completed;
-      return newTodo;
-    });
+    if (globalThis.localStorage) {
+      const todosStr = localStorage.getItem(TodoStore.localStoreName) || '[]';
+      const persistedTodos = JSON.parse(todosStr);
+      this.todos = persistedTodos.map((todo) => {
+        const newTodo = new Todo(todo.title);
+        newTodo.completed = todo.completed;
+        return newTodo;
+      });
+    }
   }
 
   updateStore() {

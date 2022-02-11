@@ -2,6 +2,15 @@
 
 ## [Unreleased][unreleased]
 
+- Decompose core
+- Add platform adapters
+- Add server side integration
+- Add Swayer CLI
+- Add SSR with jsdom
+- Add hydration
+- Add reporter
+-
+
 ## [1.0.3][] - 2021-12-28
 
 - Update types

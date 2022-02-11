@@ -15,17 +15,12 @@ export default ({ remainingCount, completedCount }) => ({
       },
       children: [
         {
-          tag: 'strong',
-          meta: import.meta,
+          tag: 'span',
           text: remainingCount,
-          styles: {
-            fontWeight: '300',
-          },
         },
-        { tag: 'span', text: ' ' },
+        ' ',
         {
           tag: 'span',
-          meta: import.meta,
           text: getItemsText(remainingCount),
         },
       ],

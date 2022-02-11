@@ -14,7 +14,7 @@ Pure JavaScript framework, which enables **plain objects to describe document
 structure, styling and behavior**. Swayer developers provide initial data to be
 rendered and get **dynamic components** for further management. This instrument
 is provided for **low-level development** and delivering fully **declarative
-specific DDLs** describing
+JSON DSLs** (domain-specific languages) describing
 **application domains**.
 
 #### Why not to stick with modified HTML like JSX?
@@ -33,15 +33,15 @@ and brings selector abstraction, so you can just share or toggle styles as a
 simple JavaScript object.
 
 **Important: Do not assume HTML or CSS to be legacy languages!**<br>
-Swayer compiles application down to the pure HTML and CSS while making it
-consistent with JavaScript.
+Swayer compiles application down to the pure HTML and CSS while **making it
+consistent with JavaScript**.
 
 ## Features:
 
 - Pure JavaScript everywhere
 - Fast asynchronous rendering
 - No need to use HTML/CSS preprocessors
-- No 3rd party dependencies
+- No 3rd party dependencies in runtime
 - Declarative schema based components
 - Configurable styles and animations
 - Inline/preload/lazy component loading
@@ -63,6 +63,7 @@ consistent with JavaScript.
 Swayer component
 example: [examples/todo-app/app/features/todo/todo.component.js](https://github.com/metarhia/swayer/blob/main/examples/todo-app/app/features/todo/todo.component.js)
 
+<!-- eslint-skip -->
 ```js
 /** @returns {Schema} */
 export default () => ({
@@ -120,7 +121,7 @@ export default () => ({
   Includes initial data provided by a developer.
   - **Initial data** - data set associated with corresponding html node to be
     rendered.
-  - **Schema config** - an object describing configuration data for lazy
+  - **Schema reference** - an object describing reference configuration for lazy
     loaded schema.
   - **Lazy schema** - a schema loaded from a different module on demand.
 - **Component** - an object instantiated by the framework using schema. Provides
@@ -153,9 +154,10 @@ Entry point: **index.html** - a single piece of html in the whole app.
 ```
 
 Bootstrap point: **app/main.js**<br>
-Import bootstrap function from Swayer package and pass a schema or schema config
+Import bootstrap function from Swayer package and pass a schema or schema reference
 object:
 
+<!-- eslint-skip -->
 ```js
 bootstrap({
   path: './pages/index.component',
@@ -179,23 +181,26 @@ As the application grows it becomes hard to manage all component schemas in a
 single file. To address this issue Swayer uses **ES6 standard modules** to separate
 application parts and load them on demand.
 
-- **Schema config** is used to lazily load schema and pass input arguments.
+- **Schema reference** is used to lazily load schema and pass input arguments.
   <br><br>
 
-  - Schema config declaration syntax:
+  - Schema reference declaration syntax:
+    <!-- eslint-skip -->
     ```ts
-    interface SchemaConfig {
+    interface SchemaRef {
       path: string; // absolute or relative path to module
       base?: string; // module url, usually import.meta.url, mandatory only if relative path is used
-      args?: any; // optional arguments for component factory
+      args?: Record<string, unknown>; // optional arguments for component factory
     }
     ```
-  - Schema config usage examples:
+  - Schema reference usage examples:
+    <!-- eslint-skip -->
     ```js
     {
-      path: '/app/features/header/header.component';
+      path: '/app/features/header/header.component',
     }
     ```
+    <!-- eslint-skip -->
     ```js
     {
       path: './header/header.component.js', // skipping .js extension is available
@@ -203,6 +208,7 @@ application parts and load them on demand.
       args: { title: 'Header title' },
     }
     ```
+    <!-- eslint-skip -->
     ```js
     {
       path: '/app/features/header/header.component',
@@ -217,6 +223,7 @@ application parts and load them on demand.
   <br><br>
 
   - Schema factory declaration syntax:
+    <!-- eslint-skip -->
     ```js
     export default (args: any) => Schema;
     ```
@@ -239,10 +246,12 @@ application parts and load them on demand.
   <br><br>
 
   - Tag declaration syntax:
+    <!-- eslint-skip -->
     ```js
     tag: string; // any HTML element name
     ```
   - Tag usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'div';
@@ -259,10 +268,12 @@ application parts and load them on demand.
   <br><br>
 
   - Meta declaration syntax:
+    <!-- eslint-skip -->
     ```js
     meta: ComponentMeta; // see types/index.d.ts for type info
     ```
   - Meta usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'div',
@@ -275,10 +286,12 @@ application parts and load them on demand.
   <br><br>
 
   - Text declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     text: string;
     ```
   - Text usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'button',
@@ -290,14 +303,16 @@ application parts and load them on demand.
 - **Children** include schemas, that belong to particular parent schema. Such
   approach is dictated by the tree-like nature of any web document. This
   extended array can hold **schema**, which is declared inside the same module,
-  or **schema config** containing the path to the module with schema.
+  or **schema reference** containing the path to the module with schema.
   <br><br>
 
   - Children declaration syntax:
+    <!-- eslint-skip -->
     ```js
     children: ComponentChildren<Schema>;
     ```
   - Children usage examples:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'div'
@@ -307,6 +322,7 @@ application parts and load them on demand.
       ],
     }
     ```
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'div'
@@ -325,6 +341,7 @@ application parts and load them on demand.
 - **Attrs** object corresponds to a set of element's attributes.
   <br><br>
   - Attrs declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Attrs {
       // key-value attribute, see types/index.d.ts for more type info
@@ -332,6 +349,7 @@ application parts and load them on demand.
     }
     ```
   - Attrs usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'input',
@@ -346,6 +364,7 @@ application parts and load them on demand.
   <br><br>
 
   - Props declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Props {
       // key-value property, see types/index.d.ts for more type info
@@ -353,6 +372,7 @@ application parts and load them on demand.
     }
     ```
   - Props usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'input',
@@ -368,10 +388,12 @@ application parts and load them on demand.
   <br><br>
 
   - State declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     state: object;
     ```
   - State usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'button',
@@ -386,12 +408,14 @@ application parts and load them on demand.
   subscribers and hooks.
   <br><br>
   - Methods declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Methods {
       methodName(args: any): any;
     }
     ```
   - Method usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'form',
@@ -412,12 +436,14 @@ application parts and load them on demand.
   channels.
   <br><br>
   - Listeners declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Events {
       eventName(event: Event): void;
     }
     ```
   - Listeners usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'input',
@@ -430,6 +456,7 @@ application parts and load them on demand.
       },
     }
     ```
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'ul',
@@ -443,11 +470,13 @@ application parts and load them on demand.
     }
     ```
   - Custom event emission declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     // component API
     emitCustomEvent(name: string, data?: any): boolean;
     ```
   - Custom event emission usage example:
+    <!-- eslint-skip -->
     ```js
     this.emitCustomEvent('removeTodoEvent', todo);
     ```
@@ -459,17 +488,19 @@ application parts and load them on demand.
   channel name conflicts, what is highly possible in big apps, a sender has to
   provide a **scope** of subscribers, so that only selected components receive
   emitted messages.<br><br>
-  **Important**: you have to add **{ meta: import.meta }** into schema if using
+  **Important**: you have to add `{ meta: import.meta }` into schema if using
   channels.
   <br><br>
 
   - Subscribers declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Channels {
       channelName(dataMessage: any): void;
     }
     ```
   - Subscribers usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'form',
@@ -484,10 +515,12 @@ application parts and load them on demand.
     }
     ```
   - Message emission declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     // component API
     emitMessage(name: string, data?: any, options?: ChannelOptions): void;
     ```
+    <!-- eslint-skip -->
     ```ts
     // Component API
     interface MessageOptions {
@@ -497,20 +530,24 @@ application parts and load them on demand.
     }
     ```
   - Message emission usage examples:
+    <!-- eslint-skip -->
     ```js
     // subsribers declared only in the same module will receive todo message
     this.emitMessage('addTodoChannel', { todo });
     ```
+    <!-- eslint-skip -->
     ```js
     // subsribers declared only in main.component.js module will receive todo message
     const scope = './main/main.component';
     this.emitMessage('addTodoChannel', { todo }, { scope });
     ```
+    <!-- eslint-skip -->
     ```js
     // subsribers declared in all modules under main folder will receive todo message
     const scope = '/app/main';
     this.emitMessage('addTodoChannel', { todo }, { scope });
     ```
+    <!-- eslint-skip -->
     ```js
     // subsribers declared in header and footer modules will receive todo message
     const scope = ['./header/header.component', './footer/footer.component'];
@@ -523,12 +560,14 @@ application parts and load them on demand.
   be managed. Right now **init** hook is available.
   <br><br>
   - Hooks declaration syntax:
+    <!-- eslint-skip -->
     ```ts
     interface Hooks {
       init(): void;
     }
     ```
   - Hooks usage example:
+    <!-- eslint-skip -->
     ```js
     {
       tag: 'form',
@@ -545,7 +584,7 @@ application parts and load them on demand.
 
 Styles in Swayer are simple JavaScript objects extending **CSSStyleDeclaration**
 standard interface. All CSS properties are available in camelCase. It's possible
-to add **inline styles via attrs.style** attribute or create **CSSStyleSheets**.
+to add **inline styles via `attrs.style`** attribute or create **CSSStyleSheets**.
 Swayer extends styling syntax by adding intuitive properties like **hover** as
 it would be another set of CSS. Such approach enables **CSS selector
 abstraction**, so that developer's cognitive work is reduced. Pseudo-classes,
@@ -556,6 +595,7 @@ Styles declaration syntax see in **types/index.d.ts**.
 Styles usage examples:
 
 - Inline style (not preferred):
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -569,6 +609,7 @@ Styles usage examples:
   }
   ```
 - CSS style properties:
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -580,6 +621,7 @@ Styles usage examples:
   }
   ```
 - Pseudo classes/elements:
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -596,6 +638,7 @@ Styles usage examples:
     },
   }
   ```
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -611,6 +654,7 @@ Styles usage examples:
     },
   }
   ```
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -626,6 +670,7 @@ Styles usage examples:
   }
   ```
 - Functional pseudo-classes:
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',
@@ -642,6 +687,7 @@ Styles usage examples:
   }
   ```
 - Animations:
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'div',
@@ -679,6 +725,7 @@ Styles usage examples:
     },
   }
   ```
+  <!-- eslint-skip -->
   ```js
   {
     tag: 'p',

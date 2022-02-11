@@ -4,6 +4,7 @@
   "description": "Simple dynamic form",
   "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/metarhia/swayer"

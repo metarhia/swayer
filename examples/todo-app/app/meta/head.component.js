@@ -3,6 +3,18 @@ export default () => ({
   tag: 'head',
   children: [
     {
+      tag: 'title',
+      text: 'Todo app',
+    },
+    {
+      tag: 'script',
+      attrs: {
+        async: true,
+        type: 'module',
+        src: '/index.js',
+      },
+    },
+    {
       tag: 'meta',
       attrs: {
         charset: 'utf-8',
@@ -14,10 +26,6 @@ export default () => ({
         name: 'viewport',
         content: 'width=device-width, initial-scale=1.0',
       },
-    },
-    {
-      tag: 'title',
-      text: 'Dynamic forms',
     },
   ],
 });

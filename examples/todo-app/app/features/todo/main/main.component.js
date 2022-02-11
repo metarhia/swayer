@@ -6,7 +6,7 @@ import {
   toggleAllTodoStyle,
 } from './main.style.js';
 
-/** @returns {SchemaConfig} */
+/** @returns {SchemaRef} */
 const createListItem = (todo) => ({
   path: './todo-item/todo-item.component',
   base: import.meta.url,

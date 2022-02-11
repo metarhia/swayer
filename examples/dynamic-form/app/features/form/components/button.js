@@ -1,6 +1,6 @@
 import buttonStyles from './button-styles.js';
 
-/** @returns {Schema} */
+/** @returns {Schema<{ count: number; }>} */
 export default () => ({
   tag: 'button',
   text: 'Send',
@@ -9,7 +9,7 @@ export default () => ({
     type: 'button',
   },
   state: {
-    count: 0,
+    count: 1,
   },
   events: {
     async click() {

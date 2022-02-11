@@ -1,6 +1,6 @@
 import formService from './domain/form-service.js';
 
-/** @returns {SchemaConfig} */
+/** @returns {SchemaRef} */
 const createField = ([name, value]) => ({
   path: `./components/${value.type}.js`,
   base: import.meta.url,
@@ -27,9 +27,6 @@ export default ({ action, title, fields }) => ({
     color: 'white',
     borderBottom: '1px solid white',
   },
-  attrs: {
-    name: 'test',
-  },
   state: {
     formData: {},
     count: 0,
@@ -41,7 +38,7 @@ export default ({ action, title, fields }) => ({
     },
   },
   hooks: {
-    init() {
+    async init() {
       Object.assign(this.events, createFieldListeners(fields));
     },
   },

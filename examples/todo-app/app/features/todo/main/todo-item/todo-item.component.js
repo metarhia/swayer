@@ -61,6 +61,7 @@ const createEditInput = (todo) => ({
 /** @returns {Schema} */
 export default ({ todo }) => ({
   tag: 'li',
+  meta: import.meta,
   styles: todoItemStyle(),
   events: {
     removeTodoEvent() {
@@ -77,6 +78,10 @@ export default ({ todo }) => ({
       const label = createTodoLabel(todo);
       this.children[0].children.splice(1, 1, label);
     },
+  },
+  // todo resolve: this leads to memory leak warn when over 20 lis
+  channels: {
+    testChannel() {},
   },
   children: [
     {

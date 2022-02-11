@@ -1,54 +1,67 @@
-interface SchemaConfig {
+interface SchemaRef {
   path: string;
   base?: string;
-  args?: any;
+  args?: unknown;
 }
 
-interface ComponentMeta extends ImportMeta {
-  url: string;
+interface ComponentConfig {
+  // moduleUrl?: string;
+  macroTaskSize?: number;
 }
 
-type SchemaChildren = Array<Schema | SchemaConfig | false | null | undefined>;
+type DefaultState = Record<string, unknown>;
 
-interface Schema {
+type SchemaChild<State extends DefaultState> =
+  Schema<State>
+  | SchemaRef
+  | string
+  | false
+  | null
+  | undefined;
+
+interface Schema<State extends DefaultState> {
   tag: string;
-  meta?: ComponentMeta;
+  config?: ComponentConfig;
   text?: string;
   styles?: Styles;
   props?: Partial<HTMLInputElement>;
   attrs?: Attrs;
-  state?: any;
-  methods?: Methods & ThisType<Component>;
-  events?: Events & ThisType<Component>;
-  channels?: Channels & ThisType<Component>;
-  hooks?: Hooks & ThisType<Component>;
-  children?: SchemaChildren;
+  state?: State;
+  methods?: Methods & ThisType<Component<State>>;
+  events?: Events & ThisType<Component<State>>;
+  channels?: Channels & ThisType<Component<State>>;
+  hooks?: Partial<Hooks> & ThisType<Component<State>>;
+  children?: SchemaChild<State>[];
 }
 
-interface Component extends Omit<Required<Schema>, 'children'> {
-  original: Schema;
-  children: ComponentChildren;
-  emitCustomEvent(name: string, data?: any): boolean;
-  emitMessage(name: string, data?: any, options?: ChannelOptions): void;
-  destroy(): void;
-  click(): void;
-  focus(): void;
-  blur(): void;
-}
+type OmittedArrayMethods<State extends DefaultState> =
+     Omit<Component<State>[], 'push' | 'pop' | 'splice'>;
 
-interface ComponentChildren
-  extends Omit<Component[], 'push' | 'pop' | 'splice'> {
-  push(...schemas: SchemaChildren): Promise<Component[]>;
-  pop(): Component;
+interface ComponentChildren<State extends DefaultState>
+          extends OmittedArrayMethods<State> {
+  push(...schemas: SchemaChild<State>[]): Promise<Component<State>[]>;
+  pop(): Component<State>;
   splice(
     start: number,
     deleteCount: number,
-    ...replacements: SchemaChildren
-  ): Promise<Component[]>;
+    ...replacements: SchemaChild<State>[]
+  ): Promise<Component<State>[]>;
 }
 
 interface ChannelOptions {
   scope?: string | string[];
+}
+
+interface Component<State extends DefaultState>
+          extends Omit<Required<Schema<State>>, 'children'> {
+  original: Schema<State>;
+  children: ComponentChildren<State>;
+  emitCustomEvent(name: string, data?): boolean;
+  emitMessage(name: string, data?, options?: ChannelOptions): void;
+  destroy(): void;
+  click(): void;
+  focus(): void;
+  blur(): void;
 }
 
 type CSSProps = Partial<Record<keyof CSSStyleDeclaration, string | number>>;
@@ -59,19 +72,19 @@ interface Attrs {
 }
 
 interface Methods {
-  [method: string]: (...args: any[]) => any;
+  [method: string]: (...args) => void;
 }
 
 interface Events {
-  [event: string]: (event?: any) => void;
+  [event: string]: (event) => void;
 }
 
 interface Channels {
-  [channel: string]: (data?: any) => void;
+  [channel: string]: (data?) => void;
 }
 
 interface Hooks {
-  init(): void;
+  init(): void | Promise<void>;
 }
 
 interface PseudoFunction {

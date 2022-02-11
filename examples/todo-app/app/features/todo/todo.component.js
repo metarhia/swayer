@@ -1,14 +1,14 @@
 import todoStore from './domain/todo-store.js';
 import { todoSectionStyle } from './todo.style.js';
 
-/** @returns {SchemaConfig} */
+/** @returns {SchemaRef} */
 const createMain = (todos = null) => ({
   path: './main/main.component',
   base: import.meta.url,
   args: { todos: todos || todoStore.todos },
 });
 
-/** @returns {SchemaConfig} */
+/** @returns {SchemaRef} */
 const createFooter = () => ({
   path: './footer/footer.component',
   base: import.meta.url,
@@ -20,7 +20,7 @@ const createFooter = () => ({
 
 /** @returns {Schema} */
 export default () => ({
-  tag: 'section',
+  tag: 'main',
   meta: import.meta,
   styles: todoSectionStyle(),
   state: {
@@ -28,16 +28,16 @@ export default () => ({
   },
   methods: {
     addMain() {
-      this.children.push(createMain(), createFooter());
+      this.children.push(createMain(), createFooter(), null);
       this.state.isMainAdded = true;
     },
     removeMain() {
-      this.children.splice(1, 2);
+      this.children.splice(2, 2);
       this.state.isMainAdded = false;
     },
     updateRemaining() {
       const footer = createFooter();
-      this.children.splice(2, 1, footer);
+      this.children.splice(3, 1, footer);
     },
     addTodo(todo) {
       const scope = './main/main.component';

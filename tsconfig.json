@@ -12,5 +12,12 @@
     "noImplicitAny": false,
     "noEmit": true
   },
-  "include": ["types/**/*.ts", "examples/**/*", "lib/**/*", "test/**/*"]
+  "include": [
+    "index.js",
+    "bin/**/*",
+    "examples/**/*",
+    "lib/**/*",
+    "test/**/*",
+    "types/**/*"
+  ]
 }

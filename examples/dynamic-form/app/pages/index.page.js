@@ -1,6 +1,9 @@
+import '../meta/head.component.js';
+import './index.page.js';
+import '../features/form/form.js';
 import patientService from '../domain/patient-service.js';
 
-/** @returns {SchemaConfig} */
+/** @returns {SchemaRef} */
 const createForm = (data) => ({
   path: '../features/form/form',
   base: import.meta.url,
@@ -21,11 +24,14 @@ const buttonStyles = {
   },
 };
 
-/** @type Schema */
+/** @type {Schema} */
 const addFormButton = {
   tag: 'button',
   styles: buttonStyles,
   text: 'Load new form',
+  attrs: {
+    type: 'button',
+  },
   events: {
     async click() {
       const diseaseFormData = await patientService.getDiseaseFormData();
@@ -35,11 +41,14 @@ const addFormButton = {
   },
 };
 
-/** @type Schema */
+/** @type {Schema} */
 const removeFormButton = {
   tag: 'button',
   text: 'Remove last form',
   styles: buttonStyles,
+  attrs: {
+    type: 'button',
+  },
   events: {
     click() {
       this.emitCustomEvent('removeForm');
@@ -57,12 +66,12 @@ export default () => ({
     lang: 'en',
   },
   hooks: {
-    init() {
+    async init() {
       console.log('Html init');
     },
   },
   children: [
-    { path: './head', base: import.meta.url },
+    { path: '../meta/head.component', base: import.meta.url },
     {
       tag: 'body',
       styles: {
@@ -82,32 +91,36 @@ export default () => ({
         async init() {
           const registerFormData = await patientService.getRegisterFormData();
           const registerForm = createForm(registerFormData);
-          this.children.push(registerForm, addFormButton, removeFormButton);
+          this.children.push(
+            registerForm,
+            addFormButton,
+            removeFormButton,
+          );
         },
       },
+      // change number to test performance
+      children: new Array(5).fill({
+        path: '../features/form/form',
+        base: import.meta.url,
+        args: {
+          action: 'addPatientDisease',
+          title: 'Disease form',
+          fields: {
+            disease: {
+              type: 'text',
+              placeholder: 'Name',
+            },
+            symptom: {
+              type: 'select',
+              options: [
+                { text: 'Sore throat', value: 'soreThroat' },
+                { text: 'Stomach ache', value: 'stomachAche' },
+                { text: 'Tooth pain', value: 'toothPain' },
+              ],
+            },
+          },
+        },
+      }),
     },
-    // uncomment to test performance
-    ...new Array(1000).fill({
-      path: '../features/form/form',
-      base: import.meta.url,
-      args: {
-        action: 'addPatientDisease',
-        title: 'Disease form',
-        fields: {
-          disease: {
-            type: 'text',
-            placeholder: 'Name',
-          },
-          symptom: {
-            type: 'select',
-            options: [
-              { text: 'Sore throat', value: 'soreThroat' },
-              { text: 'Stomach ache', value: 'stomachAche' },
-              { text: 'Tooth pain', value: 'toothPain' },
-            ],
-          },
-        },
-      },
-    }),
   ],
 });

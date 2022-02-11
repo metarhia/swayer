@@ -1,7 +1,7 @@
 /** @returns Styles */
 export const titleStyle = () => ({
   position: 'absolute',
-  top: '-155px',
+  top: '-139px',
   width: '100%',
   fontSize: '100px',
   fontWeight: 200,
