@@ -56,7 +56,7 @@ interface Component<State extends DefaultState>
           extends Omit<Required<Schema<State>>, 'children'> {
   original: Schema<State>;
   children: ComponentChildren<State>;
-  emitCustomEvent(name: string, data?): boolean;
+  emitEvent(name: string, data?): boolean;
   emitMessage(name: string, data?, options?: ChannelOptions): void;
   destroy(): void;
   click(): void;

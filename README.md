@@ -64,12 +64,13 @@ Swayer component
 example: [examples/todo-app/app/features/todo/todo.component.js](https://github.com/metarhia/swayer/blob/main/examples/todo-app/app/features/todo/todo.component.js)
 
 <!-- eslint-skip -->
+
 ```js
 /** @returns {Schema} */
 export default () => ({
   tag: 'section',
   meta: import.meta,
-  styles: todoSectionStyle(),
+  styles: todoSectionStyles(),
   state: {
     isMainAdded: false,
   },
@@ -473,12 +474,12 @@ application parts and load them on demand.
     <!-- eslint-skip -->
     ```ts
     // component API
-    emitCustomEvent(name: string, data?: any): boolean;
+    emitEvent(name: string, data?: any): boolean;
     ```
   - Custom event emission usage example:
     <!-- eslint-skip -->
     ```js
-    this.emitCustomEvent('removeTodoEvent', todo);
+    this.emitEvent('removeTodoEvent', todo);
     ```
     <br>
 - **Channels** feature implements **pub/sub** communication pattern and is used
@@ -766,7 +767,7 @@ is the following:
   - `original` - reference to original schema.
     <br><br>
 - Methods:
-  - `emitCustomEvent(name: string, data?: any): boolean` - emits a synthetic
+  - `emitEvent(name: string, data?: any): boolean` - emits a synthetic
     DOM event bubbling up through the component hierarchy, see Events section
     for more details. Returns the result of
     native `dispatchEvent(event: Event): boolean`

@@ -1,16 +1,15 @@
-import todoCtrl from '../domain/todo-controller.js';
-import { titleStyle, todoInputStyle } from './header.style.js';
+import { titleStyles, todoInputStyles } from './header.styles.js';
 
 /** @returns {Schema[]} */
 export default () => [
   {
     tag: 'h1',
     text: 'todos',
-    styles: titleStyle(),
+    styles: titleStyles(),
   },
   {
     tag: 'input',
-    styles: todoInputStyle(),
+    styles: todoInputStyles(),
     attrs: {
       autofocus: true,
       placeholder: 'What needs to be done?',
@@ -21,8 +20,7 @@ export default () => [
     events: {
       keyup(event) {
         if (event.key === 'Enter' && this.props.value) {
-          const todo = todoCtrl.addTodo(this.props.value);
-          this.emitCustomEvent('addTodoEvent', todo);
+          this.emitEvent('todoAddEvent', this.props.value);
           this.props.value = '';
         }
       },

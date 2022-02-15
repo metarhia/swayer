@@ -36,7 +36,7 @@ const addFormButton = {
     async click() {
       const diseaseFormData = await patientService.getDiseaseFormData();
       const diseaseForm = createForm(diseaseFormData);
-      this.emitCustomEvent('addForm', diseaseForm);
+      this.emitEvent('addForm', diseaseForm);
     },
   },
 };
@@ -51,7 +51,7 @@ const removeFormButton = {
   },
   events: {
     click() {
-      this.emitCustomEvent('removeForm');
+      this.emitEvent('removeForm');
     },
   },
 };

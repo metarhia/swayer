@@ -1,5 +1,5 @@
-/** @returns Styles */
-export const footerStyle = () => ({
+/** @returns {Styles} */
+export const footerStyles = () => ({
   padding: '10px 15px',
   height: '20px',
   textAlign: 'center',
@@ -21,8 +21,8 @@ export const footerStyle = () => ({
   },
 });
 
-/** @returns Styles */
-export const clearTodosButtonStyle = () => ({
+/** @returns {Styles} */
+export const clearTodosButtonStyles = () => ({
   margin: '0',
   padding: '0',
   border: '0',

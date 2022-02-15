@@ -1,4 +1,4 @@
-export const todoSectionStyle = () => ({
+export const todoSectionStyles = () => ({
   background: '#fff',
   margin: '130px 0 40px 0',
   position: 'relative',

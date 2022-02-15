@@ -1,23 +1,22 @@
 import todoCtrl from '../../domain/todo-controller.js';
-import todoController from '../../domain/todo-controller.js';
 import {
-  editTodoStyle,
-  removeTodoButtonStyle,
-  todoToggleStyle,
-  todoItemStyle,
-  todoTitleStyle,
-} from './todo-item.style.js';
+  editTodoStyles,
+  removeTodoButtonStyles,
+  todoToggleStyles,
+  todoStyles,
+  todoTitleStyles,
+} from './todo.styles.js';
 
 // todo refactor to styles reflection when available
 
 /** @returns {Schema} */
 const createTodoToggle = (todo) => ({
   tag: 'i',
-  styles: todoToggleStyle(todo.completed),
+  styles: todoToggleStyles(todo.completed),
   events: {
     click() {
-      todoController.toggleCompletion(todo);
-      this.emitCustomEvent('toggleTodoEvent', todo);
+      todoCtrl.toggleCompletion(todo);
+      this.emitEvent('toggleTodoEvent', todo);
     },
   },
 });
@@ -26,10 +25,10 @@ const createTodoToggle = (todo) => ({
 const createTodoLabel = (todo) => ({
   tag: 'label',
   text: todo.title,
-  styles: todoTitleStyle(todo.completed),
+  styles: todoTitleStyles(todo.completed),
   events: {
     dblclick() {
-      this.emitCustomEvent('startEditingTodoEvent');
+      this.emitEvent('startEditingTodoEvent');
     },
   },
 });
@@ -37,7 +36,7 @@ const createTodoLabel = (todo) => ({
 /** @returns {Schema} */
 const createEditInput = (todo) => ({
   tag: 'input',
-  styles: editTodoStyle(),
+  styles: editTodoStyles(),
   props: {
     value: todo.title,
   },
@@ -49,7 +48,7 @@ const createEditInput = (todo) => ({
       const value = this.props.value;
       if (event.key === 'Enter' && value) {
         todoCtrl.updateEditingTodo(todo, value);
-        this.emitCustomEvent('updateTitleEvent', todo);
+        this.emitEvent('titleUpdateEvent', todo);
         this.blur();
       } else if (event.key === 'Escape') {
         this.blur();
@@ -62,36 +61,38 @@ const createEditInput = (todo) => ({
 export default ({ todo }) => ({
   tag: 'li',
   meta: import.meta,
-  styles: todoItemStyle(),
+  styles: todoStyles(),
   events: {
-    removeTodoEvent() {
-      todoController.remove(todo);
-      this.emitCustomEvent('todoChangeEvent');
+    todoRemoveEvent() {
+      todoCtrl.remove(todo);
+      this.emitEvent('todoChangeEvent');
       this.destroy();
-    },
-    async startEditingTodoEvent() {
-      const editInput = createEditInput(todo);
-      const [input] = await this.children.push(editInput);
-      input.focus();
-    },
-    updateTitleEvent({ detail: todo }) {
-      const label = createTodoLabel(todo);
-      this.children[0].children.splice(1, 1, label);
     },
   },
   // todo resolve: this leads to memory leak warn when over 20 lis
   channels: {
-    testChannel() {},
+    testChannel() {
+    },
   },
   children: [
     {
       tag: 'div',
+      styles: { position: 'relative' },
       events: {
         toggleTodoEvent({ detail: todo }) {
           const icon = createTodoToggle(todo);
           const label = createTodoLabel(todo);
           this.children.splice(0, 2, icon, label);
-          this.emitCustomEvent('todoChangeEvent');
+          this.emitEvent('todoChangeEvent');
+        },
+        async startEditingTodoEvent() {
+          const editInput = createEditInput(todo);
+          const [input] = await this.children.push(editInput);
+          input.focus();
+        },
+        titleUpdateEvent({ detail: todo }) {
+          const label = createTodoLabel(todo);
+          this.children.splice(1, 1, label);
         },
       },
       children: [
@@ -99,10 +100,10 @@ export default ({ todo }) => ({
         createTodoLabel(todo),
         {
           tag: 'button',
-          styles: removeTodoButtonStyle(),
+          styles: removeTodoButtonStyles(),
           events: {
             click() {
-              this.emitCustomEvent('removeTodoEvent');
+              this.emitEvent('todoRemoveEvent');
             },
           },
         },

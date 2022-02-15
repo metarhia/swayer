@@ -14,7 +14,7 @@ export default () => ({
   events: {
     async click() {
       this.state.count++;
-      this.emitCustomEvent('send');
+      this.emitEvent('send');
       console.log(`Button clicked ${this.state.count} times`);
     },
   },
