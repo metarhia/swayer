@@ -72,6 +72,7 @@
     "quote-props": ["error", "consistent-as-needed"],
     "max-params": ["error", 4],
     "arrow-body-style": ["error", "as-needed"],
+    "generator-star-spacing": ["error", { "before": true, "after": false }],
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/ban-ts-comment": "off"
