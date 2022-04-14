@@ -7,42 +7,42 @@ class TodoController {
     this.#todoStore = todoStore;
   }
 
-  stopEditing(todo, editedTitle) {
-    todo.title = editedTitle;
-    todo.editing = false;
+  get todos() {
+    return this.#todoStore.todos;
   }
 
-  cancelEditingTodo(todo) {
-    todo.editing = false;
+  get remainingTodos() {
+    return this.#todoStore.filterTodos(false);
   }
 
-  updateEditingTodo(todo, editedTitle) {
-    editedTitle = editedTitle.trim();
-    todo.editing = false;
-    todo.title = editedTitle;
-    todoStore.updateStore();
+  get completedTodos() {
+    return this.#todoStore.filterTodos(true);
   }
 
-  editTodo(todo) {
-    todo.editing = true;
+  addTodo(todoTitle) {
+    const title = todoTitle.trim();
+    if (title) return this.#todoStore.add(title);
   }
 
-  removeCompleted() {
-    const completed = todoStore.getCompleted();
-    this.#todoStore.removeCompleted();
-    return completed;
+  removeTodo(todo) {
+    this.#todoStore.remove(todo);
+  }
+
+  updateTodo(todo, editedTitle) {
+    const title = editedTitle.trim();
+    if (title) return this.#todoStore.update(todo, title);
   }
 
   toggleCompletion(todo) {
     this.#todoStore.toggleCompletion(todo);
   }
 
-  remove(todo) {
-    this.#todoStore.remove(todo);
+  startEditing(todo) {
+    todo.editing = true;
   }
 
-  addTodo(todoText) {
-    if (todoText.trim().length > 0) return this.#todoStore.add(todoText);
+  stopEditing(todo) {
+    todo.editing = false;
   }
 }
 

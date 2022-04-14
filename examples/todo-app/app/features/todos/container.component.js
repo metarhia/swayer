@@ -1,12 +1,11 @@
-import todoStore from './domain/todo-store.js';
-import todoCtrl from './domain/todo-controller.js';
 import { todoSectionStyles } from './container.styles.js';
+import todoCtrl from './domain/todo-controller.js';
 
 /** @returns {SchemaRef} */
-const createTodoList = (todos = null) => ({
+const createTodoList = (todos = todoCtrl.todos) => ({
   path: './list/list.component',
   base: import.meta.url,
-  args: { todos: todos || todoStore.todos },
+  args: { todos },
 });
 
 /** @returns {SchemaRef} */
@@ -14,8 +13,8 @@ const createFooter = () => ({
   path: './footer/footer.component',
   base: import.meta.url,
   args: {
-    remainingCount: todoStore.getRemaining().length,
-    completedCount: todoStore.getCompleted().length,
+    remainingCount: todoCtrl.remainingTodos.length,
+    completedCount: todoCtrl.completedTodos.length,
   },
 });
 
@@ -37,8 +36,12 @@ export default () => ({
       this.state.isMainAdded = false;
     },
     updateRemaining() {
-      const footer = createFooter();
-      this.children.splice(3, 1, footer);
+      // const footer = createFooter();
+      // this.children.splice(3, 1, footer);
+      const remainingCount = todoCtrl.remainingTodos.length;
+      this.emitMessage('updateRemaining', remainingCount);
+      const showClearButton = todoCtrl.completedTodos.length > 0;
+      this.emitMessage('toggleClearButton', showClearButton);
     },
     addTodo(todo) {
       const scope = './list/list.component';
@@ -53,13 +56,13 @@ export default () => ({
       this.methods.addTodo(todo);
     },
     todoChangeEvent() {
-      if (todoStore.todos.length > 0) this.methods.updateRemaining();
+      if (todoCtrl.todos.length > 0) this.methods.updateRemaining();
       else this.methods.removeMain();
     },
   },
   hooks: {
     init() {
-      if (todoStore.todos.length > 0) this.methods.addMain();
+      if (todoCtrl.todos.length > 0) this.methods.addMain();
     },
   },
   children: [{ path: './header/header.component', base: import.meta.url }],

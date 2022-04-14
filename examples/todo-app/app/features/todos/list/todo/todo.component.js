@@ -29,6 +29,7 @@ const createTodoLabel = (todo) => ({
   events: {
     dblclick() {
       this.emitEvent('startEditingTodoEvent');
+      todoCtrl.startEditing(todo);
     },
   },
 });
@@ -43,12 +44,12 @@ const createEditInput = (todo) => ({
   events: {
     blur() {
       this.destroy();
+      todoCtrl.stopEditing(todo);
     },
     keyup(event) {
-      const value = this.props.value;
-      if (event.key === 'Enter' && value) {
-        todoCtrl.updateEditingTodo(todo, value);
-        this.emitEvent('titleUpdateEvent', todo);
+      const title = this.props.value;
+      if (event.key === 'Enter' && title) {
+        this.emitEvent('titleUpdateEvent', title);
         this.blur();
       } else if (event.key === 'Escape') {
         this.blur();
@@ -62,16 +63,21 @@ export default ({ todo }) => ({
   tag: 'li',
   meta: import.meta,
   styles: todoStyles(),
-  events: {
-    todoRemoveEvent() {
-      todoCtrl.remove(todo);
+  methods: {
+    removeTodo() {
+      todoCtrl.removeTodo(todo);
       this.emitEvent('todoChangeEvent');
       this.destroy();
     },
   },
-  // todo resolve: this leads to memory leak warn when over 20 lis
+  events: {
+    todoRemoveEvent() {
+      this.methods.removeTodo();
+    },
+  },
   channels: {
-    testChannel() {
+    clearCompletedTodos() {
+      if (todo.completed) this.methods.removeTodo();
     },
   },
   children: [
@@ -90,9 +96,9 @@ export default ({ todo }) => ({
           const [input] = await this.children.push(editInput);
           input.focus();
         },
-        titleUpdateEvent({ detail: todo }) {
-          const label = createTodoLabel(todo);
-          this.children.splice(1, 1, label);
+        titleUpdateEvent({ detail: title }) {
+          todoCtrl.updateTodo(todo, title);
+          this.children[1].text = title;
         },
       },
       children: [
