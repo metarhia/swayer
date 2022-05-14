@@ -12,7 +12,7 @@ const createListItem = (todo) => ({
 });
 
 /** @returns {Schema} */
-export default ({ todos }) => ({
+export default () => ({
   tag: 'div',
   styles: mainSectionStyles(),
   children: [
@@ -27,13 +27,7 @@ export default ({ todos }) => ({
       tag: 'ul',
       meta: import.meta,
       styles: todoListStyles(),
-      channels: {
-        async addTodoChannel(todo) {
-          const li = createListItem(todo);
-          this.children.push(li);
-        },
-      },
-      children: todos.map(createListItem),
+      children: { todos: () => createListItem },
     },
   ],
 });

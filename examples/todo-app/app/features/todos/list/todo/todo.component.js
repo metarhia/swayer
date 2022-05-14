@@ -1,35 +1,33 @@
-import todoCtrl from '../../domain/todo-controller.js';
 import {
   editTodoStyles,
   removeTodoButtonStyles,
-  todoToggleStyles,
   todoStyles,
   todoTitleStyles,
+  todoToggleStyles,
 } from './todo.styles.js';
 
 // todo refactor to styles reflection when available
 
 /** @returns {Schema} */
-const createTodoToggle = (todo) => ({
+const createTodoToggle = (completed) => ({
   tag: 'i',
-  styles: todoToggleStyles(todo.completed),
+  styles: todoToggleStyles(completed),
   events: {
     click() {
-      todoCtrl.toggleCompletion(todo);
-      this.emitEvent('toggleTodoEvent', todo);
+      this.state.completed = !completed;
+      this.emitEvent('todoChangeEvent');
     },
   },
 });
 
 /** @returns {Schema} */
-const createTodoLabel = (todo) => ({
+const createTodoLabel = (completed) => ({
   tag: 'label',
-  text: todo.title,
-  styles: todoTitleStyles(todo.completed),
+  text: { title: (value) => value },
+  styles: todoTitleStyles(completed),
   events: {
     dblclick() {
-      this.emitEvent('startEditingTodoEvent');
-      todoCtrl.startEditing(todo);
+      this.state.editing = true;
     },
   },
 });
@@ -43,17 +41,22 @@ const createEditInput = (todo) => ({
   },
   events: {
     blur() {
+      this.state.editing = false;
       this.destroy();
-      todoCtrl.stopEditing(todo);
     },
     keyup(event) {
       const title = this.props.value;
       if (event.key === 'Enter' && title) {
-        this.emitEvent('titleUpdateEvent', title);
+        this.state.title = title;
         this.blur();
       } else if (event.key === 'Escape') {
         this.blur();
       }
+    },
+  },
+  hooks: {
+    init() {
+      this.focus();
     },
   },
 });
@@ -63,56 +66,24 @@ export default ({ todo }) => ({
   tag: 'li',
   meta: import.meta,
   styles: todoStyles(),
-  methods: {
-    removeTodo() {
-      todoCtrl.removeTodo(todo);
-      this.emitEvent('todoChangeEvent');
-      this.destroy();
-    },
-  },
-  events: {
-    todoRemoveEvent() {
-      this.methods.removeTodo();
-    },
-  },
-  channels: {
-    clearCompletedTodos() {
-      if (todo.completed) this.methods.removeTodo();
-    },
-  },
+  state: todo,
   children: [
     {
       tag: 'div',
       styles: { position: 'relative' },
-      events: {
-        toggleTodoEvent({ detail: todo }) {
-          const icon = createTodoToggle(todo);
-          const label = createTodoLabel(todo);
-          this.children.splice(0, 2, icon, label);
-          this.emitEvent('todoChangeEvent');
-        },
-        async startEditingTodoEvent() {
-          const editInput = createEditInput(todo);
-          const [input] = await this.children.push(editInput);
-          input.focus();
-        },
-        titleUpdateEvent({ detail: title }) {
-          todoCtrl.updateTodo(todo, title);
-          this.children[1].text = title;
-        },
-      },
       children: [
-        createTodoToggle(todo),
-        createTodoLabel(todo),
+        { completed: (completed) => createTodoToggle(completed) },
+        { completed: (completed) => createTodoLabel(completed) },
         {
           tag: 'button',
           styles: removeTodoButtonStyles(),
           events: {
             click() {
-              this.emitEvent('todoRemoveEvent');
+              this.emitEvent('todoRemoveEvent', todo);
             },
           },
         },
+        { editing: (editing, todo) => editing && createEditInput(todo) },
       ],
     },
   ],

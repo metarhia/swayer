@@ -1,22 +1,25 @@
 import { todoSectionStyles } from './container.styles.js';
-import todoCtrl from './domain/todo-controller.js';
+import storage from './todo-storage.provider.js';
 
 /** @returns {SchemaRef} */
-const createTodoList = (todos = todoCtrl.todos) => ({
+const createTodoList = () => ({
   path: './list/list.component',
   base: import.meta.url,
-  args: { todos },
 });
 
 /** @returns {SchemaRef} */
 const createFooter = () => ({
   path: './footer/footer.component',
   base: import.meta.url,
-  args: {
-    remainingCount: todoCtrl.remainingTodos.length,
-    completedCount: todoCtrl.completedTodos.length,
-  },
 });
+
+const calculateCounts = (todos) => {
+  const completedCount = todos.filter((todo) => todo.completed).length;
+  const remainingCount = todos.length - completedCount;
+  return { completedCount, remainingCount };
+};
+
+const todos = storage.retrieve();
 
 /** @returns {Schema} */
 export default () => ({
@@ -24,46 +27,51 @@ export default () => ({
   meta: import.meta,
   styles: todoSectionStyles(),
   state: {
-    isMainAdded: false,
+    todos,
+    showMain: todos.length > 0,
+    ...calculateCounts(todos),
   },
   methods: {
-    addMain() {
-      this.children.push(createTodoList(), createFooter());
-      this.state.isMainAdded = true;
+    addTodo(todoTitle) {
+      const title = todoTitle.trim();
+      if (title) {
+        const todo = { title, completed: false, editing: false };
+        this.state.todos.push(todo);
+        return todo;
+      }
     },
-    removeMain() {
-      this.children.splice(2, 2);
-      this.state.isMainAdded = false;
-    },
-    updateRemaining() {
-      // const footer = createFooter();
-      // this.children.splice(3, 1, footer);
-      const remainingCount = todoCtrl.remainingTodos.length;
-      this.emitMessage('updateRemaining', remainingCount);
-      const showClearButton = todoCtrl.completedTodos.length > 0;
-      this.emitMessage('toggleClearButton', showClearButton);
-    },
-    addTodo(todo) {
-      const scope = './list/list.component';
-      this.emitMessage('addTodoChannel', todo, { scope });
+    updateCounts() {
+      const todos = this.state.todos;
+      Object
+        .entries(calculateCounts(todos))
+        .forEach(([count, value]) => (this.state[count] = value));
+      storage.save(todos);
     },
   },
   events: {
-    todoAddEvent({ detail: title }) {
-      const todo = todoCtrl.addTodo(title);
-      if (this.state.isMainAdded) this.methods.updateRemaining();
-      else this.methods.addMain();
-      this.methods.addTodo(todo);
-    },
     todoChangeEvent() {
-      if (todoCtrl.todos.length > 0) this.methods.updateRemaining();
-      else this.methods.removeMain();
+      this.methods.updateCounts();
+    },
+    todoAddEvent({ detail: title }) {
+      this.methods.addTodo(title);
+      this.methods.updateCounts();
+      if (!this.state.showMain) this.state.showMain = true;
+    },
+    todoRemoveEvent({ detail: todo }) {
+      const index = this.state.todos.indexOf(todo);
+      this.state.todos.splice(index, 1);
+      this.methods.updateCounts();
+      if (this.state.todos.length === 0) this.state.showMain = false;
+    },
+    clearCompletedEvent() {
+      this.state.todos = this.state.todos.filter((todo) => !todo.completed);
+      this.methods.updateCounts();
+      if (this.state.todos.length === 0) this.state.showMain = false;
     },
   },
-  hooks: {
-    init() {
-      if (todoCtrl.todos.length > 0) this.methods.addMain();
-    },
-  },
-  children: [{ path: './header/header.component', base: import.meta.url }],
+  children: [
+    { path: './header/header.component', base: import.meta.url },
+    { showMain: (show) => show && createTodoList() },
+    { showMain: (show) => show && createFooter() },
+  ],
 });

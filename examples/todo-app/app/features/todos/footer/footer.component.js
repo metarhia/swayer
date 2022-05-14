@@ -2,58 +2,45 @@ import { clearTodosButtonStyles, footerStyles } from './footer.styles.js';
 
 const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 
-const toggleClearButton = (showClearButton) => (showClearButton && {
+const clearButton = {
   tag: 'button',
   meta: import.meta,
   text: 'Clear completed',
   styles: clearTodosButtonStyles(),
   events: {
     click() {
-      const scope = '../list/todo/todo.component';
-      this.emitMessage('clearCompletedTodos', null, { scope });
+      this.emitEvent('clearCompletedEvent');
     },
   },
-});
+};
 
 /** @returns {Schema} */
-export default ({ remainingCount, showClearButton }) => ({
+export default () => ({
   tag: 'footer',
+  meta: import.meta,
   styles: footerStyles(),
-  channels: {
-    toggleClearButton(showClearButton) {
-      this.children[1] = toggleClearButton(showClearButton);
-    },
-  },
   children: [
     {
       tag: 'span',
+      meta: import.meta,
       styles: {
         float: 'left',
         textAlign: 'left',
       },
-      // todo impl??
-      locals: {
-        localVar: 1,
-        localMethod() {},
-      },
-      channels: {
-        updateRemaining(count) {
-          this.children[0].text = count;
-          this.children[2].text = getItemsText(count);
-        },
-      },
       children: [
         {
           tag: 'span',
-          text: remainingCount,
+          text: { remainingCount: (count) => count },
         },
         ' ',
         {
           tag: 'span',
-          text: getItemsText(remainingCount),
+          text: {
+            remainingCount: (count) => getItemsText(count),
+          },
         },
       ],
     },
-    toggleClearButton(showClearButton),
+    { completedCount: (count) => count > 0 && clearButton },
   ],
 });
