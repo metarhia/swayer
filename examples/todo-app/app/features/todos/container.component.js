@@ -2,9 +2,10 @@ import { todoSectionStyles } from './container.styles.js';
 import storage from './todo-storage.provider.js';
 
 /** @returns {SchemaRef} */
-const createTodoList = () => ({
+const createTodoList = (todos) => ({
   path: './list/list.component',
   base: import.meta.url,
+  args: { todos },
 });
 
 /** @returns {SchemaRef} */
@@ -28,7 +29,6 @@ export default () => ({
   styles: todoSectionStyles(),
   state: {
     todos,
-    showMain: todos.length > 0,
     ...calculateCounts(todos),
   },
   methods: {
@@ -55,23 +55,20 @@ export default () => ({
     todoAddEvent({ detail: title }) {
       this.methods.addTodo(title);
       this.methods.updateCounts();
-      if (!this.state.showMain) this.state.showMain = true;
     },
     todoRemoveEvent({ detail: todo }) {
       const index = this.state.todos.indexOf(todo);
       this.state.todos.splice(index, 1);
       this.methods.updateCounts();
-      if (this.state.todos.length === 0) this.state.showMain = false;
     },
     clearCompletedEvent() {
       this.state.todos = this.state.todos.filter((todo) => !todo.completed);
       this.methods.updateCounts();
-      if (this.state.todos.length === 0) this.state.showMain = false;
     },
   },
   children: [
     { path: './header/header.component', base: import.meta.url },
-    { showMain: (show) => show && createTodoList() },
-    { showMain: (show) => show && createFooter() },
+    ({ todos }) => todos.length > 0 && createTodoList(todos),
+    ({ todos }) => todos.length > 0 && createFooter(),
   ],
 });

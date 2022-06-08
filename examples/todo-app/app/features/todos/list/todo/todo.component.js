@@ -23,7 +23,9 @@ const createTodoToggle = (completed) => ({
 /** @returns {Schema} */
 const createTodoLabel = (completed) => ({
   tag: 'label',
-  text: { title: (value) => value },
+  text() {
+    return this.state.title;
+  },
   styles: todoTitleStyles(completed),
   events: {
     dblclick() {
@@ -33,16 +35,15 @@ const createTodoLabel = (completed) => ({
 });
 
 /** @returns {Schema} */
-const createEditInput = (todo) => ({
+const createEditInput = (title) => ({
   tag: 'input',
   styles: editTodoStyles(),
   props: {
-    value: todo.title,
+    value: title,
   },
   events: {
     blur() {
       this.state.editing = false;
-      this.destroy();
     },
     keyup(event) {
       const title = this.props.value;
@@ -72,8 +73,8 @@ export default ({ todo }) => ({
       tag: 'div',
       styles: { position: 'relative' },
       children: [
-        { completed: (completed) => createTodoToggle(completed) },
-        { completed: (completed) => createTodoLabel(completed) },
+        ({ completed }) => createTodoToggle(completed),
+        ({ completed }) => createTodoLabel(completed),
         {
           tag: 'button',
           styles: removeTodoButtonStyles(),
@@ -83,7 +84,7 @@ export default ({ todo }) => ({
             },
           },
         },
-        { editing: (editing, todo) => editing && createEditInput(todo) },
+        ({ title, editing }) => editing && createEditInput(title),
       ],
     },
   ],

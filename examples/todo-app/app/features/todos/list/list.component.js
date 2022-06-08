@@ -12,9 +12,10 @@ const createListItem = (todo) => ({
 });
 
 /** @returns {Schema} */
-export default () => ({
+export default ({ todos }) => ({
   tag: 'div',
   styles: mainSectionStyles(),
+  state: { todos },
   children: [
     {
       tag: 'input',
@@ -27,7 +28,10 @@ export default () => ({
       tag: 'ul',
       meta: import.meta,
       styles: todoListStyles(),
-      children: { todos: () => createListItem },
+      children() {
+        return this.state.todos.map(createListItem);
+      },
+      // children: todos.map(createListItem),
     },
   ],
 });

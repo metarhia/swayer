@@ -30,17 +30,18 @@ export default () => ({
       children: [
         {
           tag: 'span',
-          text: { remainingCount: (count) => count },
+          text: ({ remainingCount }) => remainingCount,
         },
         ' ',
         {
           tag: 'span',
-          text: {
-            remainingCount: (count) => getItemsText(count),
+          text() {
+            const count = this.state.remainingCount;
+            return getItemsText(count);
           },
         },
       ],
     },
-    { completedCount: (count) => count > 0 && clearButton },
+    ({ completedCount }) => completedCount > 0 && clearButton,
   ],
 });

@@ -11,7 +11,10 @@ interface ComponentConfig {
 
 type DefaultState = Record<string, unknown>;
 
-type SchemaChild<State extends DefaultState> =
+type Reaction<State extends DefaultState, Result> =
+  (this: Component<State>, state: State) => Result;
+
+type SchemaValue<State extends DefaultState> =
   Schema<State>
   | SchemaRef
   | string
@@ -19,19 +22,30 @@ type SchemaChild<State extends DefaultState> =
   | null
   | undefined;
 
+type SchemaChild<State extends DefaultState> =
+  SchemaValue<State>
+  | Reaction<State, SchemaValue<State>>;
+
+type SchemaProps = HTMLInputElement;
+type PartialProps = Partial<SchemaProps>;
+
+type Props<State extends DefaultState> = Partial<{
+  [P in keyof SchemaProps]: SchemaProps[P] | Reaction<State, SchemaProps[P]>;
+}>;
+
 interface Schema<State extends DefaultState> {
   tag: string;
   config?: ComponentConfig;
-  text?: string;
-  styles?: Styles;
-  props?: Partial<HTMLInputElement>;
-  attrs?: Attrs;
+  text?: string | Reaction<State, string>;
+  styles?: Styles | Reaction<State, CSSPropsValue>;
+  props?: Props<State> | Reaction<State, PartialProps> & PartialProps;
+  attrs?: Attrs<State> | Reaction<State, Attrs<State>>;
   state?: State;
   methods?: Methods & ThisType<Component<State>>;
   events?: Events & ThisType<Component<State>>;
   channels?: Channels & ThisType<Component<State>>;
   hooks?: Partial<Hooks> & ThisType<Component<State>>;
-  children?: SchemaChild<State>[];
+  children?: SchemaChild<State>[] | Reaction<State, SchemaChild<State>[]>;
 }
 
 type OmittedArrayMethods<State extends DefaultState> =
@@ -64,11 +78,22 @@ interface Component<State extends DefaultState>
   blur(): void;
 }
 
-type CSSProps = Partial<Record<keyof CSSStyleDeclaration, string | number>>;
+type CSSPropsValue<State extends DefaultState = DefaultState> = Partial<
+  Record<
+    keyof CSSStyleDeclaration,
+    string | number | Reaction<State, string | number>
+  >
+>;
 
-interface Attrs {
-  style?: CSSProps;
-  [attr: string]: string | number | boolean | undefined | CSSProps;
+type CSSProps<State extends DefaultState> =
+  CSSPropsValue<State> | Reaction<State, CSSPropsValue<State>>;
+
+type AttrValue<State extends DefaultState> =
+  string | number | boolean | undefined | CSSProps<State>;
+
+interface Attrs<State extends DefaultState> {
+  style?: CSSProps<State> | Reaction<State, CSSProps<State>>;
+  [attr: string]: AttrValue<State> | Reaction<State, AttrValue<State>>;
 }
 
 interface Methods {
@@ -92,7 +117,7 @@ interface PseudoFunction {
   rule: PseudoStyles;
 }
 
-interface PseudoStyles extends CSSProps {
+interface PseudoStyles extends CSSPropsValue {
   hover?: PseudoStyles;
   focus?: PseudoStyles;
   checked?: PseudoStyles;
@@ -113,7 +138,7 @@ interface CssAnimation {
   name: string;
   props: string;
   keyframes: {
-    [key: string]: CSSProps;
+    [key: string]: CSSPropsValue;
   };
 }
 

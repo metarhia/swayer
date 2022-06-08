@@ -10,7 +10,11 @@ export default () => [
   {
     tag: 'input',
     styles: todoInputStyles(),
+    state: {
+      test: 'Initial',
+    },
     attrs: {
+      test: ({ test }) => test,
       autofocus: true,
       placeholder: 'What needs to be done?',
     },
@@ -18,6 +22,9 @@ export default () => [
       value: '',
     },
     events: {
+      input() {
+        this.state.test = this.props.value;
+      },
       keyup(event) {
         if (event.key === 'Enter' && this.props.value) {
           this.emitEvent('todoAddEvent', this.props.value);
