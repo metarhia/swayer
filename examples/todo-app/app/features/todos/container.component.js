@@ -67,8 +67,16 @@ export default () => ({
     },
   },
   children: [
+    // ({ todos }) => {
+    //   console.log({ todos });
+    //   return { path: './header/header.component', base: import.meta.url };
+    // },
     { path: './header/header.component', base: import.meta.url },
-    ({ todos }) => todos.length > 0 && createTodoList(todos),
-    ({ todos }) => todos.length > 0 && createFooter(),
+    // ({ todos }) => todos.length > 0 && createTodoList(todos),
+    // ({ todos }) => todos.length > 0 && createFooter(),
+    ({ todos }) => todos.length > 0 && [
+      createTodoList(todos),
+      createFooter(),
+    ],
   ],
 });

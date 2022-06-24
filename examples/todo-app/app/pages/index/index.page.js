@@ -20,6 +20,17 @@ const bodyStyles = {
 
 console.time('Bootstrap');
 
+const createP = (text) => ([
+  {
+    tag: 'p',
+    text,
+  },
+  {
+    tag: 'p',
+    text: 'P - 2',
+  },
+]);
+
 /** @returns {Schema} */
 export default () => ({
   tag: 'html',
@@ -39,6 +50,26 @@ export default () => ({
     {
       tag: 'body',
       styles: bodyStyles,
+      state: {
+        text: '',
+      },
+      // children: [
+      //   {
+      //     tag: 'input',
+      //     attrs: {
+      //       placeholder: 'Type here...',
+      //     },
+      //     props: {
+      //       value: 'Initial',
+      //     },
+      //     events: {
+      //       input() {
+      //         this.state.text = this.props.value;
+      //       },
+      //     },
+      //   },
+      //   ({ text }) => createP(text),
+      // ],
       children: [
         { path: '../../features/todos/container.component', base: import.meta.url },
         { path: './footer.component', base: import.meta.url },

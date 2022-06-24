@@ -26,10 +26,9 @@ export default ({ todos }) => ({
     },
     {
       tag: 'ul',
-      meta: import.meta,
       styles: todoListStyles(),
-      children() {
-        return this.state.todos.map(createListItem);
+      children({ todos }) {
+        return todos.map(createListItem);
       },
       // children: todos.map(createListItem),
     },

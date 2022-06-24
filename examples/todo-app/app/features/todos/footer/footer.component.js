@@ -35,10 +35,7 @@ export default () => ({
         ' ',
         {
           tag: 'span',
-          text() {
-            const count = this.state.remainingCount;
-            return getItemsText(count);
-          },
+          text: ({ remainingCount }) => getItemsText(remainingCount),
         },
       ],
     },

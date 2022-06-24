@@ -24,7 +24,7 @@ type SchemaValue<State extends DefaultState> =
 
 type SchemaChild<State extends DefaultState> =
   SchemaValue<State>
-  | Reaction<State, SchemaValue<State>>;
+  | Reaction<State, SchemaValue<State> | SchemaValue<State>[]>;
 
 type SchemaProps = HTMLInputElement;
 type PartialProps = Partial<SchemaProps>;

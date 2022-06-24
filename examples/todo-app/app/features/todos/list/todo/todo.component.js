@@ -23,9 +23,7 @@ const createTodoToggle = (completed) => ({
 /** @returns {Schema} */
 const createTodoLabel = (completed) => ({
   tag: 'label',
-  text() {
-    return this.state.title;
-  },
+  text: ({ title }) => title,
   styles: todoTitleStyles(completed),
   events: {
     dblclick() {
@@ -65,7 +63,6 @@ const createEditInput = (title) => ({
 /** @returns {Schema} */
 export default ({ todo }) => ({
   tag: 'li',
-  meta: import.meta,
   styles: todoStyles(),
   state: todo,
   children: [
@@ -73,8 +70,12 @@ export default ({ todo }) => ({
       tag: 'div',
       styles: { position: 'relative' },
       children: [
-        ({ completed }) => createTodoToggle(completed),
-        ({ completed }) => createTodoLabel(completed),
+        // ({ completed }) => createTodoToggle(completed),
+        // ({ completed }) => createTodoLabel(completed),
+        ({ completed }) => [
+          createTodoToggle(completed),
+          createTodoLabel(completed),
+        ],
         {
           tag: 'button',
           styles: removeTodoButtonStyles(),
