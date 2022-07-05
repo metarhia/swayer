@@ -8,14 +8,20 @@ import {
 
 // todo refactor to styles reflection when available
 
+const emitTodoChange = (component) => {
+  const scope = '../../container.component';
+  component.emitMessage('todoChangeChannel', null, { scope });
+};
+
 /** @returns {Schema} */
 const createTodoToggle = (completed) => ({
   tag: 'i',
+  meta: import.meta,
   styles: todoToggleStyles(completed),
   events: {
     click() {
       this.state.completed = !completed;
-      this.emitEvent('todoChangeEvent');
+      emitTodoChange(this);
     },
   },
 });
@@ -35,6 +41,7 @@ const createTodoLabel = (completed) => ({
 /** @returns {Schema} */
 const createEditInput = (title) => ({
   tag: 'input',
+  meta: import.meta,
   styles: editTodoStyles(),
   props: {
     value: title,
@@ -45,9 +52,11 @@ const createEditInput = (title) => ({
     },
     keyup(event) {
       const title = this.props.value;
-      if (event.key === 'Enter' && title) {
-        this.state.title = title;
+      if (!title) return;
+      if (event.key === 'Enter') {
         this.blur();
+        this.state.title = title;
+        emitTodoChange(this);
       } else if (event.key === 'Escape') {
         this.blur();
       }
@@ -65,6 +74,12 @@ export default ({ todo }) => ({
   tag: 'li',
   styles: todoStyles(),
   state: todo,
+  events: {
+    // focusout() {
+    //   this.state.editing = false;
+    //   this.emitEvent('todoChangeEvent');
+    // },
+  },
   children: [
     {
       tag: 'div',

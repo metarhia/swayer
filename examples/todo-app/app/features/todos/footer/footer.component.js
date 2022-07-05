@@ -41,4 +41,12 @@ export default () => ({
     },
     ({ completedCount }) => completedCount > 0 && clearButton,
   ],
+  hooks: {
+    init() {
+      console.log('footer init');
+    },
+    destroy() {
+      console.log('footer destroy');
+    },
+  },
 });

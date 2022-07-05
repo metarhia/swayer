@@ -11,6 +11,8 @@ const createListItem = (todo) => ({
   args: { todo },
 });
 
+// todo REFACTOR TODO-APP, MAKE IT LIST
+
 /** @returns {Schema} */
 export default ({ todos }) => ({
   tag: 'div',
@@ -31,6 +33,14 @@ export default ({ todos }) => ({
         return todos.map(createListItem);
       },
       // children: todos.map(createListItem),
+      // hooks: {
+      //   init() {
+      //     setInterval(() => {
+      //       const todo = this.state.todos[this.state.todos.length - 1];
+      //       this.state.todos.push({ ...todo });
+      //     }, 3000);
+      //   },
+      // },
     },
   ],
 });

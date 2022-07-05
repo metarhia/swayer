@@ -48,10 +48,12 @@ export default () => ({
       storage.save(todos);
     },
   },
-  events: {
-    todoChangeEvent() {
+  channels: {
+    todoChangeChannel() {
       this.methods.updateCounts();
     },
+  },
+  events: {
     todoAddEvent({ detail: title }) {
       this.methods.addTodo(title);
       this.methods.updateCounts();
@@ -62,6 +64,9 @@ export default () => ({
       this.methods.updateCounts();
     },
     clearCompletedEvent() {
+      // this.state.todos = this.state.todos.filter((todo) => !todo.completed);
+      // const todos = this.state.todos;
+      // this.state.todos.splice(0, todos.length, ...todos.filter((todo) => !todo.completed));
       this.state.todos = this.state.todos.filter((todo) => !todo.completed);
       this.methods.updateCounts();
     },
@@ -78,5 +83,10 @@ export default () => ({
       createTodoList(todos),
       createFooter(),
     ],
+    // ({ todos }) =>
+    //   // console.log(todos.length);
+    // createTodoList(todos),
+    // ({ todos }) => createTodoList(todos),
+    // createFooter(),
   ],
 });
