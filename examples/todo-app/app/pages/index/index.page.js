@@ -27,7 +27,7 @@ const createP = (text) => ([
   },
   {
     tag: 'p',
-    text: 'P - 2',
+    text: 'Some words',
   },
 ]);
 
@@ -53,27 +53,42 @@ export default () => ({
       state: {
         text: '',
       },
-      // children: [
-      //   {
-      //     tag: 'input',
-      //     attrs: {
-      //       placeholder: 'Type here...',
-      //     },
-      //     props: {
-      //       value: 'Initial',
-      //     },
-      //     events: {
-      //       input() {
-      //         this.state.text = this.props.value;
-      //       },
-      //     },
-      //   },
-      //   ({ text }) => createP(text),
-      // ],
       children: [
-        { path: '../../features/todos/container.component', base: import.meta.url },
-        { path: './footer.component', base: import.meta.url },
+        {
+          tag: 'label',
+          children: [
+            {
+              tag: 'p',
+              text: 'This is simple input',
+            },
+            {
+              tag: 'input',
+              attrs: { placeholder: 'Type here...' },
+              props: { value: 'Initial' },
+              events: {
+                input() {
+                  this.state.text = this.props.value;
+                },
+              },
+            },
+          ],
+        },
+        ({ text }) => createP(text),
+        {
+          tag: 'p',
+          children: [
+            {
+              tag: 'span',
+              attrs: { test: ({ text }) => text },
+              text: ({ text }) => text,
+            },
+          ],
+        },
       ],
+      // children: [
+      //   { path: '../../features/todos/container.component', base: import.meta.url },
+      //   { path: './footer.component', base: import.meta.url },
+      // ],
     },
   ],
 });

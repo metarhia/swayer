@@ -11,8 +11,6 @@ const createListItem = (todo) => ({
   args: { todo },
 });
 
-// todo REFACTOR TODO-APP, MAKE IT LIST
-
 /** @returns {Schema} */
 export default ({ todos }) => ({
   tag: 'div',

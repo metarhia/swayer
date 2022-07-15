@@ -21,6 +21,7 @@ const calculateCounts = (todos) => {
 };
 
 const todos = storage.retrieve();
+// const todos = new Array(2000).fill(null).map(() => ({ title: '1', editing: false, completed: false }));
 
 /** @returns {Schema} */
 export default () => ({
@@ -64,7 +65,6 @@ export default () => ({
       this.methods.updateCounts();
     },
     clearCompletedEvent() {
-      // this.state.todos = this.state.todos.filter((todo) => !todo.completed);
       // const todos = this.state.todos;
       // this.state.todos.splice(0, todos.length, ...todos.filter((todo) => !todo.completed));
       this.state.todos = this.state.todos.filter((todo) => !todo.completed);
