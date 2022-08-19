@@ -1,24 +1,17 @@
 import { todoSectionStyles } from './container.styles.js';
 import storage from './todo-storage.provider.js';
 
-/** @returns {SchemaRef} */
-const createTodoList = (todos) => ({
-  path: './list/list.component',
+const createTodosComponent = (name) => (todos) => ({
+  path: `./${name}/${name}.component`,
   base: import.meta.url,
   args: { todos },
 });
 
 /** @returns {SchemaRef} */
-const createFooter = () => ({
-  path: './footer/footer.component',
-  base: import.meta.url,
-});
+const createTodoList = createTodosComponent('list');
 
-const calculateCounts = (todos) => {
-  const completedCount = todos.filter((todo) => todo.completed).length;
-  const remainingCount = todos.length - completedCount;
-  return { completedCount, remainingCount };
-};
+/** @returns {SchemaRef} */
+const createFooter = createTodosComponent('footer');
 
 const todos = storage.retrieve();
 // const todos = new Array(2000).fill(null).map(() => ({ title: '1', editing: false, completed: false }));
@@ -28,65 +21,47 @@ export default () => ({
   tag: 'main',
   meta: import.meta,
   styles: todoSectionStyles(),
-  state: {
-    todos,
-    ...calculateCounts(todos),
-  },
-  methods: {
-    addTodo(todoTitle) {
-      const title = todoTitle.trim();
-      if (title) {
-        const todo = { title, completed: false, editing: false };
-        this.state.todos.push(todo);
-        return todo;
-      }
-    },
-    updateCounts() {
-      const todos = this.state.todos;
-      Object
-        .entries(calculateCounts(todos))
-        .forEach(([count, value]) => (this.state[count] = value));
-      storage.save(todos);
-    },
-  },
+  state: { todos },
   channels: {
     todoChangeChannel() {
-      this.methods.updateCounts();
+      this.methods.save();
+    },
+  },
+  methods: {
+    save() {
+      storage.save(this.state.todos);
     },
   },
   events: {
-    todoAddEvent({ detail: title }) {
-      this.methods.addTodo(title);
-      this.methods.updateCounts();
+    todoAddEvent({ detail: todoTitle }) {
+      const title = todoTitle.trim();
+      if (!title) return;
+      const todo = { title, completed: false, editing: false };
+      this.state.todos.push(todo);
+      this.methods.save();
+      // setInterval(() => {
+      //   this.state.todos.push({ ...todo });
+      // }, 50);
+      // setInterval(() => {
+      //   this.state.todos = [];
+      // }, 1000);
+      // setTimeout(() => this.state.todos.length = 1, 1000);
     },
     todoRemoveEvent({ detail: todo }) {
       const index = this.state.todos.indexOf(todo);
       this.state.todos.splice(index, 1);
-      this.methods.updateCounts();
+      this.methods.save();
     },
     clearCompletedEvent() {
-      // const todos = this.state.todos;
-      // this.state.todos.splice(0, todos.length, ...todos.filter((todo) => !todo.completed));
       this.state.todos = this.state.todos.filter((todo) => !todo.completed);
-      this.methods.updateCounts();
+      this.methods.save();
     },
   },
   children: [
-    // ({ todos }) => {
-    //   console.log({ todos });
-    //   return { path: './header/header.component', base: import.meta.url };
-    // },
     { path: './header/header.component', base: import.meta.url },
-    // ({ todos }) => todos.length > 0 && createTodoList(todos),
-    // ({ todos }) => todos.length > 0 && createFooter(),
     ({ todos }) => todos.length > 0 && [
       createTodoList(todos),
-      createFooter(),
+      createFooter(todos),
     ],
-    // ({ todos }) =>
-    //   // console.log(todos.length);
-    // createTodoList(todos),
-    // ({ todos }) => createTodoList(todos),
-    // createFooter(),
   ],
 });

@@ -9,7 +9,10 @@ import {
 // todo refactor to styles reflection when available
 
 const emitTodoChange = (component) => {
-  const scope = '../../container.component';
+  const scope = [
+    '../../container.component',
+    '../../footer/footer.component',
+  ];
   component.emitMessage('todoChangeChannel', null, { scope });
 };
 
@@ -74,19 +77,11 @@ export default ({ todo }) => ({
   tag: 'li',
   styles: todoStyles(),
   state: todo,
-  events: {
-    // focusout() {
-    //   this.state.editing = false;
-    //   this.emitEvent('todoChangeEvent');
-    // },
-  },
   children: [
     {
       tag: 'div',
       styles: { position: 'relative' },
       children: [
-        // ({ completed }) => createTodoToggle(completed),
-        // ({ completed }) => createTodoLabel(completed),
         ({ completed }) => [
           createTodoToggle(completed),
           createTodoLabel(completed),

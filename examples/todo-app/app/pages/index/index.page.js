@@ -20,17 +20,6 @@ const bodyStyles = {
 
 console.time('Bootstrap');
 
-const createP = (text) => ([
-  {
-    tag: 'p',
-    text,
-  },
-  {
-    tag: 'p',
-    text: 'Some words',
-  },
-]);
-
 /** @returns {Schema} */
 export default () => ({
   tag: 'html',
@@ -50,45 +39,10 @@ export default () => ({
     {
       tag: 'body',
       styles: bodyStyles,
-      state: {
-        text: '',
-      },
       children: [
-        {
-          tag: 'label',
-          children: [
-            {
-              tag: 'p',
-              text: 'This is simple input',
-            },
-            {
-              tag: 'input',
-              attrs: { placeholder: 'Type here...' },
-              props: { value: 'Initial' },
-              events: {
-                input() {
-                  this.state.text = this.props.value;
-                },
-              },
-            },
-          ],
-        },
-        ({ text }) => createP(text),
-        {
-          tag: 'p',
-          children: [
-            {
-              tag: 'span',
-              attrs: { test: ({ text }) => text },
-              text: ({ text }) => text,
-            },
-          ],
-        },
+        { path: '../../features/todos/container.component', base: import.meta.url },
+        { path: './footer.component', base: import.meta.url },
       ],
-      // children: [
-      //   { path: '../../features/todos/container.component', base: import.meta.url },
-      //   { path: './footer.component', base: import.meta.url },
-      // ],
     },
   ],
 });

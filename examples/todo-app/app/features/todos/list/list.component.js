@@ -15,7 +15,6 @@ const createListItem = (todo) => ({
 export default ({ todos }) => ({
   tag: 'div',
   styles: mainSectionStyles(),
-  state: { todos },
   children: [
     {
       tag: 'input',
@@ -27,18 +26,7 @@ export default ({ todos }) => ({
     {
       tag: 'ul',
       styles: todoListStyles(),
-      children({ todos }) {
-        return todos.map(createListItem);
-      },
-      // children: todos.map(createListItem),
-      // hooks: {
-      //   init() {
-      //     setInterval(() => {
-      //       const todo = this.state.todos[this.state.todos.length - 1];
-      //       this.state.todos.push({ ...todo });
-      //     }, 3000);
-      //   },
-      // },
+      children: todos.map(createListItem),
     },
   ],
 });

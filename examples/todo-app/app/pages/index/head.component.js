@@ -7,14 +7,6 @@ export default () => ({
       text: 'Todo app',
     },
     {
-      tag: 'script',
-      attrs: {
-        async: true,
-        type: 'module',
-        src: '/index.js',
-      },
-    },
-    {
       tag: 'meta',
       attrs: {
         charset: 'utf-8',
