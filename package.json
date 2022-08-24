@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "jsdom": "^20.0.0",
-    "object-hash": "^3.0.0",
     "pretty": "^2.0.0"
   },
   "devDependencies": {

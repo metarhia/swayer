@@ -110,6 +110,7 @@ interface Channels {
 
 interface Hooks {
   init(): void | Promise<void>;
+  destroy(): void | Promise<void>;
 }
 
 interface PseudoFunction {

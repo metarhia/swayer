@@ -27,6 +27,11 @@ const createTodoToggle = (completed) => ({
       emitTodoChange(this);
     },
   },
+  hooks: {
+    destroy() {
+      console.log('destroy i');
+    },
+  },
 });
 
 /** @returns {Schema} */
