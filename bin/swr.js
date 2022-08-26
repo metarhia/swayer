@@ -18,6 +18,10 @@ const commands = {
         aliases: ['-p'],
         description: 'Prettify HTML output.',
       },
+      '--swayerUrl': {
+        // TODO: replace <CDN> with real cdn url
+        description: 'Swayer script url. Defaults to <CDN>',
+      },
     },
     arguments: [
       {
