@@ -22,6 +22,9 @@ const commands = {
         // TODO: replace <CDN> with real cdn url
         description: 'Swayer script url. Defaults to <CDN>',
       },
+      '--ssr': {
+        description: 'Enable server side rendering.',
+      },
     },
     arguments: [
       {
