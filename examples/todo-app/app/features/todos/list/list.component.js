@@ -6,8 +6,7 @@ import {
 
 /** @returns {SchemaRef} */
 const createListItem = (todo) => ({
-  path: './todo/todo.component',
-  base: import.meta.url,
+  path: '@todos/list/todo/todo.component',
   args: { todo },
 });
 

@@ -1,6 +1,6 @@
 {
   "name": "todo-app",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "todo-app example from https://todomvc.com/",
   "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
@@ -19,10 +19,7 @@
     "url": "https://www.patreon.com/rohiievych"
   },
   "scripts": {
-    "start": "http-server ../../ -a localhost -o /examples/todo-app"
-  },
-  "devDependencies": {
-    "http-server": "^14.1.1"
+    "start": "swr serve"
   },
   "dependencies": {
     "swayer": "file:../.."

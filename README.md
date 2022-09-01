@@ -1,4 +1,4 @@
-# Swayer - schema based frontend framework 👀
+# Swayer - schema based UI engine 👀
 
 [![npm version](https://img.shields.io/npm/v/swayer)](https://www.npmjs.com/package/swayer)
 [![npm downloads/month](https://img.shields.io/npm/dm/swayer.svg)](https://www.npmjs.com/package/swayer)
@@ -10,7 +10,7 @@
 
 ## Description
 
-Pure JavaScript framework, which enables **plain objects to describe document
+Swayer is a pure JavaScript framework, which enables **plain objects to describe document
 structure, styling and behavior**. Swayer developers provide initial data to be
 rendered and get **dynamic components** for further management. This instrument
 is provided for **low-level development** and delivering fully **declarative

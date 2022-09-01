@@ -35,13 +35,13 @@ export default () => ({
     },
   },
   children: [
-    { path: './head.component', base: import.meta.url },
+    { path: '@app/pages/index/head.component' },
     {
       tag: 'body',
       styles: bodyStyles,
       children: [
-        { path: '../../features/todos/container.component', base: import.meta.url },
-        { path: './footer.component', base: import.meta.url },
+        { path: '@todos/container.component' },
+        { path: '@app/pages/index/footer.component' },
       ],
     },
   ],

@@ -1,8 +1,24 @@
 #!/usr/bin/env node
+import Builder from '../lib/dev/builder.js';
+import HttpServer from '../lib/dev/httpServer.js';
 
 /*
 * Define CLI commands with options and arguments
 * */
+const renderOptions = {
+  '--args': {
+    aliases: ['-a'],
+    description: 'Pass component arguments as JSON string.',
+  },
+  '--pretty': {
+    aliases: ['-p'],
+    description: 'Prettify HTML output.',
+  },
+  '--ssr': {
+    description: 'Enable server side rendering.',
+  },
+};
+
 const commands = {
   // todo add boilerplate creator
   // new: {},
@@ -10,20 +26,17 @@ const commands = {
     aliases: ['b'],
     description: 'Build Swayer components.',
     options: {
-      '--args': {
-        aliases: ['-a'],
-        description: 'Pass component arguments as JSON string.',
+      ...renderOptions,
+      '--app': {
+        description: 'Pass Swayer app folder path.',
       },
-      '--pretty': {
-        aliases: ['-p'],
-        description: 'Prettify HTML output.',
+      '--src': {
+        aliases: ['-s'],
+        description: 'Pass source folder name. Defaults to app.',
       },
-      '--swayerUrl': {
-        // TODO: replace <CDN> with real cdn url
-        description: 'Swayer script url. Defaults to <CDN>',
-      },
-      '--ssr': {
-        description: 'Enable server side rendering.',
+      '--output': {
+        aliases: ['-o'],
+        description: 'Pass Swayer build destination folder.',
       },
     },
     arguments: [
@@ -32,10 +45,19 @@ const commands = {
         description: 'Swayer component schema path.',
       },
     ],
-    execute: async (config) => {
-      const module = await import('../lib/platforms/server.js');
-      await module.default.build(config);
-    },
+    execute: (params) => new Builder(params).build(),
+  },
+  serve: {
+    aliases: ['s'],
+    description: 'Serve Swayer application.',
+    options: renderOptions,
+    arguments: [
+      {
+        name: 'path',
+        description: 'Swayer application path.',
+      },
+    ],
+    execute: (params) => new HttpServer(params).start(),
   },
 };
 
@@ -155,9 +177,6 @@ const makeArguments = (args, inputArg, i) => {
 
 const options = inputArgs.filter(isOption).reduce(makeOptions, {});
 const args = inputArgs.filter(isArgument).reduce(makeArguments, {});
-
-// Exit
-if (Object.keys(args).length === 0) printCommandHelp(commandName, command);
 
 const config = { ...args, ...options };
 void command.execute(config);

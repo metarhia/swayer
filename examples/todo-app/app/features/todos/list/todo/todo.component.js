@@ -10,8 +10,8 @@ import {
 
 const emitTodoChange = (component) => {
   const scope = [
-    '../../container.component',
-    '../../footer/footer.component',
+    '@todos/container.component',
+    '@todos/footer/footer.component',
   ];
   component.emitMessage('todoChangeChannel', null, { scope });
 };
@@ -19,7 +19,6 @@ const emitTodoChange = (component) => {
 /** @returns {Schema} */
 const createTodoToggle = (completed) => ({
   tag: 'i',
-  meta: import.meta,
   styles: todoToggleStyles(completed),
   events: {
     click() {
@@ -49,7 +48,6 @@ const createTodoLabel = (completed) => ({
 /** @returns {Schema} */
 const createEditInput = (title) => ({
   tag: 'input',
-  meta: import.meta,
   styles: editTodoStyles(),
   props: {
     value: title,

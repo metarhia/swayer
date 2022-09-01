@@ -2,8 +2,7 @@ import { todoSectionStyles } from './container.styles.js';
 import storage from './todo-storage.provider.js';
 
 const createTodosComponent = (name) => (todos) => ({
-  path: `./${name}/${name}.component`,
-  base: import.meta.url,
+  path: `@todos/${name}/${name}.component`,
   args: { todos },
 });
 
@@ -19,7 +18,6 @@ const todos = storage.retrieve();
 /** @returns {Schema} */
 export default () => ({
   tag: 'main',
-  meta: import.meta,
   styles: todoSectionStyles(),
   state: { todos },
   channels: {
@@ -58,7 +56,7 @@ export default () => ({
     },
   },
   children: [
-    { path: './header/header.component', base: import.meta.url },
+    { path: '@todos/header/header.component' },
     ({ todos }) => todos.length > 0 && [
       createTodoList(todos),
       createFooter(todos),
