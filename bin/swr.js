@@ -28,11 +28,11 @@ const commands = {
     options: {
       ...renderOptions,
       '--app': {
-        description: 'Pass Swayer app folder path.',
+        description: 'Pass Swayer app folder path. Use for building multiple apps.',
       },
-      '--src': {
-        aliases: ['-s'],
-        description: 'Pass source folder name. Defaults to app.',
+      '--production': {
+        aliases: ['--prod'],
+        description: 'Make production-ready build.',
       },
       '--output': {
         aliases: ['-o'],
