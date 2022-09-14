@@ -9,6 +9,7 @@ const renderOptions = {
   '--args': {
     aliases: ['-a'],
     description: 'Pass component arguments as JSON string.',
+    parseAsJson: true,
   },
   '--pretty': {
     aliases: ['-p'],
@@ -163,15 +164,18 @@ let stopGettingOptions = false;
 const makeOptions = (options, arg, i, args) => {
   const optionName = getOptionName(arg);
   if (arg === '--') stopGettingOptions = true;
-  else if (!optionName || stopGettingOptions) return options;
-  else options[optionName.slice(2)] = getOptionValue(args[i + 1]);
+  if (!optionName || stopGettingOptions) return options;
+  const parseAsJson = command.options[optionName]?.parseAsJson;
+  const value = getOptionValue(args[i + 1]);
+  options[optionName.slice(2)] = parseAsJson ? JSON.parse(value) : value;
   return options;
 };
 
 const makeArguments = (args, inputArg, i) => {
-  const argName = command?.arguments[i]?.name;
+  const argName = command.arguments[i]?.name;
   if (!argName) return args;
-  args[argName] = inputArg;
+  const parseAsJson = command.arguments[i]?.parseAsJson;
+  args[argName] = parseAsJson ? JSON.parse(inputArg) : inputArg;
   return args;
 };
 
