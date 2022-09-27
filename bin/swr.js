@@ -51,7 +51,13 @@ const commands = {
   serve: {
     aliases: ['s'],
     description: 'Serve Swayer application.',
-    options: renderOptions,
+    options: {
+      ...renderOptions,
+      '--watch': {
+        aliases: ['-w'],
+        description: 'Watch files and restart server on changes.',
+      },
+    },
     arguments: [
       {
         name: 'path',
