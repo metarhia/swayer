@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import Builder from '../lib/dev/builder.js';
-import HttpServer from '../lib/dev/httpServer.js';
+import Builder from '../lib/cli/builder.js';
+import HttpServer from '../lib/cli/httpServer.js';
 
 /*
 * Define CLI commands with options and arguments
