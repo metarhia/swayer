@@ -1,5 +1,5 @@
-/** @returns {Styles} */
-export const footerStyles = () => ({
+/** @type {Styles} */
+export const footerStyles = {
   padding: '10px 15px',
   height: '20px',
   textAlign: 'center',
@@ -19,10 +19,10 @@ export const footerStyles = () => ({
                   0 16px 0 -6px #f6f6f6,
                   0 17px 2px -6px rgba(0, 0, 0, 0.2)`,
   },
-});
+};
 
-/** @returns {Styles} */
-export const clearTodosButtonStyles = () => ({
+/** @type {Styles} */
+export const clearTodosButtonStyles = {
   margin: '0',
   padding: '0',
   border: '0',
@@ -41,4 +41,4 @@ export const clearTodosButtonStyles = () => ({
   hover: {
     textDecoration: 'underline',
   },
-});
+};

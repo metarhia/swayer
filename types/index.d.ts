@@ -4,15 +4,9 @@ interface SchemaRef {
   args?: unknown;
 }
 
-interface ComponentConfig {
-  // moduleUrl?: string;
-  macroTaskSize?: number;
-}
-
 type DefaultState = Record<string, unknown>;
 
-type Reaction<State extends DefaultState, Result> =
-  (this: Component<State>, state: State) => Result;
+type Reaction<State extends DefaultState, Result> = (state: State) => Result;
 
 type SchemaValue<State extends DefaultState> =
   Schema<State>
@@ -35,9 +29,8 @@ type Props<State extends DefaultState> = Partial<{
 
 interface Schema<State extends DefaultState> {
   tag: string;
-  config?: ComponentConfig;
-  text?: string | Reaction<State, string>;
-  styles?: Styles | Reaction<State, CSSPropsValue>;
+  text?: string | Reaction<State, unknown>;
+  styles?: Styles<State> | Reaction<State, CSSPropsValue>;
   props?: Props<State> | Reaction<State, PartialProps> & PartialProps;
   attrs?: Attrs<State> | Reaction<State, Attrs<State>>;
   state?: State;
@@ -137,12 +130,12 @@ interface PseudoStyles extends CSSPropsValue {
 
 interface CssAnimation {
   name: string;
-  props: string;
   keyframes: {
     [key: string]: CSSPropsValue;
   };
 }
 
-interface Styles extends PseudoStyles {
+interface Styles<State extends DefaultState> extends PseudoStyles {
   animations?: CssAnimation[];
+  compute?: Reaction<State, CSSPropsValue>;
 }

@@ -5,16 +5,16 @@ export default () => [
   {
     tag: 'h1',
     text: 'todos',
-    styles: titleStyles(),
+    styles: titleStyles,
   },
   {
     tag: 'input',
-    styles: todoInputStyles(),
+    styles: todoInputStyles,
     state: {
       test: 'Initial',
     },
     attrs: {
-      test: ({ test }) => test,
+      test: ({ test }) => test || false,
       autofocus: true,
       placeholder: 'What needs to be done?',
     },

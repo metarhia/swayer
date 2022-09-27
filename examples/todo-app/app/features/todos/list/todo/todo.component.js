@@ -6,8 +6,6 @@ import {
   todoToggleStyles,
 } from './todo.styles.js';
 
-// todo refactor to styles reflection when available
-
 const emitTodoChange = (component) => {
   const scope = [
     '@todos/container.component',
@@ -17,38 +15,33 @@ const emitTodoChange = (component) => {
 };
 
 /** @returns {Schema} */
-const createTodoToggle = (completed) => ({
+const todoToggle = {
   tag: 'i',
-  styles: todoToggleStyles(completed),
+  styles: todoToggleStyles,
   events: {
     click() {
-      this.state.completed = !completed;
+      this.state.completed = !this.state.completed;
       emitTodoChange(this);
     },
   },
-  hooks: {
-    destroy() {
-      console.log('destroy i');
-    },
-  },
-});
+};
 
 /** @returns {Schema} */
-const createTodoLabel = (completed) => ({
+const todoLabel = {
   tag: 'label',
   text: ({ title }) => title,
-  styles: todoTitleStyles(completed),
+  styles: todoTitleStyles,
   events: {
     dblclick() {
       this.state.editing = true;
     },
   },
-});
+};
 
 /** @returns {Schema} */
 const createEditInput = (title) => ({
   tag: 'input',
-  styles: editTodoStyles(),
+  styles: editTodoStyles,
   props: {
     value: title,
   },
@@ -78,25 +71,42 @@ const createEditInput = (title) => ({
 /** @returns {Schema} */
 export default ({ todo }) => ({
   tag: 'li',
-  styles: todoStyles(),
+  styles: todoStyles,
   state: todo,
   children: [
     {
       tag: 'div',
       styles: { position: 'relative' },
       children: [
-        ({ completed }) => [
-          createTodoToggle(completed),
-          createTodoLabel(completed),
-        ],
+        todoToggle,
+        todoLabel,
         {
           tag: 'button',
-          styles: removeTodoButtonStyles(),
+          styles: removeTodoButtonStyles,
+          state: {
+            buttonAnimation: 'none',
+          },
           events: {
             click() {
               this.emitEvent('todoRemoveEvent', todo);
             },
+            mouseenter() {
+              this.state.buttonAnimation = 'show';
+            },
+            mouseleave() {
+              this.state.buttonAnimation = 'hide';
+            },
           },
+          children: [
+            {
+              tag: 'i',
+              styles: {
+                width: '25px',
+                height: '25px',
+                background: 'url(/assets/icons/remove.svg) center no-repeat',
+              },
+            },
+          ],
         },
         ({ title, editing }) => editing && createEditInput(title),
       ],

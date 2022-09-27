@@ -18,7 +18,7 @@ const todos = storage.retrieve();
 /** @returns {Schema} */
 export default () => ({
   tag: 'main',
-  styles: todoSectionStyles(),
+  styles: todoSectionStyles,
   state: { todos },
   channels: {
     todoChangeChannel() {

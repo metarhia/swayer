@@ -13,18 +13,18 @@ const createListItem = (todo) => ({
 /** @returns {Schema} */
 export default ({ todos }) => ({
   tag: 'div',
-  styles: mainSectionStyles(),
+  styles: mainSectionStyles,
   children: [
     {
       tag: 'input',
-      styles: toggleAllTodosStyles(),
+      styles: toggleAllTodosStyles,
       attrs: {
         type: 'checkbox',
       },
     },
     {
       tag: 'ul',
-      styles: todoListStyles(),
+      styles: todoListStyles,
       children: todos.map(createListItem),
     },
   ],

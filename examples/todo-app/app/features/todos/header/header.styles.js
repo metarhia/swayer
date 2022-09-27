@@ -1,5 +1,5 @@
-/** @returns {Styles} */
-export const titleStyles = () => ({
+/** @type {Styles} */
+export const titleStyles = {
   position: 'absolute',
   top: '-139px',
   width: '100%',
@@ -7,10 +7,10 @@ export const titleStyles = () => ({
   fontWeight: 200,
   textAlign: 'center',
   color: 'rgba(175, 47, 47, 0.15)',
-});
+};
 
-/** @returns {Styles} */
-export const todoInputStyles = () => ({
+/** @type {Styles} */
+export const todoInputStyles = {
   position: 'relative',
   margin: '0',
   width: '100%',
@@ -31,4 +31,4 @@ export const todoInputStyles = () => ({
     fontWeight: 300,
     color: '#e6e6e6',
   },
-});
+};

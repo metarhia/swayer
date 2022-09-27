@@ -11,7 +11,7 @@ const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 const clearButton = {
   tag: 'button',
   text: 'Clear completed',
-  styles: clearTodosButtonStyles(),
+  styles: clearTodosButtonStyles,
   events: {
     click() {
       this.emitEvent('clearCompletedEvent');
@@ -22,7 +22,7 @@ const clearButton = {
 /** @returns {Schema} */
 export default ({ todos }) => ({
   tag: 'footer',
-  styles: footerStyles(),
+  styles: footerStyles,
   state: { counts: calculateCounts(todos) },
   channels: {
     todoChangeChannel() {
