@@ -137,5 +137,5 @@ interface CssAnimation {
 
 interface Styles<State extends DefaultState> extends PseudoStyles {
   animations?: CssAnimation[];
-  compute?: Reaction<State, CSSPropsValue>;
+  compute?: Reaction<State, CSSPropsValue> | Reaction<State, CSSPropsValue>[];
 }

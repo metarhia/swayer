@@ -90,15 +90,21 @@ export const removeTodoButtonStyles = {
       },
     },
   ],
-  compute: ({ buttonAnimation }) => {
-    let animation;
-    switch (buttonAnimation) {
-      case 'show': animation = 'ease-in 0.15s forwards fadeIn'; break;
-      case 'hide': animation = 'ease-out 0.15s forwards fadeOut'; break;
-      default: animation = 'none';
-    }
-    return { animation };
-  },
+  compute: [
+    ({ test }) => {
+      console.log('Compute button style test:', test);
+      return { boxSizing: 'border-box' };
+    },
+    ({ buttonAnimation }) => {
+      let animation;
+      switch (buttonAnimation) {
+        case 'show': animation = 'ease-in 0.15s forwards fadeIn'; break;
+        case 'hide': animation = 'ease-out 0.15s forwards fadeOut'; break;
+        default: animation = 'none';
+      }
+      return { animation };
+    },
+  ],
 };
 
 /** @type {Styles} */

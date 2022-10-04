@@ -85,6 +85,7 @@ export default ({ todo }) => ({
           styles: removeTodoButtonStyles,
           state: {
             buttonAnimation: 'none',
+            test: true,
           },
           events: {
             click() {
