@@ -50,12 +50,4 @@ export default ({ todos }) => ({
     },
     ({ counts }) => counts.completed > 0 && clearButton,
   ],
-  hooks: {
-    init() {
-      console.log('footer init');
-    },
-    destroy() {
-      console.log('footer destroy');
-    },
-  },
 });

@@ -18,31 +18,32 @@ const bodyStyles = {
   fontWeight: '300',
 };
 
-console.time('Bootstrap');
-
 /** @returns {Schema} */
-export default () => ({
-  tag: 'html',
-  styles: {
-    fontFamily: 'Helvetica',
-  },
-  attrs: {
-    lang: 'en',
-  },
-  hooks: {
-    init() {
-      console.timeEnd('Bootstrap');
+export default () => {
+  console.time('Init');
+  return {
+    tag: 'html',
+    styles: {
+      fontFamily: 'Helvetica',
     },
-  },
-  children: [
-    { path: '@app/pages/index/head.component' },
-    {
-      tag: 'body',
-      styles: bodyStyles,
-      children: [
-        { path: '@todos/container.component' },
-        { path: '@app/pages/index/footer.component' },
-      ],
+    attrs: {
+      lang: 'en',
     },
-  ],
-});
+    hooks: {
+      init() {
+        console.timeEnd('Init');
+      },
+    },
+    children: [
+      { path: '@app/pages/index/head.component' },
+      {
+        tag: 'body',
+        styles: bodyStyles,
+        children: [
+          { path: '@todos/container.component' },
+          { path: '@app/pages/index/footer.component' },
+        ],
+      },
+    ],
+  };
+};

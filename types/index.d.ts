@@ -14,7 +14,8 @@ type SchemaValue<State extends DefaultState> =
   | string
   | false
   | null
-  | undefined;
+  | undefined
+  | unknown;
 
 type SchemaChild<State extends DefaultState> =
   SchemaValue<State>
