@@ -45,8 +45,6 @@
       "error",
       {
         "code": 80,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
         "ignoreUrls": true
       }
     ],
@@ -68,6 +66,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "handle-callback-err": "off",
     "consistent-return": "off",
+    "class-methods-use-this": "off",
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "quote-props": ["error", "consistent-as-needed"],
     "max-params": ["error", 4],

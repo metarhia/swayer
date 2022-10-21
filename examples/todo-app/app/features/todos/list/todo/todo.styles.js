@@ -91,10 +91,7 @@ export const removeTodoButtonStyles = {
     },
   ],
   compute: [
-    ({ test }) => {
-      console.log('Compute button style test:', test);
-      return { boxSizing: 'border-box' };
-    },
+    () => ({ boxSizing: 'border-box' }),
     ({ buttonAnimation }) => {
       let animation;
       switch (buttonAnimation) {

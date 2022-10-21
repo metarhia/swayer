@@ -13,7 +13,9 @@ const createTodoList = createTodosComponent('list');
 const createFooter = createTodosComponent('footer');
 
 const todos = storage.retrieve();
-// const todos = new Array(2000).fill(null).map(() => ({ title: '1', editing: false, completed: false }));
+// const todos = new Array(5).fill(null).map(
+//   (_, i) => ({ title: `Title ${i + 1}`, editing: false, completed: false }),
+// );
 
 /** @returns {Schema} */
 export default () => ({
@@ -57,9 +59,20 @@ export default () => ({
   },
   children: [
     { path: '@todos/header/header.component' },
+    // {
+    //   // @ts-ignore
+    //   routes: {
+    //     'test/hello': { path: '@todos/header/header.component' },
+    //     'wow/okay/:id': { path: '@todos/good/good.component', args: { test: true } },
+    //   },
+    // },
     ({ todos }) => todos.length > 0 && [
       createTodoList(todos),
       createFooter(todos),
     ],
   ],
 });
+
+// this.route.changes (async generator)
+// this.route.params
+// this.router.navigate()
