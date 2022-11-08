@@ -1,5 +1,5 @@
 /** @type {Styles} */
-export const todoSectionStyles = {
+export const todosStyles = {
   background: '#fff',
   margin: '130px 0 40px 0',
   position: 'relative',

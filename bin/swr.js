@@ -6,9 +6,9 @@ import HttpServer from '../lib/cli/httpServer.js';
 * Define CLI commands with options and arguments
 * */
 const renderOptions = {
-  '--args': {
-    aliases: ['-a'],
-    description: 'Pass component arguments as JSON string.',
+  '--input': {
+    aliases: ['-i'],
+    description: 'Pass component input as JSON string.',
     parseAsJson: true,
   },
   '--pretty': {

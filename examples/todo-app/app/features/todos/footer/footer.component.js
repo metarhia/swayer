@@ -1,11 +1,5 @@
 import { clearTodosButtonStyles, footerStyles } from './footer.styles.js';
 
-const calculateCounts = (todos) => {
-  const completed = todos.filter((todo) => todo.completed).length;
-  const remaining = todos.length - completed;
-  return { completed, remaining };
-};
-
 const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 
 const clearButton = {
@@ -14,21 +8,16 @@ const clearButton = {
   styles: clearTodosButtonStyles,
   events: {
     click() {
-      this.emitEvent('clearCompletedEvent');
+      this.state.clearCompleted();
     },
   },
 };
 
 /** @returns {Schema} */
-export default ({ todos }) => ({
+export default (todosState) => ({
   tag: 'footer',
+  state: todosState,
   styles: footerStyles,
-  state: { counts: calculateCounts(todos) },
-  channels: {
-    todoChangeChannel() {
-      this.state.counts = calculateCounts(todos);
-    },
-  },
   children: [
     {
       tag: 'span',

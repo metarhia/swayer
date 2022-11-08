@@ -6,56 +6,45 @@ import {
   todoToggleStyles,
 } from './todo.styles.js';
 
-const emitTodoChange = (component) => {
-  const scope = [
-    '@todos/container.component',
-    '@todos/footer/footer.component',
-  ];
-  component.emitMessage('todoChangeChannel', null, { scope });
-};
-
-/** @returns {Schema} */
+/** @type {Schema} */
 const todoToggle = {
   tag: 'i',
   styles: todoToggleStyles,
   events: {
     click() {
-      this.state.completed = !this.state.completed;
-      emitTodoChange(this);
+      this.state.toggleComplete();
     },
   },
 };
 
-/** @returns {Schema} */
+/** @type {Schema} */
 const todoLabel = {
   tag: 'label',
   text: ({ title }) => title,
   styles: todoTitleStyles,
   events: {
     dblclick() {
-      this.state.editing = true;
+      this.state.startEditing();
     },
   },
 };
 
-/** @returns {Schema} */
-const createEditInput = (title) => ({
+/** @type {Schema} */
+const editInput = {
   tag: 'input',
   styles: editTodoStyles,
   props: {
-    value: title,
+    value: ({ title }) => title,
   },
   events: {
     blur() {
-      this.state.editing = false;
+      this.state.endEditing();
     },
     keyup(event) {
-      const title = this.props.value;
-      if (!title) return;
       if (event.key === 'Enter') {
+        const title = this.props.value;
+        this.state.updateTitle(title);
         this.blur();
-        this.state.title = title;
-        emitTodoChange(this);
       } else if (event.key === 'Escape') {
         this.blur();
       }
@@ -66,13 +55,51 @@ const createEditInput = (title) => ({
       this.focus();
     },
   },
+};
+
+/** @returns {Schema} */
+const removeTodoBtn = (todoState) => ({
+  tag: 'button',
+  styles: removeTodoButtonStyles,
+  state: {
+    model: {
+      buttonAnimation: 'none',
+    },
+    showIcon() {
+      this.model.buttonAnimation = 'show';
+    },
+    hideIcon() {
+      this.model.buttonAnimation = 'hide';
+    },
+  },
+  events: {
+    click() {
+      todoState.remove();
+    },
+    mouseenter() {
+      this.state.showIcon();
+    },
+    mouseleave() {
+      this.state.hideIcon();
+    },
+  },
+  children: [
+    {
+      tag: 'i',
+      styles: {
+        width: '25px',
+        height: '25px',
+        background: 'url(/assets/icons/remove.svg) center no-repeat',
+      },
+    },
+  ],
 });
 
 /** @returns {Schema} */
-export default ({ todo }) => ({
+export default (todoModel) => ({
   tag: 'li',
   styles: todoStyles,
-  state: todo,
+  state: todoModel.getState(),
   children: [
     {
       tag: 'div',
@@ -80,35 +107,8 @@ export default ({ todo }) => ({
       children: [
         todoToggle,
         todoLabel,
-        {
-          tag: 'button',
-          styles: removeTodoButtonStyles,
-          state: {
-            buttonAnimation: 'none',
-          },
-          events: {
-            click() {
-              this.emitEvent('todoRemoveEvent', todo);
-            },
-            mouseenter() {
-              this.state.buttonAnimation = 'show';
-            },
-            mouseleave() {
-              this.state.buttonAnimation = 'hide';
-            },
-          },
-          children: [
-            {
-              tag: 'i',
-              styles: {
-                width: '25px',
-                height: '25px',
-                background: 'url(/assets/icons/remove.svg) center no-repeat',
-              },
-            },
-          ],
-        },
-        ({ title, editing }) => editing && createEditInput(title),
+        removeTodoBtn(todoModel.getState()),
+        ({ editing }) => editing && editInput,
       ],
     },
   ],

@@ -19,7 +19,7 @@ const bodyStyles = {
 };
 
 /** @returns {Schema} */
-export default (args = {}) => {
+export default () => {
   console.time('Init');
   return {
     tag: 'html',
@@ -35,7 +35,7 @@ export default (args = {}) => {
       },
     },
     children: [
-      { path: '@app/pages/index/head.component', args },
+      { path: '@app/pages/index/head.component' },
       {
         tag: 'body',
         styles: bodyStyles,

@@ -1,15 +1,21 @@
-/** @returns Styles */
-const linkStyles = () => ({
+/** @type {Styles} */
+const linkStyles = {
   color: 'inherit',
   textDecoration: 'none',
   fontWeight: 400,
   hover: {
     textDecoration: 'underline',
   },
-});
+};
 
-export default () => ({
+/** @type {Schema} */
+export default {
   tag: 'footer',
+  state: {
+    model: {
+      color: 'red',
+    },
+  },
   styles: {
     margin: '65px auto 0',
     color: '#bfbfbf',
@@ -29,7 +35,7 @@ export default () => ({
         'Created by ',
         {
           tag: 'a',
-          styles: linkStyles(),
+          styles: linkStyles,
           attrs: {
             href: 'https://github.com/rohiievych',
             target: '_blank',
@@ -40,7 +46,7 @@ export default () => ({
         ' using ',
         {
           tag: 'a',
-          styles: linkStyles(),
+          styles: linkStyles,
           attrs: {
             href: 'https://github.com/metarhia/swayer',
             target: '_blank',
@@ -51,4 +57,4 @@ export default () => ({
       ],
     },
   ],
-});
+};

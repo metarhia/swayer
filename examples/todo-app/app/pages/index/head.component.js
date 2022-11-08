@@ -1,10 +1,10 @@
-/** @returns {Schema} */
-export default ({ title = 'Todo app' }) => ({
+/** @type {Schema} */
+export default {
   tag: 'head',
   children: [
     {
       tag: 'title',
-      text: title,
+      text: 'Todo app',
     },
     {
       tag: 'meta',
@@ -20,4 +20,4 @@ export default ({ title = 'Todo app' }) => ({
       },
     },
   ],
-});
+};

@@ -1,7 +1,6 @@
 interface SchemaRef {
   path: string;
-  base?: string;
-  args?: unknown;
+  input?: Record<string, unknown>;
 }
 
 type DefaultState = Record<string, unknown>;
