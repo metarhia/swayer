@@ -4,16 +4,11 @@ import {
   toggleAllTodosStyles,
 } from './list.styles.js';
 
-const createListItem = (todoModel) => ({
-  path: '@todos/list/todo/todo.component',
-  input: todoModel,
-});
-
 /** @returns {Schema} */
-export default (todosState) => ({
+export default (todosModel) => ({
   tag: 'div',
   styles: mainSectionStyles,
-  state: todosState,
+  model: todosModel,
   children: [
     {
       tag: 'input',
@@ -25,7 +20,10 @@ export default (todosState) => ({
     {
       tag: 'ul',
       styles: todoListStyles,
-      children: ({ todos }) => todos.map(createListItem),
+      children: ({ todos }) => todos.map((todo) => ({
+        path: '@todos/list/todo/todo.component',
+        input: { todosModel, todo },
+      })),
     },
   ],
 });

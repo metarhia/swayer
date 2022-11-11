@@ -1,7 +1,7 @@
 import { titleStyles, todoInputStyles } from './header.styles.js';
 
 /** @returns {Schema[]} */
-export default (todosState) => [
+export default (todosModel) => [
   {
     tag: 'h1',
     text: 'todos',
@@ -10,8 +10,8 @@ export default (todosState) => [
   {
     tag: 'input',
     styles: todoInputStyles,
-    state: {
-      model: {
+    model: {
+      state: {
         test: 'Initial',
       },
     },
@@ -25,13 +25,13 @@ export default (todosState) => [
     },
     events: {
       input() {
-        this.state.model.test = this.props.value;
+        this.model.state.test = this.props.value;
       },
       keyup(event) {
         if (event.key === 'Enter' && this.props.value) {
           const title = this.props.value;
-          todosState.addTodo({ title });
-          this.props.value = '';
+          todosModel.addTodo({ title });
+          this.model.state.test = this.props.value = '';
         }
       },
     },

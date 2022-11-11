@@ -1,17 +1,17 @@
 import { todosStyles } from './container.styles.js';
-import { TodosState } from './domain/todos.state.js';
+import { TodosModel } from './todos.model.js';
 
 /** @returns {Schema} */
 export default () => {
-  const todosState = new TodosState();
+  const todosModel = new TodosModel();
   return {
     tag: 'main',
     styles: todosStyles,
-    state: todosState,
+    model: todosModel,
     children: [
       {
         path: '@todos/header/header.component',
-        input: todosState,
+        input: todosModel,
       },
       // {
       //   // @ts-ignore
@@ -26,11 +26,11 @@ export default () => {
       ({ show }) => show && [
         {
           path: `@todos/list/list.component`,
-          input: todosState,
+          input: todosModel,
         },
         {
           path: `@todos/footer/footer.component`,
-          input: todosState,
+          input: todosModel,
         },
       ],
     ],

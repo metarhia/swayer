@@ -3,6 +3,11 @@ interface SchemaRef {
   input?: Record<string, unknown>;
 }
 
+// eslint-disable-next-line
+interface Model<State> extends Record<string, any> {
+  state: State;
+}
+
 type DefaultState = Record<string, unknown>;
 
 type Reaction<State extends DefaultState, Result> = (state: State) => Result;
@@ -33,7 +38,7 @@ interface Schema<State extends DefaultState> {
   styles?: Styles<State> | Reaction<State, CSSPropsValue>;
   props?: Props<State> | Reaction<State, PartialProps> & PartialProps;
   attrs?: Attrs<State> | Reaction<State, Attrs<State>>;
-  state?: State;
+  model?: Model<State>;
   methods?: Methods & ThisType<Component<State>>;
   events?: Events & ThisType<Component<State>>;
   channels?: Channels & ThisType<Component<State>>;

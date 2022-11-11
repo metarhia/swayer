@@ -1,3 +1,4 @@
+import { TodoModel } from './todo.model.js';
 import {
   editTodoStyles,
   removeTodoButtonStyles,
@@ -12,7 +13,7 @@ const todoToggle = {
   styles: todoToggleStyles,
   events: {
     click() {
-      this.state.toggleComplete();
+      this.model.toggleComplete();
     },
   },
 };
@@ -24,7 +25,7 @@ const todoLabel = {
   styles: todoTitleStyles,
   events: {
     dblclick() {
-      this.state.startEditing();
+      this.model.startEditing();
     },
   },
 };
@@ -38,12 +39,12 @@ const editInput = {
   },
   events: {
     blur() {
-      this.state.endEditing();
+      this.model.endEditing();
     },
     keyup(event) {
       if (event.key === 'Enter') {
         const title = this.props.value;
-        this.state.updateTitle(title);
+        this.model.updateTitle(title);
         this.blur();
       } else if (event.key === 'Escape') {
         this.blur();
@@ -58,58 +59,69 @@ const editInput = {
 };
 
 /** @returns {Schema} */
-const removeTodoBtn = (todoState) => ({
-  tag: 'button',
-  styles: removeTodoButtonStyles,
-  state: {
-    model: {
+const removeTodoBtn = () => {
+  const model = {
+    state: {
       buttonAnimation: 'none',
     },
     showIcon() {
-      this.model.buttonAnimation = 'show';
+      this.state.buttonAnimation = 'show';
     },
     hideIcon() {
-      this.model.buttonAnimation = 'hide';
+      this.state.buttonAnimation = 'hide';
     },
-  },
-  events: {
-    click() {
-      todoState.remove();
-    },
-    mouseenter() {
-      this.state.showIcon();
-    },
-    mouseleave() {
-      this.state.hideIcon();
-    },
-  },
-  children: [
-    {
-      tag: 'i',
-      styles: {
-        width: '25px',
-        height: '25px',
-        background: 'url(/assets/icons/remove.svg) center no-repeat',
+  };
+  return {
+    tag: 'button',
+    styles: removeTodoButtonStyles,
+    model,
+    events: {
+      click() {
+        this.emitEvent('removeTodo');
+      },
+      mouseenter() {
+        this.model.showIcon();
+      },
+      mouseleave() {
+        this.model.hideIcon();
       },
     },
-  ],
-});
+    children: [
+      {
+        tag: 'i',
+        styles: {
+          width: '25px',
+          height: '25px',
+          background: 'url(/assets/icons/remove.svg) center no-repeat',
+        },
+      },
+    ],
+  };
+};
 
 /** @returns {Schema} */
-export default (todoModel) => ({
-  tag: 'li',
-  styles: todoStyles,
-  state: todoModel.getState(),
-  children: [
-    {
-      tag: 'div',
-      styles: { position: 'relative' },
-      children: [
-        todoToggle,
-        todoLabel,
-        removeTodoBtn(todoModel.getState()),
-        ({ editing }) => editing && editInput,
-      ],
+export default ({ todosModel, todo }) => {
+  const todoModel = new TodoModel(todosModel, todo);
+  return {
+    tag: 'li',
+    styles: todoStyles,
+    model: todoModel,
+    events: {
+      removeTodo() {
+        this.model.remove();
+      },
     },
-  ],
-});
+    children: [
+      {
+        tag: 'div',
+        styles: { position: 'relative' },
+        children: [
+          todoToggle,
+          todoLabel,
+          removeTodoBtn(),
+          ({ editing }) => editing && editInput,
+        ],
+      },
+    ],
+  };
+};

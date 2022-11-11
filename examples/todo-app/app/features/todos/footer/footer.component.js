@@ -8,15 +8,15 @@ const clearButton = {
   styles: clearTodosButtonStyles,
   events: {
     click() {
-      this.state.clearCompleted();
+      this.model.clearCompleted();
     },
   },
 };
 
 /** @returns {Schema} */
-export default (todosState) => ({
+export default (todosModel) => ({
   tag: 'footer',
-  state: todosState,
+  model: todosModel,
   styles: footerStyles,
   children: [
     {

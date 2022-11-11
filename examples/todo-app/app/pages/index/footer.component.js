@@ -11,11 +11,6 @@ const linkStyles = {
 /** @type {Schema} */
 export default {
   tag: 'footer',
-  state: {
-    model: {
-      color: 'red',
-    },
-  },
   styles: {
     margin: '65px auto 0',
     color: '#bfbfbf',
