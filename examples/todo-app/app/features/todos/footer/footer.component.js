@@ -13,7 +13,7 @@ const clearButton = {
   },
 };
 
-/** @returns {Schema} */
+/** @returns {Schema<TodosModel>} */
 export default (todosModel) => ({
   tag: 'footer',
   model: todosModel,

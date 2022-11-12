@@ -7,7 +7,7 @@ import {
   todoToggleStyles,
 } from './todo.styles.js';
 
-/** @type {Schema} */
+/** @type {Schema<TodoModel>} */
 const todoToggle = {
   tag: 'i',
   styles: todoToggleStyles,
@@ -18,7 +18,7 @@ const todoToggle = {
   },
 };
 
-/** @type {Schema} */
+/** @type {Schema<TodoModel>} */
 const todoLabel = {
   tag: 'label',
   text: ({ title }) => title,
@@ -30,7 +30,7 @@ const todoLabel = {
   },
 };
 
-/** @type {Schema} */
+/** @type {Schema<TodoModel>} */
 const editInput = {
   tag: 'input',
   styles: editTodoStyles,
@@ -99,29 +99,26 @@ const removeTodoBtn = () => {
   };
 };
 
-/** @returns {Schema} */
-export default ({ todosModel, todo }) => {
-  const todoModel = new TodoModel(todosModel, todo);
-  return {
-    tag: 'li',
-    styles: todoStyles,
-    model: todoModel,
-    events: {
-      removeTodo() {
-        this.model.remove();
-      },
+/** @returns {Schema<TodoModel>} */
+export default ({ todosModel, todo }) => ({
+  tag: 'li',
+  styles: todoStyles,
+  model: new TodoModel(todosModel, todo),
+  events: {
+    removeTodo() {
+      this.model.remove();
     },
-    children: [
-      {
-        tag: 'div',
-        styles: { position: 'relative' },
-        children: [
-          todoToggle,
-          todoLabel,
-          removeTodoBtn(),
-          ({ editing }) => editing && editInput,
-        ],
-      },
-    ],
-  };
-};
+  },
+  children: [
+    {
+      tag: 'div',
+      styles: { position: 'relative' },
+      children: [
+        todoToggle,
+        todoLabel,
+        removeTodoBtn(),
+        ({ editing }) => editing && editInput,
+      ],
+    },
+  ],
+});

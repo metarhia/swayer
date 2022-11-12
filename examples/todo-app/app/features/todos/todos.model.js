@@ -2,15 +2,24 @@ import storageService from './todo-storage.service.js';
 
 export class TodosModel {
   #storage = storageService;
-  state = {};
+  /** @type {TodosState} */
+  state = {
+    show: false,
+    todos: [],
+    counts: {
+      completed: 0,
+      remaining: 0,
+    },
+  };
 
   constructor() {
-    this.state.todos = this.#storage.retrieve();
+    this.load();
     this.updateVisibility();
     this.calculateCounts();
   }
 
-  addTodo(data) {
+  addTodo(title) {
+    const data = { title, editing: false, completed: false };
     this.state.todos.push(data);
     this.handleChanges();
   }
@@ -42,6 +51,10 @@ export class TodosModel {
     const completed = todos.filter(({ completed }) => completed).length;
     const remaining = todos.length - completed;
     this.state.counts = { completed, remaining };
+  }
+
+  load() {
+    this.state.todos = this.#storage.retrieve();
   }
 
   save() {

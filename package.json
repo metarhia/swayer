@@ -44,21 +44,21 @@
     "fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "jsdom": "^20.0.0",
+    "jsdom": "^20.0.2",
     "pretty": "^2.0.0",
-    "terser": "^5.15.0"
+    "terser": "^5.15.1"
   },
   "devDependencies": {
-    "@types/node": "^18.7.14",
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
-    "eslint": "^8.22.0",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
     "eslint-config-metarhia": "^8.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-markdown": "^3.0.0",
-    "eslint-plugin-yml": "^1.1.0",
+    "eslint-plugin-yml": "^1.2.0",
     "metatests": "^0.8.2",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.4"
   }
 }

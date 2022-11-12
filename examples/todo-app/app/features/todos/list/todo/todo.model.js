@@ -1,10 +1,15 @@
 export class TodoModel {
   #todosModel;
-  state;
+  /** @type {TodoState} */
+  state = {
+    title: '',
+    editing: false,
+    completed: false,
+  };
 
-  constructor(todosModel, data = {}) {
+  constructor(todosModel, data) {
     this.#todosModel = todosModel;
-    this.state = data;
+    this.state = data || this.state;
     this.state.title = (data.title ?? '').trim();
     this.state.editing = data.editing ?? false;
     this.state.completed = data.completed ?? false;

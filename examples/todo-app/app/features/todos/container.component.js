@@ -1,7 +1,7 @@
 import { todosStyles } from './container.styles.js';
 import { TodosModel } from './todos.model.js';
 
-/** @returns {Schema} */
+/** @returns {Schema<TodosModel>} */
 export default () => {
   const todosModel = new TodosModel();
   return {

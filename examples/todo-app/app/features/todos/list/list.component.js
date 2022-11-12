@@ -4,7 +4,7 @@ import {
   toggleAllTodosStyles,
 } from './list.styles.js';
 
-/** @returns {Schema} */
+/** @returns {Schema<TodosModel>} */
 export default (todosModel) => ({
   tag: 'div',
   styles: mainSectionStyles,

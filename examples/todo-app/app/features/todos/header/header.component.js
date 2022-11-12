@@ -30,7 +30,7 @@ export default (todosModel) => [
       keyup(event) {
         if (event.key === 'Enter' && this.props.value) {
           const title = this.props.value;
-          todosModel.addTodo({ title });
+          todosModel.addTodo(title);
           this.model.state.test = this.props.value = '';
         }
       },

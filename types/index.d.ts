@@ -1,95 +1,78 @@
+// eslint-disable-next-line
+type UserObject = Record<string, any>;
+
 interface SchemaRef {
   path: string;
-  input?: Record<string, unknown>;
+  input?: UserObject;
 }
 
-// eslint-disable-next-line
-interface Model<State> extends Record<string, any> {
+interface Model<State = UserObject> extends UserObject {
   state: State;
 }
 
-type DefaultState = Record<string, unknown>;
+type BasicPrimitives = string | boolean | number | bigint | symbol;
 
-type Reaction<State extends DefaultState, Result> = (state: State) => Result;
+type NullishPrimitives = null | undefined;
 
-type SchemaValue<State extends DefaultState> =
-  Schema<State>
+type Reaction<State, Result> = (state: State) => Result;
+
+type SchemaValue<TModel extends Model> = Schema<TModel>
   | SchemaRef
-  | string
-  | false
-  | null
-  | undefined
-  | unknown;
+  | BasicPrimitives
+  | NullishPrimitives;
 
-type SchemaChild<State extends DefaultState> =
-  SchemaValue<State>
-  | Reaction<State, SchemaValue<State> | SchemaValue<State>[]>;
+type SchemaChild<TModel extends Model> = SchemaValue<TModel>
+  | Reaction<TModel['state'], SchemaValue<TModel> | SchemaValue<TModel>[]>;
 
 type SchemaProps = HTMLInputElement;
-type PartialProps = Partial<SchemaProps>;
 
-type Props<State extends DefaultState> = Partial<{
+type Props<State> = Partial<{
   [P in keyof SchemaProps]: SchemaProps[P] | Reaction<State, SchemaProps[P]>;
 }>;
 
-interface Schema<State extends DefaultState> {
+interface Schema<TModel extends Model, State = TModel['state']> {
   tag: string;
-  text?: string | Reaction<State, unknown>;
+  text?: BasicPrimitives | Reaction<State, BasicPrimitives>;
   styles?: Styles<State> | Reaction<State, CSSPropsValue>;
-  props?: Props<State> | Reaction<State, PartialProps> & PartialProps;
+  props?: Props<State>;
   attrs?: Attrs<State> | Reaction<State, Attrs<State>>;
-  model?: Model<State>;
-  methods?: Methods & ThisType<Component<State>>;
-  events?: Events & ThisType<Component<State>>;
-  channels?: Channels & ThisType<Component<State>>;
-  hooks?: Partial<Hooks> & ThisType<Component<State>>;
-  children?: SchemaChild<State>[] | Reaction<State, SchemaChild<State>[]>;
-}
-
-type OmittedArrayMethods<State extends DefaultState> =
-     Omit<Component<State>[], 'push' | 'pop' | 'splice'>;
-
-interface ComponentChildren<State extends DefaultState>
-          extends OmittedArrayMethods<State> {
-  push(...schemas: SchemaChild<State>[]): Promise<Component<State>[]>;
-  pop(): Component<State>;
-  splice(
-    start: number,
-    deleteCount: number,
-    ...replacements: SchemaChild<State>[]
-  ): Promise<Component<State>[]>;
+  model?: TModel;
+  methods?: Methods & ThisType<Component<TModel>>;
+  events?: Events & ThisType<Component<TModel>>;
+  channels?: Channels & ThisType<Component<TModel>>;
+  hooks?: Partial<Hooks> & ThisType<Component<TModel>>;
+  children?: SchemaChild<TModel>[] | Reaction<State, SchemaChild<TModel>[]>;
 }
 
 interface ChannelOptions {
   scope?: string | string[];
 }
 
-interface Component<State extends DefaultState>
-          extends Omit<Required<Schema<State>>, 'children'> {
-  original: Schema<State>;
-  children: ComponentChildren<State>;
+interface Component<TModel extends Model>
+          extends Omit<Required<Schema<TModel>>, 'children'> {
+  isServer: boolean;
+  isBrowser: boolean;
+  moduleUrl: string;
   emitEvent(name: string, data?): boolean;
   emitMessage(name: string, data?, options?: ChannelOptions): void;
-  destroy(): void;
   click(): void;
   focus(): void;
   blur(): void;
 }
 
-type CSSPropsValue<State extends DefaultState = DefaultState> = Partial<
+type CSSPropsValue<State = UserObject> = Partial<
   Record<
     keyof CSSStyleDeclaration,
     string | number | Reaction<State, string | number>
   >
 >;
 
-type CSSProps<State extends DefaultState> =
+type CSSProps<State> =
   CSSPropsValue<State> | Reaction<State, CSSPropsValue<State>>;
 
-type AttrValue<State extends DefaultState> =
-  string | number | boolean | undefined | CSSProps<State>;
+type AttrValue<State> = BasicPrimitives | NullishPrimitives | CSSProps<State>;
 
-interface Attrs<State extends DefaultState> {
+interface Attrs<State> {
   style?: CSSProps<State> | Reaction<State, CSSProps<State>>;
   [attr: string]: AttrValue<State> | Reaction<State, AttrValue<State>>;
 }
@@ -140,7 +123,7 @@ interface CssAnimation {
   };
 }
 
-interface Styles<State extends DefaultState> extends PseudoStyles {
+interface Styles<State> extends PseudoStyles {
   animations?: CssAnimation[];
   compute?: Reaction<State, CSSPropsValue> | Reaction<State, CSSPropsValue>[];
 }
