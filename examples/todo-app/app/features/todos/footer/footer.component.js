@@ -2,6 +2,7 @@ import { clearTodosButtonStyles, footerStyles } from './footer.styles.js';
 
 const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 
+/** @type {Schema<TodosModel>} */
 const clearButton = {
   tag: 'button',
   text: 'Clear completed',

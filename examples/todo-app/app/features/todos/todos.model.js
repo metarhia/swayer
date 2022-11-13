@@ -13,37 +13,27 @@ export class TodosModel {
   };
 
   constructor() {
-    this.load();
-    this.updateVisibility();
+    this.#load();
+    this.#updateVisibility();
     this.calculateCounts();
   }
 
   addTodo(title) {
     const data = { title, editing: false, completed: false };
     this.state.todos.push(data);
-    this.handleChanges();
+    this.#handleChanges();
   }
 
   removeTodo(todoModel) {
     const index = this.state.todos.indexOf(todoModel.state);
     this.state.todos.splice(index, 1);
-    this.handleChanges();
+    this.#handleChanges();
   }
 
   clearCompleted() {
     const todos = this.state.todos;
     this.state.todos = todos.filter(({ completed }) => !completed);
-    this.handleChanges();
-  }
-
-  handleChanges() {
-    this.updateVisibility();
-    this.calculateCounts();
-    this.save();
-  }
-
-  updateVisibility() {
-    this.state.show = this.state.todos.length > 0;
+    this.#handleChanges();
   }
 
   calculateCounts() {
@@ -53,11 +43,21 @@ export class TodosModel {
     this.state.counts = { completed, remaining };
   }
 
-  load() {
+  save() {
+    this.#storage.save(this.state.todos);
+  }
+
+  #load() {
     this.state.todos = this.#storage.retrieve();
   }
 
-  save() {
-    this.#storage.save(this.state.todos);
+  #handleChanges() {
+    this.#updateVisibility();
+    this.calculateCounts();
+    this.save();
+  }
+
+  #updateVisibility() {
+    this.state.show = this.state.todos.length > 0;
   }
 }
