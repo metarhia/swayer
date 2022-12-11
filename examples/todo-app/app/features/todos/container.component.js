@@ -13,16 +13,6 @@ export default () => {
         path: '@todos/header/header.component',
         input: todosModel,
       },
-      // {
-      //   // @ts-ignore
-      //   routes: {
-      //     'test/hello': { path: '@todos/header/header.component' },
-      //     'wow/okay/:id': {
-      //        path: '@todos/good/good.component',
-      //        input: { test: true },
-      //      },
-      //   },
-      // },
       ({ show }) => show && [
         {
           path: `@todos/list/list.component`,
@@ -36,7 +26,3 @@ export default () => {
     ],
   };
 };
-
-// this.route.changes (async generator)
-// this.route.params
-// this.router.navigate()

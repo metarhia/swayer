@@ -6,9 +6,31 @@ interface SchemaRef {
   input?: UserObject;
 }
 
+interface Route<TModel extends Model> {
+  pattern: string;
+  component: SchemaValue<TModel> | RouteComponentResolver<TModel>;
+}
+
+interface Routes<TModel extends Model> {
+  routes: Route<TModel>[];
+}
+
+interface RouteResolution {
+  params: Record<string, string>;
+}
+
+// todo implement router
+interface Router {
+  go(path: string): void;
+}
+
 interface Model<State = UserObject> extends UserObject {
   state: State;
 }
+
+type RouteComponentResolver<TModel extends Model> = (
+  resolution: RouteResolution
+) => SchemaValue<TModel> | Promise<SchemaValue<TModel>>;
 
 type BasicPrimitives = string | boolean | number | bigint | symbol;
 
@@ -18,6 +40,7 @@ type Reaction<State, Result> = (state: State) => Result;
 
 type SchemaValue<TModel extends Model> = Schema<TModel>
   | SchemaRef
+  | Routes<TModel>
   | BasicPrimitives
   | NullishPrimitives;
 
@@ -32,6 +55,7 @@ type Props<State> = Partial<{
 
 interface Schema<TModel extends Model, State = TModel['state']> {
   tag: string;
+  namespaces?: Record<string, string>,
   text?: BasicPrimitives | Reaction<State, BasicPrimitives>;
   styles?: Styles<State> | Reaction<State, CSSPropsValue>;
   props?: Props<State>;
@@ -53,6 +77,7 @@ interface Component<TModel extends Model>
   isServer: boolean;
   isBrowser: boolean;
   moduleUrl: string;
+  router: Router;
   emitEvent(name: string, data?): boolean;
   emitMessage(name: string, data?, options?: ChannelOptions): void;
   click(): void;

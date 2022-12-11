@@ -18,6 +18,9 @@ const renderOptions = {
   '--ssr': {
     description: 'Enable server side rendering.',
   },
+  '--spa': {
+    description: 'Single page application',
+  },
 };
 
 const commands = {
