@@ -1,24 +1,34 @@
-// Preload
-import './app/site/page.component.js';
-import './app/site/head.component.js';
-import './app/features/todos/footer/footer.component.js';
-import './app/features/todos/header/header.component.js';
-import './app/features/todos/list/list.component.js';
-import './app/features/todos/list/todo/todo.component.js';
-import './app/features/todos/container.component.js';
+const locales = {
+  uk: 'uk',
+  en: 'en',
+};
+const resolveLocale = (locale) => locales[locale] || locales.uk;
 
 export default {
   namespaces: {
     '@app': 'app',
     '@todos': 'app/features/todos',
   },
-  routes: [
+  preload: [
+    '@app/site/head.component',
+    '@app/site/footer.component',
+    '@todos/header/header.component',
+    '@todos/container.component',
+    '@todos/list/list.component',
+    '@todos/list/todo/todo.component',
+    '@todos/footer/footer.component',
+  ],
+  children: [
     {
-      pattern: ':lang',
-      component: ({ params }) => ({
-        path: '@app/site/page.component',
-        input: params,
-      }),
+      routes: [
+        {
+          pattern: ':locale',
+          component: ({ params }) => ({
+            path: '@app/site/page.component',
+            input: { locale: resolveLocale(params.locale) },
+          }),
+        },
+      ],
     },
   ],
 };

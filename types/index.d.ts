@@ -19,7 +19,6 @@ interface RouteResolution {
   params: Record<string, string>;
 }
 
-// todo implement router
 interface Router {
   go(path: string): void;
 }

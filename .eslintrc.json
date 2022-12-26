@@ -74,6 +74,7 @@
     "generator-star-spacing": ["error", { "before": true, "after": false }],
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-this-alias": "off"
   }
 }

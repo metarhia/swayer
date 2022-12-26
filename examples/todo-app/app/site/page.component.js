@@ -9,22 +9,26 @@ const bodyStyles = {
   fontWeight: '300',
 };
 
+const siteHeadRef = { path: '@app/site/head.component' };
+const todosContainerRef = { path: '@todos/container.component' };
+const siteFooterRef = { path: '@app/site/footer.component' };
+
 /** @returns {Schema} */
-export default ({ lang = 'en' }) => {
+export default ({ locale }) => {
   console.time('Init');
   return {
     tag: 'html',
     styles: {
       fontFamily: 'Helvetica',
     },
-    attrs: { lang },
+    attrs: { lang: locale },
     hooks: {
       init() {
         console.timeEnd('Init');
       },
     },
     children: [
-      { path: '@app/site/head.component' },
+      siteHeadRef,
       {
         tag: 'body',
         styles: bodyStyles,
@@ -33,15 +37,15 @@ export default ({ lang = 'en' }) => {
             routes: [
               {
                 pattern: '',
-                component: { path: '@todos/container.component' },
+                component: todosContainerRef,
               },
               {
                 pattern: 'todos',
-                component: { path: '@todos/container.component' },
+                component: todosContainerRef,
               },
               {
                 pattern: 'todos/:id',
-                component: 'Hey, this is todo',
+                component: ({ params }) => `Hey, this is todo '${params.id}'`,
               },
               {
                 pattern: '**',
@@ -49,7 +53,7 @@ export default ({ lang = 'en' }) => {
               },
             ],
           },
-          { path: '@app/site/footer.component' },
+          siteFooterRef,
         ],
       },
     ],
