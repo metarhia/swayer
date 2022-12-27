@@ -23,6 +23,12 @@ export default {
     {
       tag: 'p',
       text: 'Double-click to edit a todo',
+      attrs: { id: 'test' },
+      channels: {
+        test(message) {
+          console.log({ message });
+        },
+      },
     },
     {
       tag: 'p',

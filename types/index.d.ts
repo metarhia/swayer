@@ -67,8 +67,13 @@ interface Schema<TModel extends Model, State = TModel['state']> {
   children?: SchemaChild<TModel>[] | Reaction<State, SchemaChild<TModel>[]>;
 }
 
-interface ChannelOptions {
+interface ChannelOptions<TModel extends Model> {
   scope?: string | string[];
+  select?: (
+    component: Component<TModel>,
+    index: number,
+    array: Component<TModel>[],
+  ) => boolean;
 }
 
 interface Component<TModel extends Model>
@@ -78,7 +83,7 @@ interface Component<TModel extends Model>
   moduleUrl: string;
   router: Router;
   emitEvent(name: string, data?): boolean;
-  emitMessage(name: string, data?, options?: ChannelOptions): void;
+  emitMessage(name: string, data?, options?: ChannelOptions<TModel>): void;
   click(): void;
   focus(): void;
   blur(): void;

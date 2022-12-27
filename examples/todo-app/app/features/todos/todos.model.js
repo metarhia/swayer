@@ -1,7 +1,7 @@
-import storageService from './todo-storage.service.js';
+import Storage from '../../utils/storage.js';
 
 export class TodosModel {
-  #storage = storageService;
+  #storage = new Storage('swayer-todos');
   /** @type {TodosState} */
   state = {
     show: false,
