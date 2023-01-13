@@ -2,7 +2,11 @@ const locales = {
   uk: 'uk',
   en: 'en',
 };
-const resolveLocale = (locale) => locales[locale] || locales.uk;
+
+const createPageComponent = (locale = locales.uk) => ({
+  path: '@app/site/page.component',
+  input: { locale },
+});
 
 export default {
   namespaces: {
@@ -22,11 +26,17 @@ export default {
     {
       routes: [
         {
-          pattern: ':locale',
-          component: ({ params }) => ({
-            path: '@app/site/page.component',
-            input: { locale: resolveLocale(params.locale) },
-          }),
+          pattern: ['', 'todos'],
+          component: createPageComponent(),
+        },
+        {
+          pattern: [':locale', ':locale/todos'],
+          canMatch: (params) => params.locale in locales,
+          component: (params) => createPageComponent(locales[params.locale]),
+        },
+        {
+          pattern: '**',
+          component: createPageComponent(),
         },
       ],
     },

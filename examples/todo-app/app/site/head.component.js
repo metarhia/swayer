@@ -1,31 +1,10 @@
-const createTitle = (title) => ({
-  tag: 'title',
-  text: title,
-});
-
-/** @type {Schema} */
-export default {
+/** @returns {Schema} */
+export default (title) => ({
   tag: 'head',
   children: [
     {
-      routes: [
-        {
-          pattern: '',
-          component: createTitle('Todos'),
-        },
-        {
-          pattern: 'todos',
-          component: createTitle('Todos'),
-        },
-        {
-          pattern: 'todos/:id',
-          component: ({ params }) => createTitle(`Todo #${params.id}`),
-        },
-        {
-          pattern: '**',
-          component: createTitle('404'),
-        },
-      ],
+      tag: 'title',
+      text: title,
     },
     {
       tag: 'meta',
@@ -41,4 +20,4 @@ export default {
       },
     },
   ],
-};
+});

@@ -9,9 +9,20 @@ const bodyStyles = {
   fontWeight: '300',
 };
 
-const siteHeadRef = { path: '@app/site/head.component' };
-const todosContainerRef = { path: '@todos/container.component' };
-const siteFooterRef = { path: '@app/site/footer.component' };
+const createPage = (title, contentComponent) => [
+  {
+    path: '@app/site/head.component',
+    input: title,
+  },
+  {
+    tag: 'body',
+    styles: bodyStyles,
+    children: [
+      contentComponent,
+      { path: '@app/site/footer.component' },
+    ],
+  },
+];
 
 /** @returns {Schema} */
 export default ({ locale }) => {
@@ -28,32 +39,29 @@ export default ({ locale }) => {
       },
     },
     children: [
-      siteHeadRef,
       {
-        tag: 'body',
-        styles: bodyStyles,
-        children: [
+        routes: [
           {
-            routes: [
-              {
-                pattern: '',
-                component: todosContainerRef,
-              },
-              {
-                pattern: 'todos',
-                component: todosContainerRef,
-              },
-              {
-                pattern: 'todos/:id',
-                component: ({ params }) => `Hey, this is todo '${params.id}'`,
-              },
-              {
-                pattern: '**',
-                component: 'Page not found',
-              },
-            ],
+            pattern: '',
+            component: createPage(
+              'Todos',
+              { path: '@todos/container.component' },
+            ),
           },
-          siteFooterRef,
+          {
+            pattern: [':id', 'todos/:id'],
+            component: (params) => createPage(
+              `Todo #${params.id}`,
+              `Hey, this is todo '${params.id}'`,
+            ),
+          },
+          {
+            pattern: '**',
+            component: createPage(
+              '404',
+              'Page not found',
+            ),
+          },
         ],
       },
     ],

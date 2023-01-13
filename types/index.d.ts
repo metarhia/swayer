@@ -7,16 +7,13 @@ interface SchemaRef {
 }
 
 interface Route<TModel extends Model> {
-  pattern: string;
-  component: SchemaValue<TModel> | RouteComponentResolver<TModel>;
+  pattern: string | string[];
+  component: RouteComponent<TModel>;
+  canMatch?: (params: Record<string, string>) => boolean | Promise<boolean>;
 }
 
 interface Routes<TModel extends Model> {
   routes: Route<TModel>[];
-}
-
-interface RouteResolution {
-  params: Record<string, string>;
 }
 
 interface Router {
@@ -27,9 +24,15 @@ interface Model<State = UserObject> extends UserObject {
   state: State;
 }
 
+type RouteComponent<TModel extends Model> = SchemaValue<TModel>
+  | SchemaValue<TModel>[]
+  | RouteComponentResolver<TModel>;
+
 type RouteComponentResolver<TModel extends Model> = (
-  resolution: RouteResolution
-) => SchemaValue<TModel> | Promise<SchemaValue<TModel>>;
+  params: Record<string, string>,
+) => SchemaValue<TModel>
+  | SchemaValue<TModel>[]
+  | Promise<SchemaValue<TModel>>;
 
 type BasicPrimitives = string | boolean | number | bigint | symbol;
 
