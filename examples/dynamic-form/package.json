@@ -19,9 +19,9 @@
     "url": "https://www.patreon.com/rohiievych"
   },
   "scripts": {
-    "start": "http-server ../../ -a localhost -o /examples/dynamic-form"
+    "start": "swr serve"
   },
-  "devDependencies": {
-    "http-server": "^14.0.0"
+  "dependencies": {
+    "swayer": "file:../.."
   }
 }

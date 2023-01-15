@@ -6,7 +6,7 @@ const createOption = ({ text, value }) => ({
 });
 
 /** @returns {Schema} */
-export default ([name, value]) => ({
+export default ([name, selectValue]) => ({
   tag: 'select',
   styles: {
     padding: '5px 10px',
@@ -14,8 +14,16 @@ export default ([name, value]) => ({
     border: 'none',
   },
   attrs: {
-    multiple: value.multiple || false,
+    multiple: selectValue.multiple || false,
     name,
   },
-  children: value.options.map(createOption),
+  props: {
+    value: '',
+  },
+  events: {
+    change() {
+      this.emitEvent(name, this.props.value);
+    },
+  },
+  children: selectValue.options.map(createOption),
 });

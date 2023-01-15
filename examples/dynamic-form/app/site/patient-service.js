@@ -6,10 +6,12 @@ class PatientService {
       fields: {
         name: {
           type: 'text',
+          defaultValue: '',
           placeholder: 'Name',
         },
         phone: {
           type: 'text',
+          defaultValue: '',
           placeholder: 'Phone',
         },
       },
@@ -23,10 +25,12 @@ class PatientService {
       fields: {
         disease: {
           type: 'text',
+          defaultValue: '',
           placeholder: 'Name',
         },
         symptom: {
           type: 'select',
+          defaultValue: 'soreThroat',
           options: [
             { text: 'Sore throat', value: 'soreThroat' },
             { text: 'Stomach ache', value: 'stomachAche' },

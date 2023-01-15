@@ -1,18 +1,10 @@
-/** @returns {Schema} */
-export default () => ({
+/** @type {Schema} */
+export default {
   tag: 'head',
   children: [
     {
       tag: 'title',
       text: 'Dynamic forms',
-    },
-    {
-      tag: 'script',
-      attrs: {
-        async: true,
-        type: 'module',
-        src: '/index.js',
-      },
     },
     {
       tag: 'meta',
@@ -28,4 +20,4 @@ export default () => ({
       },
     },
   ],
-});
+};

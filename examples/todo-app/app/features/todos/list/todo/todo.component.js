@@ -105,9 +105,6 @@ export default ({ todosModel, todo }) => ({
   styles: todoStyles,
   model: new TodoModel(todosModel, todo),
   events: {
-    click() {
-      this.router.go(`todos/${todo.title}`);
-    },
     removeTodo() {
       this.model.remove();
     },

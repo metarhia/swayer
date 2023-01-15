@@ -11,9 +11,12 @@ export default ([name, value]) => ({
     name,
     placeholder: value.placeholder,
   },
+  props: {
+    value: '',
+  },
   events: {
-    input(event) {
-      this.emitEvent(name, event.target.value);
+    input() {
+      this.emitEvent(name, this.props.value);
     },
   },
 });

@@ -1,22 +1,26 @@
-import formService from './domain/form-service.js';
+import formService from './form-service.js';
 
 /** @returns {SchemaRef} */
 const createField = ([name, value]) => ({
-  path: `./components/${value.type}.js`,
-  base: import.meta.url,
-  args: [name, value],
+  path: `@form/components/${value.type}.js`,
+  input: [name, value],
 });
 const createFields = (fields) => Object.entries(fields).map(createField);
 
 const createFieldListener = (name) => ({
   [name]({ detail: data }) {
-    this.state.formData[name] = data;
+    this.model.state.formData[name] = data;
   },
 });
 const createFieldListeners = (fields) =>
   Object.keys(fields)
     .map(createFieldListener)
-    .reduce((events, listener) => ({ ...events, ...listener }), {});
+    .reduce((events, listenerObj) => ({ ...events, ...listenerObj }), {});
+
+const createFormData = (fields) =>
+  Object.entries(fields)
+    .map(([name, value]) => ({ [name]: value.defaultValue }))
+    .reduce((data, fieldObj) => ({ ...data, ...fieldObj }), {});
 
 /** @returns {Schema} */
 export default ({ action, title, fields }) => ({
@@ -27,20 +31,19 @@ export default ({ action, title, fields }) => ({
     color: 'white',
     borderBottom: '1px solid white',
   },
-  state: {
-    formData: {},
-    count: 0,
+  model: {
+    state: {
+      formData: createFormData(fields),
+      count: 0,
+    },
   },
   events: {
     async send() {
-      const data = this.state.formData;
-      await formService.sendFormData(action, data);
+      const data = this.model.state.formData;
+      const res = await formService.sendFormData(action, data);
+      alert(res);
     },
-  },
-  hooks: {
-    async init() {
-      Object.assign(this.events, createFieldListeners(fields));
-    },
+    ...createFieldListeners(fields),
   },
   children: [
     {
@@ -56,7 +59,7 @@ export default ({ action, title, fields }) => ({
       },
       children: [
         ...createFields(fields),
-        { path: './components/button', base: import.meta.url },
+        { path: '@form/components/button' },
       ],
     },
   ],
