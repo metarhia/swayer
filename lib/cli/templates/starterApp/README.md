@@ -18,4 +18,4 @@ swr build
 swr help
 ```
 
-## [Documentation and examples](https://metarhia.github.io/swayer/examples/todo-app/)
+## [Documentation and examples](https://github.com/metarhia/swayer)
