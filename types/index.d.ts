@@ -56,7 +56,7 @@ type Props<State> = Partial<{
 }>;
 
 interface Schema<TModel extends Model, State = TModel['state']> {
-  tag: string;
+  tag?: string;
   namespaces?: Record<string, string>,
   text?: BasicPrimitives | Reaction<State, BasicPrimitives>;
   styles?: Styles<State> | Reaction<State, CSSPropsValue>;

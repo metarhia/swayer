@@ -3,6 +3,14 @@ import Builder from '../lib/cli/builder.js';
 import HttpServer from '../lib/cli/httpServer.js';
 
 /*
+* Define CLI colors
+* Usage: colors.green(str) or colors.green`str`
+* */
+const colors = {
+  green: (str) => `\x1b[32m${str}\x1b[0m`,
+};
+
+/*
 * Define CLI commands with options and arguments
 * */
 const renderOptions = {
@@ -18,17 +26,28 @@ const renderOptions = {
   '--ssr': {
     description: 'Enable server side rendering.',
   },
-  '--spa': {
-    description: 'Single page application',
-  },
 };
 
 const commands = {
-  // todo add boilerplate creator
-  // new: {},
+  create: {
+    aliases: ['new', 'c'],
+    description: 'Create Swayer starter application.',
+    options: {},
+    arguments: [
+      {
+        name: 'name',
+        description: 'New application name.',
+      },
+    ],
+    execute: ({ ssr, pretty, name }) => {
+      console.log(colors.green('\nCreating new Swayer application...\n'));
+      const platformOptions = { ssr, pretty };
+      return new Builder(platformOptions).createStarter(name);
+    },
+  },
   build: {
     aliases: ['b'],
-    description: 'Build Swayer components.',
+    description: 'Build Swayer application.',
     options: {
       ...renderOptions,
       '--app': {
@@ -50,7 +69,11 @@ const commands = {
         description: 'Swayer component schema path.',
       },
     ],
-    execute: (params) => new Builder(params).build(),
+    execute: ({ ssr, pretty, ...buildOptions }) => {
+      console.log(colors.green('\nCreating application build...\n'));
+      const platformOptions = { ssr, pretty };
+      return new Builder(platformOptions).build(buildOptions);
+    },
   },
   serve: {
     aliases: ['s'],
@@ -68,16 +91,12 @@ const commands = {
         description: 'Swayer application path.',
       },
     ],
-    execute: (params) => new HttpServer(params).start(),
+    execute: (params) => {
+      console.log(colors.green('\nWelcome to Swayer dev server!'));
+      console.log('\n-- DO NOT USE IN PRODUCTION --\n');
+      return new HttpServer(params).start();
+    },
   },
-};
-
-/*
-* Define CLI colors
-* Usage: colors.green(str) or colors.green`str`
-* */
-const colors = {
-  green: (str) => `\x1b[32m${str}\x1b[0m`,
 };
 
 /*

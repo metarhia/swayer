@@ -11,7 +11,7 @@ const bodyStyles = {
 
 const createPage = (title, contentComponent) => [
   {
-    path: '@app/site/head.component',
+    path: '@site/head.component',
     input: title,
   },
   {
@@ -19,7 +19,7 @@ const createPage = (title, contentComponent) => [
     styles: bodyStyles,
     children: [
       contentComponent,
-      { path: '@app/site/footer.component' },
+      { path: '@site/footer.component' },
     ],
   },
 ];
@@ -45,7 +45,10 @@ export default ({ locale }) => {
             pattern: '',
             component: createPage(
               'Todos',
-              { path: '@todos/container.component' },
+              [
+                { path: '@site/header.component' },
+                { path: '@todos/container.component' },
+              ],
             ),
           },
           {

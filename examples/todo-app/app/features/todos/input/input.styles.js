@@ -1,15 +1,4 @@
 /** @type {Styles} */
-export const titleStyles = {
-  position: 'absolute',
-  top: '-139px',
-  width: '100%',
-  fontSize: '100px',
-  fontWeight: 200,
-  textAlign: 'center',
-  color: 'rgba(175, 47, 47, 0.15)',
-};
-
-/** @type {Styles} */
 export const todoInputStyles = {
   position: 'relative',
   margin: '0',
@@ -24,6 +13,7 @@ export const todoInputStyles = {
   height: '65px',
   border: 'none',
   outline: 'none',
+  borderBottom: '1px solid #e6e6e6',
   backgroundColor: 'rgba(0, 0, 0, 0.003)',
   boxShadow: 'inset 0 -2px 1px rgba(0, 0, 0, 0.03)',
   placeholder: {

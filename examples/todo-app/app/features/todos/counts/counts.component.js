@@ -1,4 +1,4 @@
-import { clearTodosButtonStyles, footerStyles } from './footer.styles.js';
+import { clearTodosButtonStyles, countsStyles } from './counts.styles.js';
 
 const getItemsText = (count) => (count === 1 ? 'item left' : 'items left');
 
@@ -18,7 +18,7 @@ const clearButton = {
 export default (todosModel) => ({
   tag: 'footer',
   model: todosModel,
-  styles: footerStyles,
+  styles: countsStyles,
   children: [
     {
       tag: 'span',

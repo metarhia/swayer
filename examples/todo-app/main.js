@@ -4,23 +4,24 @@ const locales = {
 };
 
 const createPageComponent = (locale = locales.uk) => ({
-  path: '@app/site/page.component',
+  path: '@site/page.component',
   input: { locale },
 });
 
 export default {
   namespaces: {
-    '@app': 'app',
+    '@site': 'app/site',
     '@todos': 'app/features/todos',
   },
   preload: [
-    '@app/site/head.component',
-    '@app/site/footer.component',
-    '@todos/header/header.component',
+    '@site/head.component',
+    '@site/header.component',
+    '@site/footer.component',
     '@todos/container.component',
+    '@todos/input/input.component',
     '@todos/list/list.component',
     '@todos/list/todo/todo.component',
-    '@todos/footer/footer.component',
+    '@todos/counts/counts.component',
   ],
   children: [
     {

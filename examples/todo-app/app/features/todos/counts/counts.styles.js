@@ -1,5 +1,5 @@
 /** @type {Styles} */
-export const footerStyles = {
+export const countsStyles = {
   padding: '10px 15px',
   height: '20px',
   textAlign: 'center',

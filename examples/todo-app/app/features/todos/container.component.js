@@ -1,16 +1,23 @@
-import { todosStyles } from './container.styles.js';
 import { TodosModel } from './todos.model.js';
+
+/** @type {Styles} */
+export const containerStyles = {
+  position: 'relative',
+  background: 'white',
+  boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.2),
+              0 25px 50px 0 rgba(0, 0, 0, 0.1)`,
+};
 
 /** @returns {Schema<TodosModel>} */
 export default () => {
   const todosModel = new TodosModel();
   return {
     tag: 'main',
-    styles: todosStyles,
+    styles: containerStyles,
     model: todosModel,
     children: [
       {
-        path: '@todos/header/header.component',
+        path: '@todos/input/input.component',
         input: todosModel,
       },
       ({ show }) => show && [
@@ -19,7 +26,7 @@ export default () => {
           input: todosModel,
         },
         {
-          path: `@todos/footer/footer.component`,
+          path: `@todos/counts/counts.component`,
           input: todosModel,
         },
       ],

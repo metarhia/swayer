@@ -1,16 +1,18 @@
 {
   "name": "swayer",
-  "version": "2.0.0-alpha.1",
-  "description": "Schema based frontend framework",
+  "version": "1.0.0-alpha.1",
+  "description": "Schema based UI engine",
   "author": "Roman Ohiievych <r.ogiyevich@gmail.com>",
   "license": "MIT",
   "keywords": [
+    "app",
     "application",
     "lightweight",
     "scalable",
     "web",
+    "UI",
     "framework",
-    "app"
+    "engine"
   ],
   "main": "index.js",
   "type": "module",
@@ -50,15 +52,14 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
-    "@typescript-eslint/eslint-plugin": "^5.48.1",
-    "@typescript-eslint/parser": "^5.48.1",
-    "eslint": "^8.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
     "eslint-config-metarhia": "^8.1.0",
-    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-yml": "^1.4.0",
-    "metatests": "^0.8.2",
     "typescript": "^4.9.4"
   }
 }

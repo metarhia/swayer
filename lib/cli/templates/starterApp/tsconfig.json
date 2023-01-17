@@ -4,21 +4,13 @@
     "module": "esnext",
     "strict": true,
     "baseUrl": ".",
-    "moduleResolution": "NodeNext",
     "useDefineForClassFields": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
     "noImplicitAny": false,
-    "noEmit": true
-  },
-  "include": [
-    "index.js",
-    "bin/**/*",
-    "examples/**/*",
-    "lib/**/*",
-    "test/**/*",
-    "types/**/*"
-  ]
+    "noEmit": true,
+    "types": ["swayer"]
+  }
 }

@@ -1,29 +1,12 @@
-import {
-  mainSectionStyles,
-  todoListStyles,
-  toggleAllTodosStyles,
-} from './list.styles.js';
+import { todoListStyles } from './list.styles.js';
 
 /** @returns {Schema<TodosModel>} */
 export default (todosModel) => ({
-  tag: 'div',
-  styles: mainSectionStyles,
+  tag: 'ul',
   model: todosModel,
-  children: [
-    {
-      tag: 'input',
-      styles: toggleAllTodosStyles,
-      attrs: {
-        type: 'checkbox',
-      },
-    },
-    {
-      tag: 'ul',
-      styles: todoListStyles,
-      children: ({ todos }) => todos.map((todo) => ({
-        path: '@todos/list/todo/todo.component',
-        input: { todosModel, todo },
-      })),
-    },
-  ],
+  styles: todoListStyles,
+  children: ({ todos }) => todos.map((todo) => ({
+    path: '@todos/list/todo/todo.component',
+    input: { todosModel, todo },
+  })),
 });

@@ -1,6 +1,5 @@
 export class TodoModel {
   #todosModel;
-  /** @type {TodoState} */
   state = {
     title: '',
     editing: false,
