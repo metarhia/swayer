@@ -39,10 +39,11 @@ const commands = {
         description: 'New application name.',
       },
     ],
-    execute: ({ ssr, pretty, name }) => {
+    execute: async ({ ssr, pretty, name }) => {
       console.log(colors.green('\nCreating new Swayer application...\n'));
       const platformOptions = { ssr, pretty };
-      return new Builder(platformOptions).createStarter(name);
+      await new Builder(platformOptions).createStarter(name);
+      console.log(colors.green('Done!\n'));
     },
   },
   build: {
@@ -76,7 +77,7 @@ const commands = {
       const platformOptions = { ssr, pretty, production };
       if (production) buildOptions.env = 'production';
       await new Builder(platformOptions).build(buildOptions);
-      console.log(colors.green('\nDone!'));
+      console.log(colors.green('Done!\n'));
     },
   },
   render: {
@@ -110,7 +111,7 @@ const commands = {
       console.log(colors.green('\nRendering Swayer component...\n'));
       const platformOptions = { ssr, pretty };
       await new Builder(platformOptions).render(renderOptions);
-      console.log(colors.green('\nDone!'));
+      console.log(colors.green('Done!\n'));
     },
   },
   serve: {
