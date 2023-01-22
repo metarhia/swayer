@@ -7,6 +7,7 @@ import HttpServer from '../lib/cli/httpServer.js';
 * Usage: colors.green(str) or colors.green`str`
 * */
 const colors = {
+  red: (str) => `\x1b[31m${str}\x1b[0m`,
   green: (str) => `\x1b[32m${str}\x1b[0m`,
 };
 
@@ -16,12 +17,11 @@ const colors = {
 const renderOptions = {
   '--input': {
     aliases: ['-i'],
-    description: 'Pass component input as JSON string.',
+    description: 'Pass component input data as JSON string.',
     parseAsJson: true,
   },
   '--pretty': {
-    aliases: ['-p'],
-    description: 'Prettify HTML output.',
+    description: 'Prettify HTML output files.',
   },
   '--ssr': {
     description: 'Enable server side rendering.',
@@ -49,10 +49,11 @@ const commands = {
     aliases: ['b'],
     description: 'Build Swayer application.',
     options: {
-      ...renderOptions,
-      '--app': {
-        description: 'Pass Swayer app folder path. ' +
-        'Use for building multiple apps.',
+      '--env': {
+        aliases: ['-e'],
+        description: 'Set environment, e.g. ' +
+        `'production' will use 'env.production.js' file. ` +
+        `Defaults to 'development'.`,
       },
       '--production': {
         aliases: ['--prod'],
@@ -60,19 +61,56 @@ const commands = {
       },
       '--output': {
         aliases: ['-o'],
-        description: 'Pass Swayer build destination folder.',
+        description: 'Path to build output directory. Defaults to ./dist.',
       },
     },
     arguments: [
       {
         name: 'path',
-        description: 'Swayer component schema path.',
+        description: 'Path to application directory. ' +
+        'Defaults to current directory.',
       },
     ],
-    execute: ({ ssr, pretty, ...buildOptions }) => {
-      console.log(colors.green('\nCreating application build...\n'));
+    execute: async ({ ssr, pretty, production, ...buildOptions }) => {
+      console.log(colors.green('\nBuilding Swayer application...\n'));
+      const platformOptions = { ssr, pretty, production };
+      if (production) buildOptions.env = 'production';
+      await new Builder(platformOptions).build(buildOptions);
+      console.log(colors.green('\nDone!'));
+    },
+  },
+  render: {
+    aliases: ['r'],
+    description: 'Render Swayer component.',
+    options: {
+      ...renderOptions,
+      '--route': {
+        description: 'Path to be routed inside Swayer components. ' +
+          `Defaults to '/'.`,
+      },
+      '--output': {
+        aliases: ['-o'],
+        description: 'Path to HTML output file. ' +
+        'Defaults to same as component schema file path, ' +
+        'but with .html extension.',
+      },
+    },
+    arguments: [
+      {
+        name: 'path',
+        description: 'Path to component schema file.',
+      },
+    ],
+    execute: async ({ ssr, pretty, ...renderOptions }) => {
+      if (!renderOptions.path) {
+        const msg = '\nError: path to component schema file is not provided!';
+        console.log(colors.red(msg));
+        return;
+      }
+      console.log(colors.green('\nRendering Swayer component...\n'));
       const platformOptions = { ssr, pretty };
-      return new Builder(platformOptions).build(buildOptions);
+      await new Builder(platformOptions).render(renderOptions);
+      console.log(colors.green('\nDone!'));
     },
   },
   serve: {
@@ -80,21 +118,27 @@ const commands = {
     description: 'Serve Swayer application.',
     options: {
       ...renderOptions,
-      '--watch': {
-        aliases: ['-w'],
-        description: 'Watch files and restart server on changes.',
+      '--host': {
+        aliases: ['-h'],
+        description: `Set server host. Defaults to '127.0.0.1'.`,
+      },
+      '--port': {
+        aliases: ['-p'],
+        description: `Set server port. Defaults to '8000'`,
       },
     },
     arguments: [
       {
         name: 'path',
-        description: 'Swayer application path.',
+        description: 'Path to application directory. ' +
+        'Defaults to current directory.',
       },
     ],
-    execute: (params) => {
+    execute: ({ ssr, pretty, ...serverOptions }) => {
       console.log(colors.green('\nWelcome to Swayer dev server!'));
       console.log('\n-- DO NOT USE IN PRODUCTION --\n');
-      return new HttpServer(params).start();
+      const platformOptions = { ssr, pretty };
+      return new HttpServer(platformOptions).start(serverOptions);
     },
   },
 };

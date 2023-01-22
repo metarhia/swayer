@@ -4,12 +4,11 @@
   "description": "Initial Swayer application",
   "type": "module",
   "scripts": {
-    "start": "swr serve --ssr --prod",
-    "dev": "swr serve",
-    "dev:ssr": "swr serve --ssr",
-    "build": "swr build --pretty",
-    "build:ssr": "swr build --ssr --pretty",
-    "build:prod": "swr build --ssr --prod"
+    "start": "swr serve",
+    "start:ssr": "swr serve --ssr",
+    "build": "swr build && swr render dist/main.js --output dist/index.html --pretty",
+    "build:ssr": "swr build && swr render dist/main.js --output dist/index.html --pretty --ssr",
+    "build:prod": "swr build --prod && swr render dist/main.js --output dist/index.html --ssr"
   },
   "dependencies": {
     "swayer": "github:metarhia/swayer#feat/framework-enhancements"
