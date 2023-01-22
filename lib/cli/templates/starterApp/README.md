@@ -3,19 +3,19 @@
 ## Run locally
 
 ```
-swr serve
+npm start
 ```
 
 ## Build static artifact
 
 ```
-swr build
+npm run build:prod
 ```
 
 ## CLI help
 
 ```
-swr help
+swr -h
 ```
 
 ## [Documentation and examples](https://github.com/metarhia/swayer)
