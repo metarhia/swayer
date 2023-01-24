@@ -2,9 +2,9 @@ import { createReadStream } from 'node:fs';
 import fsp from 'node:fs/promises';
 import http from 'node:http';
 import { extname, join, normalize, resolve } from 'node:path';
-import { ENTRY_FILE_NAME } from '../constants.js';
-import ServerPlatform from '../platforms/server.js';
-import Reporter from '../reporter.js';
+import { ENTRY_FILE_NAME } from '../lib/constants.js';
+import ServerPlatform from '../lib/platforms/server.js';
+import Reporter from '../lib/reporter.js';
 
 const FILE_TYPES = {
   html: 'text/html',

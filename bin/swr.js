@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import Builder from '../lib/cli/builder.js';
-import HttpServer from '../lib/cli/httpServer.js';
+import Builder from '../cli/builder.js';
+import HttpServer from '../cli/httpServer.js';
 
 /*
 * Define CLI colors
@@ -20,9 +20,6 @@ const renderOptions = {
     description: 'Pass component input data as JSON string.',
     parseAsJson: true,
   },
-  '--pretty': {
-    description: 'Prettify HTML output files.',
-  },
   '--ssr': {
     description: 'Enable server side rendering.',
   },
@@ -39,10 +36,9 @@ const commands = {
         description: 'New application name.',
       },
     ],
-    execute: async ({ ssr, pretty, name }) => {
+    execute: async ({ name }) => {
       console.log(colors.green('\nCreating new Swayer application...\n'));
-      const platformOptions = { ssr, pretty };
-      await new Builder(platformOptions).createStarter(name);
+      await new Builder().createStarter(name);
       console.log(colors.green('Done!\n'));
     },
   },
@@ -72,11 +68,10 @@ const commands = {
         'Defaults to current directory.',
       },
     ],
-    execute: async ({ ssr, pretty, production, ...buildOptions }) => {
+    execute: async ({ ssr, ...buildOptions }) => {
       console.log(colors.green('\nBuilding Swayer application...\n'));
-      const platformOptions = { ssr, pretty, production };
-      if (production) buildOptions.env = 'production';
-      await new Builder(platformOptions).build(buildOptions);
+      if (buildOptions.production) buildOptions.env = 'production';
+      await new Builder({ ssr }).build(buildOptions);
       console.log(colors.green('Done!\n'));
     },
   },
@@ -95,6 +90,9 @@ const commands = {
         'Defaults to same as component schema file path, ' +
         'but with .html extension.',
       },
+      '--pretty': {
+        description: 'Prettify HTML output files.',
+      },
     },
     arguments: [
       {
@@ -102,15 +100,14 @@ const commands = {
         description: 'Path to component schema file.',
       },
     ],
-    execute: async ({ ssr, pretty, ...renderOptions }) => {
+    execute: async ({ ssr, ...renderOptions }) => {
       if (!renderOptions.path) {
         const msg = '\nError: path to component schema file is not provided!';
         console.log(colors.red(msg));
         return;
       }
       console.log(colors.green('\nRendering Swayer component...\n'));
-      const platformOptions = { ssr, pretty };
-      await new Builder(platformOptions).render(renderOptions);
+      await new Builder({ ssr }).render(renderOptions);
       console.log(colors.green('Done!\n'));
     },
   },
@@ -135,11 +132,10 @@ const commands = {
         'Defaults to current directory.',
       },
     ],
-    execute: ({ ssr, pretty, ...serverOptions }) => {
-      console.log(colors.green('\nWelcome to Swayer dev server!'));
+    execute: ({ ssr, ...serverOptions }) => {
+      console.log(colors.green('\nWelcome to Swayer http server!'));
       console.log('\n-- DO NOT USE IN PRODUCTION --\n');
-      const platformOptions = { ssr, pretty };
-      return new HttpServer(platformOptions).start(serverOptions);
+      return new HttpServer({ ssr }).start(serverOptions);
     },
   },
 };

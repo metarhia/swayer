@@ -1,12 +1,13 @@
+import prettify from 'html-prettify';
 import { exec as execute } from 'node:child_process';
 import fsp from 'node:fs/promises';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { minify } from 'terser';
 import { fileURLToPath } from 'url';
 import { promisify } from 'util';
-import { ENTRY_FILE_NAME, ENV_FILE_NAME } from '../constants.js';
-import ServerPlatform from '../platforms/server.js';
-import Reporter from '../reporter.js';
+import { ENTRY_FILE_NAME, ENV_FILE_NAME } from '../lib/constants.js';
+import ServerPlatform from '../lib/platforms/server.js';
+import Reporter from '../lib/reporter.js';
 
 const exec = promisify(execute);
 
@@ -17,6 +18,8 @@ const ensureDirAccess = async (dirPath) => {
     await fsp.mkdir(dirPath, { recursive: true });
   }
 };
+
+const OUTPUT_DIR = 'dist';
 
 const ENV_DIR = 'environments';
 
@@ -50,9 +53,9 @@ export default class Builder {
   }
 
   async build(options) {
-    const { path, output, env } = options;
-    const srcDir = path ? resolve(path) : resolve();
-    const outputDir = output ? resolve(output) : resolve(path, 'dist');
+    const { path = './', output, env } = options;
+    const srcDir = resolve(path);
+    const outputDir = output ? resolve(output) : resolve(path, OUTPUT_DIR);
     const buildFiles = BUILD_FILES.map((path) => join(srcDir, path));
     const filter = (src) => buildFiles.some((name) => src.startsWith(name));
     await this.#copyDir(srcDir, outputDir, { filter });
@@ -62,10 +65,11 @@ export default class Builder {
   }
 
   async render(options) {
-    const { path, input, output, route } = options;
-    const content = await this.#platform.render(path, input, route);
+    const { path, input, output, route, pretty } = options;
     const outputPath = output ? output : path.replace('.js', '.html');
     const fullOutputPath = resolve(outputPath);
+    let content = await this.#platform.render(path, input, route);
+    if (pretty) content = prettify(content);
     await fsp.writeFile(fullOutputPath, content);
   }
 

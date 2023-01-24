@@ -23,7 +23,7 @@ export default {
             {
               tag: 'a',
               styles: { display: 'block' },
-              text: 'By reading documentation',
+              text: 'Read documentation',
               attrs: {
                 href: 'https://github.com/metarhia/swayer',
                 target: '_blank',
@@ -32,7 +32,7 @@ export default {
             {
               tag: 'a',
               styles: { display: 'block' },
-              text: 'By playing with example',
+              text: 'Play with example',
               attrs: {
                 href: 'https://github.com/metarhia/swayer/tree/main/examples/todo-app',
                 target: '_blank',
