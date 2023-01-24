@@ -61,6 +61,6 @@
     "eslint-plugin-yml": "^1.4.0",
     "typescript": "^4.9.4",
     "terser": "^5.16.1",
-    "html-prettify": "^1.0.7"
+    "pretty": "^2.0.0"
   }
 }

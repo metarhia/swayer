@@ -1,7 +1,7 @@
-import prettify from 'html-prettify';
 import { exec as execute } from 'node:child_process';
 import fsp from 'node:fs/promises';
 import { basename, dirname, extname, join, resolve } from 'node:path';
+import prettifyHTML from 'pretty';
 import { minify } from 'terser';
 import { fileURLToPath } from 'url';
 import { promisify } from 'util';
@@ -69,7 +69,7 @@ export default class Builder {
     const outputPath = output ? output : path.replace('.js', '.html');
     const fullOutputPath = resolve(outputPath);
     let content = await this.#platform.render(path, input, route);
-    if (pretty) content = prettify(content);
+    if (pretty) content = prettifyHTML(content);
     await fsp.writeFile(fullOutputPath, content);
   }
 
