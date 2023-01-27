@@ -14,6 +14,8 @@ const todoToggle = {
   events: {
     click() {
       this.model.toggleComplete();
+      this.emitEvent('toggleComplete');
+      this.emitEvent('todoChange');
     },
   },
 };
@@ -26,6 +28,7 @@ const todoLabel = {
   events: {
     dblclick() {
       this.model.startEditing();
+      this.emitEvent('todoChange');
     },
   },
 };
@@ -52,14 +55,17 @@ const editInput = {
     },
   },
   hooks: {
-    init() {
+    ready() {
       this.focus();
+    },
+    destroy() {
+      this.emitEvent('todoChange');
     },
   },
 };
 
 /** @returns {Schema} */
-const removeTodoBtn = () => {
+const removeTodoBtn = (index) => {
   const model = {
     state: {
       buttonAnimation: 'none',
@@ -77,7 +83,7 @@ const removeTodoBtn = () => {
     model,
     events: {
       click() {
-        this.emitEvent('removeTodo');
+        this.emitEvent('removeTodo', index);
       },
       mouseenter() {
         this.model.showIcon();
@@ -100,15 +106,10 @@ const removeTodoBtn = () => {
 };
 
 /** @returns {Schema<TodoModel>} */
-export default ({ todosModel, todo }) => ({
+export default ({ todo, index }) => ({
   tag: 'li',
   styles: todoStyles,
-  model: new TodoModel(todosModel, todo),
-  events: {
-    removeTodo() {
-      this.model.remove();
-    },
-  },
+  model: new TodoModel(todo),
   children: [
     {
       tag: 'div',
@@ -116,7 +117,7 @@ export default ({ todosModel, todo }) => ({
       children: [
         todoToggle,
         todoLabel,
-        removeTodoBtn(),
+        removeTodoBtn(index),
         ({ editing }) => editing && editInput,
       ],
     },

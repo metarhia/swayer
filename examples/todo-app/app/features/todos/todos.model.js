@@ -24,8 +24,7 @@ export class TodosModel {
     this.#handleChanges();
   }
 
-  removeTodo(todoModel) {
-    const index = this.state.todos.indexOf(todoModel.state);
+  removeTodo(index) {
     this.state.todos.splice(index, 1);
     this.#handleChanges();
   }

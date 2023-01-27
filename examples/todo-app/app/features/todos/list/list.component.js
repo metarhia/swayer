@@ -5,8 +5,19 @@ export default (todosModel) => ({
   tag: 'ul',
   model: todosModel,
   styles: todoListStyles,
-  children: ({ todos }) => todos.map((todo) => ({
+  events: {
+    toggleComplete() {
+      todosModel.calculateCounts();
+    },
+    removeTodo({ detail: index }) {
+      todosModel.removeTodo(index);
+    },
+    todoChange() {
+      todosModel.save();
+    },
+  },
+  children: ({ todos }) => todos.map((todo, index) => ({
     path: '@todos/list/todo/todo.component',
-    input: { todosModel, todo },
+    input: { todo, index },
   })),
 });
