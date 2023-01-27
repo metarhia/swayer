@@ -122,8 +122,8 @@ interface Channels {
 }
 
 interface Hooks {
-  init(): void | Promise<void>;
-  destroy(): void | Promise<void>;
+  ready(): void | Promise<void>;
+  destroy(): void;
 }
 
 interface PseudoFunction {

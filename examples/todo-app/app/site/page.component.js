@@ -26,7 +26,7 @@ const createPage = (title, contentComponent) => [
 
 /** @returns {Schema} */
 export default ({ locale }) => {
-  console.time('Init');
+  console.time('Ready');
   return {
     tag: 'html',
     styles: {
@@ -34,8 +34,8 @@ export default ({ locale }) => {
     },
     attrs: { lang: locale },
     hooks: {
-      init() {
-        console.timeEnd('Init');
+      ready() {
+        console.timeEnd('Ready');
       },
     },
     children: [
